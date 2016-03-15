@@ -1,2 +1,3 @@
-# melodictransport
-Harvard CS 171 Data Visualization final project 
+# MelodicTransport
+Harvard CS 171 Data Visualization Final Project 
+
