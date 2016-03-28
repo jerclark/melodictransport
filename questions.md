@@ -58,6 +58,8 @@ changes in cost of living.
 
 * The change in American spending patterns over the last century: Although the BLS survey has been collected annually in recent years, the original survey data goes all the way back to 1880 (collected every 10 years). The changes in spending patterns are most dramatic when you look over a long period of time. For example, in 1901, the average american spent 42% of their income on food. By 2003, that share had fallen to 13%. Spending on transportation (all forms) grew from basically nothing in 1901 to ~20% in 2003. This report (http://www.bls.gov/opub/uscs/home.htm) is the best summary of the types of stories we could tell with this data, and it's all based on the BLS survey data.  There are probably more interesting long term stories that could be told about aggregate Americans -- i.e., the declining cost of food, the increasing cost of health care, the incress of other "non-essential expenditures" etc. 
 
+* Testing git. 
+
 
 
  
