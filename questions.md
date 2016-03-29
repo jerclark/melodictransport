@@ -30,7 +30,6 @@ Show the evolution of the cost of education across time.
 	*  Education Level?
 
 
-
 ### "Market Basket", CPI
 
 This is an interesting measure of the way prices of goods and services changes over time, such that it tracks 
@@ -57,9 +56,6 @@ changes in cost of living.
 * The rise and fall of big box stores. For example, it would be cool if we had an animated map where you could see the spread of stores such as Walmart, Target, and Best buy throughout the 1990s, only to see them start retreating around 2008 or so. This combined with some data about aggregate spending in big-box stores vs. online and/or small retailers could be interesting visualization of this trend. 
 
 * The change in American spending patterns over the last century: Although the BLS survey has been collected annually in recent years, the original survey data goes all the way back to 1880 (collected every 10 years). The changes in spending patterns are most dramatic when you look over a long period of time. For example, in 1901, the average american spent 42% of their income on food. By 2003, that share had fallen to 13%. Spending on transportation (all forms) grew from basically nothing in 1901 to ~20% in 2003. This report (http://www.bls.gov/opub/uscs/home.htm) is the best summary of the types of stories we could tell with this data, and it's all based on the BLS survey data.  There are probably more interesting long term stories that could be told about aggregate Americans -- i.e., the declining cost of food, the increasing cost of health care, the incress of other "non-essential expenditures" etc. 
-
-* Testing git. 
-
 
 
  
