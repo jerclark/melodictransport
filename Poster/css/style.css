@@ -1,0 +1,190 @@
+/*********************/
+/*  LAYOUT  */
+/*********************/
+body {
+    padding: 30px 30px 30px 30px;
+}
+
+h1 {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 40px;
+    padding-left: 0px;
+}
+
+#header-text {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 20px;
+}
+
+#headline {
+    padding-left: 0px;
+}
+
+#main-row {
+    padding-top:40px;
+}
+
+#overview-row {
+    padding-left:0;
+}
+
+.main-text {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.section-blurb {
+    font-size: 15px;
+}
+
+#classroom-image {
+    padding-top:40px;
+}
+
+
+/*********************/
+/*  AFRICA CHRORPLETH  */
+/*********************/
+.africa-legend-label {
+    padding-right: 10px;
+    font-size: 12px;
+    text-align: right;
+}
+
+#africa-legend-table tr {
+    height: 25px;
+}
+
+#main-row {
+    padding-top: 40px;
+}
+
+#choropleth-legend {
+    position: absolute;
+    top: 325px;
+}
+
+#cases-text {
+    padding-bottom: 20px;
+}
+
+
+/*********************/
+/*  HOTSPOTS  */
+/*********************/
+.population {
+    fill: none;
+    stroke: black;
+}
+
+.suspected {
+    fill: red;
+    stroke: none;
+}
+
+.known {
+    fill: black;
+    stroke: none;
+}
+
+.hotspot-legend-line {
+    stroke: black;
+    stroke-width: 1px;
+}
+
+.hotspot-legend-label {
+    font-style:italic;
+    font-size:12px;
+}
+
+#hotspot-section {
+    padding-top: 0px;
+}
+
+#hotspots-area {
+    padding-top: 20px;
+}
+
+#hotspots-legend-container {
+    padding-top: 20px;
+}
+
+.hotspot .label {
+    font-size: 12px;
+}
+
+#hotspots-blurb {
+    font-size: 12px;
+}
+
+/*********************/
+/*  KEY FACTS  */
+/*********************/
+
+#key-facts ul {
+    padding-left:15px;
+}
+
+
+
+/*********************/
+/*  FUNDING  */
+/*********************/
+
+#funding-section {
+    padding-top:20px;
+}
+
+#funding-line {
+    fill: none;
+    stroke: #1C9A3D;
+    stroke-width: 1.5px;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+.axis text {
+    font-size: 9px;
+}
+
+.line {
+    fill: none;
+    stroke: #1C9A3D;
+    stroke-width: 1.5px;
+}
+
+#global-funding-chart-area {
+    padding-top: 20px;
+}
+
+
+/*********************/
+/*  TOOLTIP OVERLAY  */
+/*********************/
+
+.tooltip-title {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.d3-tip {
+    line-height: 1;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+}
