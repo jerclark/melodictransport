@@ -1,17 +1,25 @@
-section {
-    height: 600px;
+.subtable > td {
+    padding-left: 30px !important;
+}
+
+.subtable table {
+    border: none 0;
+}
+
+.subtable td, .subtable th {
+    border: none 0;
 }
 
 #characteristics {
-    max-height: 500px;
     overflow-y: scroll;
     overflow-x: none;
 }
 
-tr {
+/* selectable tables */
+.table-selectable tbody tr {
     cursor: pointer;
 }
 
-tr.selected {
-    background-color: yellow;
+tbody tr.selected, tbody tr.selected:hover {
+    background-color: lightBlue;
 }
