@@ -1,7 +1,16 @@
+function objattrs(attrs) {
+    if (!attrs) return "";
+
+    return Object.keys(attrs).reduce(function(acc, k) {
+        acc.push(k + '=' + '"' + attrs[k] + '"');
+        return acc;
+    }, []).join(" ")
+}
+
 // Takes an html tag name (without the <>) and value and returns the value
 // wrapped inside the tag.
-function tag(t, value) {
-    return "<" + t + ">" + value + "</" + t + ">";
+function tag(t, value, attrs) {
+    return '<' + t + " " + objattrs(attrs || {}) + '>' + value + '</' + t + '>';
 }
 
 var th = _.partial(tag, "th");
@@ -15,20 +24,28 @@ var table = _.partial(tag, "table");
 // predicate function to filter which keys (e.g. columns) get show.
 function toTable(arr, keys, idField) {
     if (arr.length === 0) return tag("table", "");
-    var toString = function(arr){ return arr.join("") };
 
     keys = keys || _.keys(arr[0]);
-    arr = arr.map(_.partial(_.pick, _, keys));
-
     var header = thead(tr(keys.map(th).join("")));
 
-    // fine line between clever and stupid
-    var body = tbody(arr
-        .map(_.values)
-        .map(_.partial(_.map, _, td)).map(toString)
-        .map(tr).join(""));
+    var rows = arr.reduce(function(rows, d, idx) {
+        var attrs = {
+            'data-key-value': d[idField],
+            'data-key-field': idField
+        };
 
-    return tag("table class='table table-hover table-condensed table-selectable'", header + body);
+        var cells = keys.map(function(k) {
+            return td(d[k]);
+        }).join("");
+
+        rows.push(tag('tr', cells, attrs));
+        return rows;
+    }, []).join("");
+
+    var body = tbody(rows);
+    return tag("table", header + body, {
+        'class': 'table table-hover table-condensed table-selectable'
+    });
 }
 
 // Returns a filtering function where field = value
@@ -42,24 +59,28 @@ $(function() {
     queue()
         .defer(d3.tsv, "raw/cx/cx.demographics")
         .defer(d3.tsv, "raw/cx/cx.characteristics")
-        .await(showDemo);
+        .defer(d3.tsv, "raw/cx/cx.subcategory")
+        .defer(d3.tsv, "raw/cx/cx.item")
+        .defer(d3.tsv, "raw/cx/cx.series")
+        .await(main)
 
     function drilldownTable(options) {
         var parentData = options.parentData;
         var parentFields = options.parentFields;
         var childrenData = options.childrenData;
         var childrenFields = options.childrenFields;
-        var idLocator = options.idLocator;
-        var idField = options.idField;
 
-        var parentTable = $(toTable(parentData, parentFields));
+        var parentTable = $(toTable(parentData, parentFields, options.idField));
         parentTable.addClass("table-parent");
         parentTable.find("tbody tr").on("click", function(e) {
-            var id = idLocator(e.currentTarget);
+            var keyValue = $(e.currentTarget).data('key-value');
+            var keyField = $(e.currentTarget).data('key-field');
+
             var filteredData = childrenData.filter(function(d) {
-                return d[idField] === id;
+                return d[keyField] === keyValue;
             });
-            var subtable = toTable(filteredData, childrenFields);
+
+            var subtable = toTable(filteredData, childrenFields, keyField);
 
             parentTable.find(".subtable").remove();
             $('<tr class="subtable"><td colspan="' + parentFields.length + '">'
@@ -72,51 +93,104 @@ $(function() {
 
     // Handle selectable tables
     $("body").on("click", ".table-selectable tbody tr", function(e) {
-        $(e.currentTarget).siblings().removeClass("selected");
-        $(e.currentTarget).addClass("selected");
-        $(e.currentTarget).trigger("row-selected", e.currentTarget);
+        e.stopPropagation();
+
+        var $el = $(e.currentTarget);
+        $el.siblings().removeClass("selected");
+        $el.addClass("selected");
+        $el.trigger("row-selected", [$el.data(), $el.index()]);
     });
 
-    function showDemo(errors, demographics, characteristics) {
+    function showDemo(demographics, characteristics) {
         var table = drilldownTable({
             parentData: demographics,
             parentFields: ["demographics_code", "demographics_text"],
             childrenFields: ["characteristics_code", "characteristics_text"],
             childrenData: characteristics,
-            idLocator: function(tr) {
-                return $(tr).children("td").first().text();
-            },
             idField: "demographics_code"
         });
 
         $("#demographics").empty().append(table);
         $("#demographics tbody tr").first().click();
+        return table;
     }
 
-    queue()
-        .defer(d3.tsv, "raw/cx/cx.subcategory")
-        .defer(d3.tsv, "raw/cx/cx.item")
-        .await(showItems)
-
-    function showItems(errors, subcategory, items) {
+    function showItems(subcategory, items) {
         var table = drilldownTable({
             parentData: subcategory,
             parentFields:  ["category_code", "subcategory_code", "subcategory_text"],
             childrenData: items,
             childrenFields: ["subcategory_code", "item_code", "item_text"],
-            idLocator: function(tr) {
-                return $(tr).children("td").eq(1).text();
-            },
             idField: "subcategory_code"
         });
 
         $("#subcategories").empty().append(table);
         $("#subcategories tbody tr").first().click();
+        return table;
+    }
+
+        // TODO: this is garbage
+
+    function main(errors, demographics, characteristics, subcategory, items, series) {
+        var demoTable = showDemo(demographics, characteristics);
+        var itemsTable = showItems(subcategory, items);
+
+        itemsTable.subcategory_code = function() {
+            return itemsTable.find("tbody > tr.selected").data("key-value");
+        };
+
+        itemsTable.item_code = function() {
+            return itemsTable
+                .find(".subtable > td > table > tbody > tr.selected")
+                .children().eq(1).text()
+        };
+
+        $('body').on('row-selected', function(e, data, index) {
+            var subcategory_code = itemsTable.subcategory_code();
+            var category_code = itemsTable.find("tbody > tr.selected").children().first().text();
+            var item_code = itemsTable.item_code();
+
+            var demographics_code = demoTable.find("tbody > tr.selected").data("key-value");
+            var characteristics_code = demoTable.find(".subtable > td > table > tbody > tr.selected")
+                .children().eq(0).text();
+
+            updateSeries(series, category_code, subcategory_code, item_code, demographics_code, characteristics_code);
+
+            console.log(data);
+            console.log(index);
+        });
+    }
+
+    function updateSeries(
+        series,
+        category_code,
+        subcategory_code,
+        item_code,
+        demographics_code,
+        characteristics_code) {
+
+        console.log('updateSeries', Array.from(arguments));
+
+        console.assert(category_code);
+        console.assert(subcategory_code);
+        console.assert(item_code);
+        console.assert(demographics_code);
+        console.assert(characteristics_code);
+
+        var availableSeries = _.where(series, {
+            category_code: category_code,
+            subcategory_code: subcategory_code,
+            demographics_code: demographics_code,
+            characteristics_code: characteristics_code
+        });
+
+        console.log(availableSeries);
+        $("#series").html(toTable(availableSeries, ["series_title", "begin_year", "end_year"]));
     }
 
     queue()
-        .defer(d3.tsv, "raw/cx/cx.series")
         .await(function(errors, series) {
+            var series = series;
             console.log("series loaded", series);
         });
 });
