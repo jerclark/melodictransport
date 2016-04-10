@@ -134,7 +134,24 @@ $(function() {
 
         // TODO: this is garbage
 
+
+    function trim(obj) {
+        return Object.keys(obj).reduce(function(o, k) {
+            o[k] = (o[k] || "").trim()
+            return o;
+        }, obj);
+    }
+
     function main(errors, demographics, characteristics, subcategory, items, series, dataset) {
+        // TODO: do this in Node, dump to json
+
+        demographics = demographics.map(trim);
+        characteristics = characteristics.map(trim);
+        subcategory = subcategory.map(trim);
+        items = items.map(trim);
+        series = series.map(trim);
+        dataset = dataset.map(trim);
+
         var demoTable = showDemo(demographics, characteristics);
         var itemsTable = showItems(subcategory, items);
 
@@ -178,7 +195,7 @@ $(function() {
         demographics_code,
         characteristics_code) {
 
-        console.log('updateSeries', Array.from(arguments));
+        $("#data").empty();
 
         // Make sure each thing we need is selected
         console.assert(category_code);
@@ -191,13 +208,18 @@ $(function() {
             category_code: category_code,
             subcategory_code: subcategory_code,
             demographics_code: demographics_code,
-            characteristics_code: characteristics_code
+            characteristics_code: characteristics_code,
+            item_code: item_code
         });
 
         var table = $(toTable(availableSeries,
             ["series_title", "begin_year", "end_year"], "series_id"));
 
         $("#series").empty().append(table);
+
+        // Select first one
+        $("#series tbody > tr").first().click();
+
     }
 
     function showData(dataset, series_id) {
