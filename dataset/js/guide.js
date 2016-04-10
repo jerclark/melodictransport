@@ -1,3 +1,5 @@
+'use strict';
+
 function objattrs(attrs) {
     if (!attrs) return "";
 
@@ -62,6 +64,7 @@ $(function() {
         .defer(d3.tsv, "raw/cx/cx.subcategory")
         .defer(d3.tsv, "raw/cx/cx.item")
         .defer(d3.tsv, "raw/cx/cx.series")
+        .defer(d3.tsv, "raw/cx/cx.data.1.AllData")
         .await(main)
 
     function drilldownTable(options) {
@@ -92,7 +95,7 @@ $(function() {
     }
 
     // Handle selectable tables
-    $("body").on("click", ".table-selectable tbody tr", function(e) {
+    $("body").on("click", ".table-selectable > tbody > tr", function(e) {
         e.stopPropagation();
 
         var $el = $(e.currentTarget);
@@ -131,7 +134,7 @@ $(function() {
 
         // TODO: this is garbage
 
-    function main(errors, demographics, characteristics, subcategory, items, series) {
+    function main(errors, demographics, characteristics, subcategory, items, series, dataset) {
         var demoTable = showDemo(demographics, characteristics);
         var itemsTable = showItems(subcategory, items);
 
@@ -145,19 +148,25 @@ $(function() {
                 .children().eq(1).text()
         };
 
-        $('body').on('row-selected', function(e, data, index) {
-            var subcategory_code = itemsTable.subcategory_code();
-            var category_code = itemsTable.find("tbody > tr.selected").children().first().text();
-            var item_code = itemsTable.item_code();
+        $('body').on('row-selected', function(e, selected, index) {
 
-            var demographics_code = demoTable.find("tbody > tr.selected").data("key-value");
-            var characteristics_code = demoTable.find(".subtable > td > table > tbody > tr.selected")
-                .children().eq(0).text();
+            // A series was selected, time for some delicious data
+            if ($('#series *').is(e.target)) {
+                showData(dataset, selected.keyValue);
+            }
+            else {
+                // One of the filters has been selected, try to update the series
 
-            updateSeries(series, category_code, subcategory_code, item_code, demographics_code, characteristics_code);
+                var subcategory_code = itemsTable.subcategory_code();
+                var category_code = itemsTable.find("tbody > tr.selected").children().first().text();
+                var item_code = itemsTable.item_code();
 
-            console.log(data);
-            console.log(index);
+                var demographics_code = demoTable.find("tbody > tr.selected").data("key-value");
+                var characteristics_code = demoTable.find(".subtable > td > table > tbody > tr.selected")
+                    .children().eq(0).text();
+
+                updateSeries(series, category_code, subcategory_code, item_code, demographics_code, characteristics_code);
+            }
         });
     }
 
@@ -171,6 +180,7 @@ $(function() {
 
         console.log('updateSeries', Array.from(arguments));
 
+        // Make sure each thing we need is selected
         console.assert(category_code);
         console.assert(subcategory_code);
         console.assert(item_code);
@@ -184,13 +194,22 @@ $(function() {
             characteristics_code: characteristics_code
         });
 
-        console.log(availableSeries);
-        $("#series").html(toTable(availableSeries, ["series_title", "begin_year", "end_year"]));
+        var table = $(toTable(availableSeries,
+            ["series_title", "begin_year", "end_year"], "series_id"));
+
+        $("#series").empty().append(table);
     }
 
-    queue()
-        .await(function(errors, series) {
-            var series = series;
-            console.log("series loaded", series);
-        });
+    function showData(dataset, series_id) {
+        var data = _.chain(dataset)
+            .where({
+                series_id: series_id
+            })
+            .sortBy('year')
+            .value();
+
+        var table = $(toTable(data, ['year', 'value'], 'series_id'));
+        $("#data").empty().append(table);
+    }
+
 });
