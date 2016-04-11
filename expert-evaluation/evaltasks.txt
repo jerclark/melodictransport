@@ -1,0 +1,50 @@
+---------- Forwarded message ----------
+From: Nathaniel Burbank <nathaniel.burbank@gmail.com>
+Date: Sun, Apr 10, 2016 at 12:15 PM
+Subject: Re: Expert feedback session
+To: Craig Houston <craighouston@gmail.com>
+Cc: Dominick Peluso <peluso.dominick@gmail.com>, "mariodv@hotmail.nl" <mariodv@hotmail.nl>, bruno c <neonskimmer@gmail.com>, Jeremy Clark <jeremy_clark1@yahoo.com>
+
+
+Hi Craig, 
+
+Thanks so much for the feed back. This is very helpful and we will consider this feedback carefully. 
+
+During our group meeting today, we came up with some additional “tasks” for you to attempt with our draft viz.
+
+1. For a period of time, what historical events influenced the changes in spending?
+
+2. Find a source of spending where that has increased/became more burdensome overtime?
+ (This can be express either as: Needing to spend more for the same amount of goods/services, OR Needing to spend the same amount for less goods/services.) 
+
+Feel free to ignore these if you want — I’m not asking for you to do any extra work. But if you happen to have any quick additional reactions to our project in light of these tasks/stories, we would appreciate hearing them. 
+
+Thanks again and good luck with your own project! 
+
+Best,
+Nathaniel 
+
+
+
+------- Forwarded message ----------
+From: Craig Houston <craighouston@gmail.com>
+Date: Sun, Apr 10, 2016 at 9:51 PM
+Subject: Re: Expert feedback session
+To: Nathaniel Burbank <nathaniel.burbank@gmail.com>
+Cc: Dominick Peluso <peluso.dominick@gmail.com>, "mariodv@hotmail.nl" <mariodv@hotmail.nl>, bruno c <neonskimmer@gmail.com>, Jeremy Clark <jeremy_clark1@yahoo.com>
+
+
+Hi Nathaniel,
+
+This is how I would attempt to completed the two tasks you mention:
+
+1) I would use the control panel to identify the historical event I am interested in.  I can see these are separated into categories, so once I identify the category, would move the slider bars around to identify, then isolate the event I am interested on the timeline.  It looks like I can click on the control panel and it will bring up a bar chart of spending over that period.  
+
+One thing that comes to mind is what if I know the event I am interested in, say hurricane Katrina, but I don’t remember the year? If you had a chronological list of your events on the right,  it would help the user quickly find what they are looking for.  Clinking on the list item could then automatically set the time slider in to the corresponding dates. 
+
+2) To see what items have increased in dollar terms over time, my immediate reaction would be to click the stacked area chart item so I could see the single category over time.  When I hear financial burden, I think expenditure as % of income, which if I am reading the sketches correctly, will be shown as the edge length between the parent node and the corresponding child?  Normally I would not associate the node length with a quantitative property, but perhaps you guys have a good way of altering the reader to this?
+
+Hope that is helpful.
+
+Best regards,
+Craig
