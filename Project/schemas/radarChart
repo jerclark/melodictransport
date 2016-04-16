@@ -1,0 +1,34 @@
+{
+  "title": "radarChart",
+  "type": "object",
+  "properties":{
+    "demographic":{
+      "type":"string"
+    },
+    "characteristics":{
+      "type":"array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "characteristic": {
+            "type": "string"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "year": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

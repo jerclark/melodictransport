@@ -1,0 +1,73 @@
+{
+  "title": "stackData",
+  "type": "object",
+  "properties":{
+    "incomes":{
+      "type":"array",
+      "items":{
+        "type":"object",
+        "properties":{
+          "year":{
+            "type":"string"
+          },
+          "income":{
+            "type":"number"
+          }
+        }
+      }
+    },
+    "categories":{
+      "type":"array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "year": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "expenditures":{
+      "type":"array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "expenditure": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "year": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
