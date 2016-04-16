@@ -85,12 +85,18 @@
 
         var merged = results.reduce(function(obj, result) {
             obj.names.push(result.name);
-            obj.totals.push(_.pluck(result.values, "value"));
+            // obj.totals.push(_.pluck(result.values, "value"));
+
+            // TODO: ensure ordering / use a hash instead of array
             obj.values = result.values.map(function(v, idx) {
-                return (obj.values[idx] || 0) + v.value;
+                return {
+                    year: v.year,
+                    value: ((obj.values[idx] || {}).value || 0) + v.value
+                };
             });
+
             return obj;
-        }, { values: [], names: [], totals: []});
+        }, { values: [], names: [] });
 
         merged.name = merged.names.join("-");
         return merged;
@@ -136,9 +142,12 @@
             demographicText: this.demographicText(criteria.demographic),
             characteristic: criteria.characteristic,
             characteristicText: this.characteristicText(criteria.demographic, criteria.characteristic),
-            values: _.where(this._datasets.values, {
-                series_id: this._keyFor(criteria)
-            })
+            values: _.chain(this._datasets.values)
+                .where({
+                    series_id: this._keyFor(criteria)
+                })
+                .map(_.partial(_.pick, _, "year", "value"))
+                .value()
         };
     };
 

@@ -15,7 +15,6 @@
         // Get the data for the percentage of howeowners with a mortgage
         // aged 25-34 and place it under the "mortgages25" key
 
-
         var mortgageCriteria = {
             name: "mortgages25",
             item: "980230",
