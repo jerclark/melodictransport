@@ -34,3 +34,5 @@ node_modules
 
 # OSX garbage
 .DS_Store
+
+.idea
