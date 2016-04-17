@@ -1,8 +1,4 @@
-// Variables for the visualization instances
-var areachart
-
-
-    (function(cs171) {
+(function(cs171) {
 
     var ds = window.ds = new cs171.Dataset();
 
@@ -78,7 +74,6 @@ var areachart
 
         console.log("all-demographic", numVehiclesByHousingType);
 
-
         // Simplified dataset to build first iteration of stacked area chart with  -- will improve!
         var basic_expends = ds.query({
             name: "Housing",
@@ -103,7 +98,7 @@ var areachart
             item: "ENTRTAIN"
         });
 
-        areachart = new Stacked("#stacked-area-chart", basic_expends);
+        var areachart = new Stacked("#stacked-area-chart", basic_expends);
 
         // Show beef consumption radar per age
         var beefdata = ds.queryDemographic({
@@ -111,6 +106,8 @@ var areachart
             item: "BEEF",
             year: 1984
         });
+
+        console.log(beefdata);
 
         // TODO: make a method in dataset to do this stuff
         // return 1984 values
@@ -126,9 +123,6 @@ var areachart
         })
 
         var radar = new Radar(".vis-radar", beefdata);
-
-
     });
-
 
 })(window.cs171);
