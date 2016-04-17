@@ -1,7 +1,7 @@
 /* Area Chart */
 
-.axis path,
-.axis line {
+.vis-stacked .axis path,
+.vis-stacked .axis line {
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
