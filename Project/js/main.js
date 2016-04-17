@@ -1,4 +1,8 @@
 
+// Variables for the visualization instances
+var areachart
+
+
 (function(cs171) {
 
     var ds = window.ds = new cs171.Dataset();
@@ -70,6 +74,27 @@
         //Get item data for all characteristics for a particlar demographic
         var numVehiclesByHousingType = ds.itemDataForDemographic("LB08", "VEHICLES", "numVehicles");
         console.log("all-demographic", numVehiclesByHousingType);
+
+
+        // Basic dataset to build first iteration of stacked area chart with  -- I'm sure there's a better way... 
+        var basic_expends = ds.query({
+            name: "Housing",
+            item: "HOUSING"   
+        },{
+            name: "Healthcare",
+            item: "HEALTH"   
+        },{
+            name: "Food",
+            item: "FOODTOTL"    
+        },{
+            name: "Transportation",
+            item: "TRANS"    
+        },{
+            name: "Education",
+            item: "EDUCATN"    
+        });
+
+        areachart = new Stacked("stacked-area-chart", basic_expends);
 
 
     });
