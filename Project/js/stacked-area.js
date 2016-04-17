@@ -42,19 +42,20 @@ Stacked.prototype.initVis = function() {
     var stack = d3.layout.stack()
     .values(function(d) { return d.values; });
 
-   var transposedData = dataCategories.map(function(name) {
-    return {
-        name: name,
-        values: vis.data[name].values.map(function(d) {
-            return {year: parseDate(d.year.toString()), y: d.value};
-        })
-    };
-    });
+    function stackDataForKey(key){
+        return stack(
+                dataCategories.map(function(name) {
+                    return {
+                        name: name,
+                        values: vis.data[name].values.map(function(d) {
+                        return {year: parseDate(d.year.toString()), y: d[key]};
+                })};}))}; 
+
+
+    vis.inflateAdjusted = stackDataForKey("adjustedValue");
+    vis.rawData = stackDataForKey("value");
+    vis.percentIncome = stackDataForKey("valuePercentIncome");
     
-    vis.stackedData = stack(transposedData);
-    console.log(vis.stackedData);
-
-
 
   // SVG drawing area
     vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -64,11 +65,12 @@ Stacked.prototype.initVis = function() {
         .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
 
+    console.log(vis.inflateAdjusted);
     // Scales and axes
     // Currently makes x scale based on first layer min/max 
     vis.x = d3.time.scale()
         .range([0, vis.width])
-        .domain(d3.extent(vis.stackedData[0].values, function(d) {return d.year; }));
+        .domain(d3.extent(vis.inflateAdjusted[0].values, function(d) {return d.year; }));
 
     vis.y = d3.scale.linear()
         .range([vis.height, 0]);
@@ -87,7 +89,6 @@ Stacked.prototype.initVis = function() {
 
     vis.svg.append("g")
             .attr("class", "y-axis axis");
-
 
     vis.area = d3.svg.area()
         .interpolate("cardinal")
@@ -119,8 +120,8 @@ Stacked.prototype.initVis = function() {
 Stacked.prototype.wrangleData = function() {
     var vis = this;
 
-    // Currently no data wrangling/filtering needed
-    vis.displayData = vis.stackedData;
+    var TYPE = d3.select("#area-chart-type").property("value");
+    vis.displayData = vis[TYPE]; 
 
     // Update the visualization
     vis.updateVis();
