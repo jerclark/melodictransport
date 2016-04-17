@@ -21,9 +21,6 @@ Stacked = function(_parentElement, _data){
     this.data = _data;
     this.displayData = []; // see data wrangling
 
-    // DEBUG RAW DATA
-    // console.log(this.data);
-
     this.initVis();
 }
 
@@ -58,6 +55,7 @@ Stacked.prototype.initVis = function() {
     var stack = d3.layout.stack()
     .values(function(d) { return d.values; });
 
+    // Build area layout datastructure for given data key 
     function stackDataForKey(key){
         return stack(
                 dataCategories.map(function(name) {
@@ -73,7 +71,8 @@ Stacked.prototype.initVis = function() {
     vis.percentIncome = stackDataForKey("valuePercentIncome");
     
     
-
+    // Calculating percentages is dependent on the totals from the submitted dataset, 
+    // and needs to be calculated a little differently 
     vis.percent = stack(dataCategories.map(function(name) {
                     return {
                         name: name,
@@ -82,7 +81,7 @@ Stacked.prototype.initVis = function() {
                             year: parseDate(d.year.toString()), y: d["value"]/(year_maxes[d.year])};
                 })};})); 
     
-  // SVG drawing area
+  // SVG drawing area (Adapted from lab 7)
     vis.svg = d3.select("#" + vis.parentElement).append("svg")
         .attr("width", vis.width + vis.margin.left + vis.margin.right)
         .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
@@ -151,7 +150,7 @@ Stacked.prototype.wrangleData = function() {
 
 
 /*
- *  The drawing function
+ *  The drawing function (Heavly adabted from Lab  7)
  */
 
 Stacked.prototype.updateVis = function() {
@@ -171,16 +170,12 @@ Stacked.prototype.updateVis = function() {
       .data(vis.displayData);
   
   categories.enter().append("path")
-      .attr("class", "area");
+    .attr("class", "area");
 
   categories
-  .transition().duration(duration).delay(delay)
-        .style("fill", function(d) { 
-            return colorScale(d.name);
-        })
-      .attr("d", function(d) {
-                return vis.area(d.values);
-      })
+    .style("fill", function(d) { return colorScale(d.name);})
+    .transition().duration(duration).delay(delay)
+    .attr("d", function(d) {return vis.area(d.values);})
 
     categories
         .on("mouseover", function(d) 
@@ -189,13 +184,9 @@ Stacked.prototype.updateVis = function() {
         .on("mouseout",function(d)
             {vis.svg.select("#category-name").text("");})
 
-
     categories.exit().remove();
-
 
     // Call axis functions with the new domain 
     vis.svg.select(".x-axis").call(vis.xAxis);
-  vis.svg.select(".y-axis").call(vis.yAxis);
-
-
+    vis.svg.select(".y-axis").call(vis.yAxis);
 }

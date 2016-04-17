@@ -75,29 +75,8 @@ var areachart
         var numVehiclesByHousingType = ds.itemDataForDemographic("LB08", "VEHICLES", "numVehicles");
         console.log("all-demographic", numVehiclesByHousingType);
 
-        // Show beef consumption radar per age
-        var beefdata = ds.queryDemographic({
-            demographic: "LB04",
-            item: "BEEF",
-            year: 1984
-        });
 
-        // TODO: make a method in dataset to do this stuff
-        // return 1984 values
-
-        beefdata = Object.keys(beefdata).map(function(k) {
-
-            var d = beefdata[k];
-            return {
-                dimension: k,
-                value: d.values[0].adjustedValue
-            };
-
-        })
-
-        var radar = new Radar(".vis-radar", beefdata);
-
-        // Basic dataset to build first iteration of stacked area chart with  -- I'm sure there's a better way... 
+        // Simplified dataset to build first iteration of stacked area chart with  -- will improve! 
         var basic_expends = ds.query({
             name: "Housing",
             item: "HOUSING"   
@@ -113,7 +92,14 @@ var areachart
         },{
             name: "Education",
             item: "EDUCATN"    
-        });
+        }, {
+            name: "Apparel and services",
+            item: "APPAREL"    
+        },{
+            name: "Entertainment",
+            item: "ENTRTAIN"    
+        }
+        );
 
         areachart = new Stacked("stacked-area-chart", basic_expends);
 
