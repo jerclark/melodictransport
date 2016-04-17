@@ -82,6 +82,16 @@
         }.bind(this));
     }
 
+
+    Dataset.prototype.demographics = function(){
+        return this._datasets.demographics;
+    }
+
+    Dataset.prototype.characteristics = function(){
+        return this._datasets.characteristics;
+    }
+
+
     // Merges two or more datasets together. The "name" of the resulting
     // dataset is "dataset 1 name-dataset 2 name": all the names with
     // dashes between them. The values are added indiscriminately
@@ -190,6 +200,30 @@
             return result;
         }.bind(this), {});
     }
+
+
+    //Get item data for all characteristics for a particlar demographic
+    Dataset.prototype.itemDataForDemographic = function(demographicCode, itemCode, namePrefix){
+
+        //Create an array of criteria for each characteristic of the passed in demographic
+        var criteria = this.characteristics().reduce(function(criteria,nextCharacteristic){
+
+            if ((nextCharacteristic.demographics_code) === (demographicCode)) {
+                criteria.push({
+                    name:(namePrefix + "-" + nextCharacteristic.characteristics_text),
+                    item:itemCode,
+                    demographic:demographicCode,
+                    characteristic: nextCharacteristic.characteristics_code
+                })
+            }
+
+            return criteria;
+        }, []);
+
+        return this.query.apply(this, criteria);
+
+    }
+
 
     Dataset.prototype._keyFor = function(criteria) {
         console.assert(criteria.item);

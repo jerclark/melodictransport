@@ -65,6 +65,13 @@
 
         var nice = ds.query(mortgageCriteria, incomeCriteria, mergedCriteria);
         console.log("advanced", nice);
+
+
+        //Get item data for all characteristics for a particlar demographic
+        var numVehiclesByHousingType = ds.itemDataForDemographic("LB08", "VEHICLES", "numVehicles");
+        console.log("all-demographic", numVehiclesByHousingType);
+
+
     });
 
 
