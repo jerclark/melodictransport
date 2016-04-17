@@ -54,6 +54,9 @@
         .defer(d3.tsv, "data/cx/cx.subcategory")
         .defer(d3.tsv, "data/cx/cx.item")
         .defer(d3.tsv, "data/cx/cx.data.1.AllData")
+        .defer(d3.json, "data/events/disasters.json")
+        .defer(d3.json, "data/events/presidents.json")
+
         .await(function(errors, demographics, characteristics, subcategories,
             items, values) {
 
@@ -130,6 +133,30 @@
         if (!criteria.name) criteria.name = "data";
         return criteria;
     };
+
+    // If subcategory is not give, returns every item code
+
+    Dataset.prototype.items = function(subcategory) {
+        var t = function(d) {
+            return {
+                item: d.item_code,
+                name: d.item_text,
+                subcategory: d.subcategory_code
+            };
+        }
+
+        if (subcategory) {
+            return _.chain(this._datasets.items)
+            .where({
+                subcategory_code : subcategory
+            })
+            .map(t)
+            .value()
+        }
+        else {
+            return this._datasets.items.map(t);
+        }
+    }
 
     Dataset.prototype.itemText = function(item) {
         return _.findWhere(this._datasets.items, {
