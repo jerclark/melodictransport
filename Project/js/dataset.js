@@ -2,7 +2,9 @@
 
 (function(cs171) {
 
-    var INCOME_BEFORE_TAXES = { item : "INCBEFTX" };
+    var INCOME_BEFORE_TAXES = {
+        item: "INCBEFTX"
+    };
     var YV = function(d) {
         return {
             year: d.year,
@@ -37,11 +39,10 @@
         this._datasets = null;
     }
 
-    Dataset.prototype.ready = function (callback) {
+    Dataset.prototype.ready = function(callback) {
         if (this.isLoaded) {
             callback(this);
-        }
-        else {
+        } else {
             this._loadData(callback);
         }
     }
@@ -49,16 +50,24 @@
     Dataset.prototype._loadData = function(callback) {
 
         queue()
-        .defer(d3.tsv, "data/cx/cx.demographics")
-        .defer(d3.tsv, "data/cx/cx.characteristics")
-        .defer(d3.tsv, "data/cx/cx.subcategory")
-        .defer(d3.tsv, "data/cx/cx.item")
-        .defer(d3.tsv, "data/cx/cx.data.1.AllData")
-        .defer(d3.json, "data/events/disasters.json")
-        .defer(d3.json, "data/events/presidents.json")
+            .defer(d3.tsv, "data/cx/cx.demographics")
+            .defer(d3.tsv, "data/cx/cx.characteristics")
+            .defer(d3.tsv, "data/cx/cx.subcategory")
+            .defer(d3.tsv, "data/cx/cx.item")
+            .defer(d3.tsv, "data/cx/cx.data.1.AllData")
+            .defer(d3.json, "data/events/disasters.json")
+            .defer(d3.json, "data/events/presidents.json")
 
-        .await(function(errors, demographics, characteristics, subcategories,
-            items, values) {
+        .await(function(errors,
+            demographics,
+            characteristics,
+            subcategories,
+            items,
+            values,
+
+            /* events */
+            disasters,
+            presidents) {
 
             if (errors) console.log(errors);
 
@@ -75,7 +84,9 @@
                 characteristics: characteristics,
                 subcategories: subcategories,
                 items: items,
-                values: values
+                values: values,
+                disasters: disasters,
+                presidents: presidents
             };
 
             this.isLoaded = true;
@@ -86,19 +97,41 @@
     }
 
 
-    Dataset.prototype.demographics = function(){
-        return this._datasets.demographics;
+    Dataset.prototype.demographics = function() {
+        var t = function(d) {
+            return {
+                demographic: d.demographics_code,
+                name: d.demographics_text
+            };
+        }
+        return this._datasets.demographics.map(t);
     }
 
-    Dataset.prototype.characteristics = function(){
-        return this._datasets.characteristics;
+
+    Dataset.prototype.characteristics = function(demographic) {
+        var t = function(d) {
+            return {
+                demographic: d.demographics_code,
+                characteristic: d.characteristics_code,
+                name: d.characteristics_text
+            };
+        }
+
+        if (demographic) {
+            return _.where(this._datasets.characteristics, {
+                demographics_code: demographic
+            }).map(t);
+        }
+        else {
+            return this._datasets.characteristics.map(t);
+        }
     }
 
 
     // Merges two or more datasets together. The "name" of the resulting
     // dataset is "dataset 1 name-dataset 2 name": all the names with
     // dashes between them. The values are added indiscriminately
-    Dataset.prototype.merge = function(/* criteria, criteria */) {
+    Dataset.prototype.merge = function( /* criteria, criteria */ ) {
         var args = Array.from(arguments);
         var results = args.map(this.singleResult, this);
 
@@ -115,7 +148,10 @@
             });
 
             return obj;
-        }, { values: [], names: [] });
+        }, {
+            values: [],
+            names: []
+        });
 
         merged.values = merged.values.map(this.includeRelativeValues, this);
         merged.name = merged.names.join("-");
@@ -147,13 +183,12 @@
 
         if (subcategory) {
             return _.chain(this._datasets.items)
-            .where({
-                subcategory_code : subcategory
-            })
-            .map(t)
-            .value()
-        }
-        else {
+                .where({
+                    subcategory_code: subcategory
+                })
+                .map(t)
+                .value()
+        } else {
             return this._datasets.items.map(t);
         }
     }
@@ -199,15 +234,15 @@
             characteristic: criteria.characteristic,
             characteristicText: this.characteristicText(criteria.demographic, criteria.characteristic),
             values: _.where(this._datasets.values, {
-                series_id: this._keyFor(criteria)
-            })
-            .map(YV)
-            .map(_.partial(this.includeRelativeValues, _, criteria), this)
+                    series_id: this._keyFor(criteria)
+                })
+                .map(YV)
+                .map(_.partial(this.includeRelativeValues, _, criteria), this)
         };
     };
 
     // Returns n results in an object with keys corresponding the names given in the criteria
-    Dataset.prototype.query = function(/* criteria, criteria, ...*/) {
+    Dataset.prototype.query = function( /* criteria, criteria, ...*/ ) {
         var args = Array.from(arguments);
         console.assert(args.length > 0, "you need to pass some criteria here");
 
@@ -218,8 +253,7 @@
                 criteria = criteria.map(_defaultCriteria);
                 var merged = this.merge.apply(this, criteria);
                 result[merged.name] = merged;
-            }
-            else {
+            } else {
                 criteria = _defaultCriteria(criteria);
                 result[criteria.name] = this.singleResult(criteria);
             }
@@ -230,16 +264,16 @@
 
 
     //Get item data for all characteristics for a particlar demographic
-    Dataset.prototype.itemDataForDemographic = function(demographicCode, itemCode, namePrefix){
+    Dataset.prototype.itemDataForDemographic = function(demographicCode, itemCode, namePrefix) {
 
         //Create an array of criteria for each characteristic of the passed in demographic
-        var criteria = this.characteristics().reduce(function(criteria,nextCharacteristic){
+        var criteria = this.characteristics().reduce(function(criteria, nextCharacteristic) {
 
-            if ((nextCharacteristic.demographics_code) === (demographicCode)) {
+            if (nextCharacteristic.demographics_code === demographicCode) {
                 criteria.push({
-                    name:(namePrefix + "-" + nextCharacteristic.characteristics_text),
-                    item:itemCode,
-                    demographic:demographicCode,
+                    name: (namePrefix + "-" + nextCharacteristic.characteristics_text),
+                    item: itemCode,
+                    demographic: demographicCode,
                     characteristic: nextCharacteristic.characteristics_code
                 })
             }
@@ -248,7 +282,31 @@
         }, []);
 
         return this.query.apply(this, criteria);
+    }
 
+    Dataset.prototype.queryDemographic = function(criteria) {
+        console.assert(criteria.demographic, "need a demographic");
+        console.assert(criteria.item, "need an item");
+
+        var demographic = criteria.demographic;
+        var item = criteria.item;
+        var includeAll = !!criteria.includeAll;
+
+        var chars = this.characteristics(demographic);
+        if (!includeAll) chars = _.reject(chars, function(d){
+            return d.characteristic === "01"
+        });
+
+        var criteria = chars.map(function(c) {
+            return {
+                name: (demographic + "-" + c.characteristic + "-" + c.name),
+                item: item,
+                demographic: demographic,
+                characteristic: c.characteristic
+            }
+        });
+
+        return this.query.apply(this, criteria);
     }
 
 
@@ -261,7 +319,7 @@
         k += criteria.item;
         k += criteria.demographic;
         k += criteria.characteristic;
-        k += "M";  // process code
+        k += "M"; // process code
         return k;
     };
 
@@ -276,7 +334,9 @@
     // year. Defaults to everyone / all demographics.
 
     Dataset.prototype.incomeForYear = _.memoize(function(year, criteria) {
-        return _.findWhere(this.incomes(), { year: year }).value;
+        return _.findWhere(this.incomes(), {
+            year: year
+        }).value;
     }, hashCriteria);
 
     // Returns all the incomes for the criteria given (ignores the item code)
@@ -288,7 +348,9 @@
         return _.where(this._datasets.values, {
             series_id: this._keyFor(criteria)
         }).map(YV);
-    }, function(criteria){ return hashCriteria(null, criteria); });
+    }, function(criteria) {
+        return hashCriteria(null, criteria);
+    });
 
 
 })(window.cs171 || (window.cs171 = {}));

@@ -8,38 +8,38 @@
 Radar = function(_parentElement, _data) {
 
     this.parentElement = _parentElement;
-    //this.data = _data;
+    this.data = _data;
 
-    this.data = [
-        {
-            dimension:"Poop",
-            value:10
-        },
-        {
-            dimension:"Terd",
-            value:13
-        },
-        {
-            dimension:"Crud",
-            value:15
-        },
-        {
-            dimension:"Stuff",
-            value:8
-        },
-        {
-            dimension:"More Stuff",
-            value:18
-        },
-        {
-            dimension:"Yet More Stuff",
-            value:9
-        },
-        {
-            dimension:"Hey Now",
-            value:10
-        }
-    ];
+    // this.data = [
+    //     {
+    //         dimension:"Poop",
+    //         value:10
+    //     },
+    //     {
+    //         dimension:"Terd",
+    //         value:13
+    //     },
+    //     {
+    //         dimension:"Crud",
+    //         value:15
+    //     },
+    //     {
+    //         dimension:"Stuff",
+    //         value:8
+    //     },
+    //     {
+    //         dimension:"More Stuff",
+    //         value:18
+    //     },
+    //     {
+    //         dimension:"Yet More Stuff",
+    //         value:9
+    //     },
+    //     {
+    //         dimension:"Hey Now",
+    //         value:10
+    //     }
+    // ];
 
     this.initVis();
 }
@@ -54,9 +54,9 @@ Radar.prototype.initVis = function() {
 
     //Create an SVG area (width: 1000px, height: 600px)
     var margin = {top: 40, right: 40, bottom: 40, left: 40};
-    var width = vis.width = 600 - margin.left - margin.right;
-    var height = vis.height = 600 - margin.top - margin.bottom;
-    vis.radius = Math.min(vis.width, vis.height) / 2 - 30;
+    var width = vis.width = 1000 - margin.left - margin.right;
+    var height = vis.height = 1000 - margin.top - margin.bottom;
+    vis.radius = Math.min(vis.width, vis.height) / 2 - 200;
 
     var svg = vis.svg = d3.select(vis.parentElement).append("svg")
       .attr("width", width + margin.left + margin.right)
