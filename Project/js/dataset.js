@@ -262,27 +262,15 @@
         }.bind(this), {});
     }
 
+    // Given a demographic and item code returns a dataset that contains
+    // each characteristic and their values.
+    // The object keys and names look like
+    // LB04-01-Textutal Description
+    // demographic-characteristic code-characteristic text
 
-    //Get item data for all characteristics for a particlar demographic
-    Dataset.prototype.itemDataForDemographic = function(demographicCode, itemCode, namePrefix) {
-
-        //Create an array of criteria for each characteristic of the passed in demographic
-        var criteria = this.characteristics().reduce(function(criteria, nextCharacteristic) {
-
-            if (nextCharacteristic.demographics_code === demographicCode) {
-                criteria.push({
-                    name: (namePrefix + "-" + nextCharacteristic.characteristics_text),
-                    item: itemCode,
-                    demographic: demographicCode,
-                    characteristic: nextCharacteristic.characteristics_code
-                })
-            }
-
-            return criteria;
-        }, []);
-
-        return this.query.apply(this, criteria);
-    }
+    // if the criteria has a a flag "includeAll" set to true, we also
+    // return the 01- all consumer units as part of the result. By default
+    // it is NOT included.
 
     Dataset.prototype.queryDemographic = function(criteria) {
         console.assert(criteria.demographic, "need a demographic");
