@@ -182,8 +182,6 @@ Stacked.prototype.updateVis = function() {
                 return vis.area(d.values);
       })
 
-  // TO-DO: Update tooltip text
-
     categories
         .on("mouseover", function(d) 
             {vis.svg.select("#category-name").text(d.name);})
