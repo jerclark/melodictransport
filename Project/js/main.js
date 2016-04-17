@@ -1,9 +1,8 @@
-
 // Variables for the visualization instances
 var areachart
 
 
-(function(cs171) {
+    (function(cs171) {
 
     var ds = window.ds = new cs171.Dataset();
 
@@ -52,19 +51,19 @@ var areachart
 
         var mergedCriteria = [{
             name: "housing",
-            demographic: "LB04",    // < 25 age demo
+            demographic: "LB04", // < 25 age demo
             characteristic: "02",
-            item: "HOUSING"    // housing costs
+            item: "HOUSING" // housing costs
         }, {
             name: "mortgateinterest",
-            demographic: "LB04",    // < 25 age demo
+            demographic: "LB04", // < 25 age demo
             characteristic: "02",
-            item: "OWNMORTG"  // mortage interest and charges
+            item: "OWNMORTG" // mortage interest and charges
         }, {
             name: "propertytaxes",
-            demographic: "LB04",    // < 25 age demo
+            demographic: "LB04", // < 25 age demo
             characteristic: "02",
-            item: "220211"  // property taxes
+            item: "220211" // property taxes
         }];
 
         var nice = ds.query(mortgageCriteria, incomeCriteria, mergedCriteria);
@@ -72,40 +71,64 @@ var areachart
 
 
         //Get item data for all characteristics for a particlar demographic
-        var numVehiclesByHousingType = ds.itemDataForDemographic("LB08", "VEHICLES", "numVehicles");
+        var numVehiclesByHousingType = ds.queryDemographic({
+            demographic: "LB08",
+            item: "VEHICLES"
+        });
+
         console.log("all-demographic", numVehiclesByHousingType);
 
 
-        // Simplified dataset to build first iteration of stacked area chart with  -- will improve! 
+        // Simplified dataset to build first iteration of stacked area chart with  -- will improve!
         var basic_expends = ds.query({
             name: "Housing",
-            item: "HOUSING"   
-        },{
+            item: "HOUSING"
+        }, {
             name: "Healthcare",
-            item: "HEALTH"   
-        },{
+            item: "HEALTH"
+        }, {
             name: "Food",
-            item: "FOODTOTL"    
-        },{
+            item: "FOODTOTL"
+        }, {
             name: "Transportation",
-            item: "TRANS"    
-        },{
+            item: "TRANS"
+        }, {
             name: "Education",
-            item: "EDUCATN"    
+            item: "EDUCATN"
         }, {
             name: "Apparel and services",
-            item: "APPAREL"    
-        },{
+            item: "APPAREL"
+        }, {
             name: "Entertainment",
-            item: "ENTRTAIN"    
-        }
-        );
+            item: "ENTRTAIN"
+        });
 
-        areachart = new Stacked("stacked-area-chart", basic_expends);
+        areachart = new Stacked("#stacked-area-chart", basic_expends);
+
+        // Show beef consumption radar per age
+        var beefdata = ds.queryDemographic({
+            demographic: "LB04",
+            item: "BEEF",
+            year: 1984
+        });
+
+        // TODO: make a method in dataset to do this stuff
+        // return 1984 values
+
+        beefdata = Object.keys(beefdata).map(function(k) {
+
+            var d = beefdata[k];
+            return {
+                dimension: k,
+                value: d.values[0].adjustedValue
+            };
+
+        })
+
+        var radar = new Radar(".vis-radar", beefdata);
 
 
     });
 
 
 })(window.cs171);
-

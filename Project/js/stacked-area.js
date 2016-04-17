@@ -26,7 +26,7 @@ Stacked = function(_parentElement, _data){
 
 
 /*
- *  Initialize area chart 
+ *  Initialize area chart
  */
 
 Stacked.prototype.initVis = function() {
@@ -43,19 +43,19 @@ Stacked.prototype.initVis = function() {
 
 
     // Caculates year-by-year total for each year, to be used in percentage
-    // caculations below 
-    var year_maxes = {}; 
+    // caculations below
+    var year_maxes = {};
     var years =  dataCategories.map(function(name) {
         vis.data[name].values.map(function(d){
                 if (d.year in year_maxes){
-                    year_maxes[d.year] = year_maxes[d.year] + d.value; 
+                    year_maxes[d.year] = year_maxes[d.year] + d.value;
                 } else {year_maxes[d.year] =  d.value;}})});
 
-  
+
     var stack = d3.layout.stack()
     .values(function(d) { return d.values; });
 
-    // Build area layout datastructure for given data key 
+    // Build area layout datastructure for given data key
     function stackDataForKey(key){
         return stack(
                 dataCategories.map(function(name) {
@@ -64,32 +64,32 @@ Stacked.prototype.initVis = function() {
                         values: vis.data[name].values.map(function(d) {
                         return {
                             year: parseDate(d.year.toString()), y: d[key]};
-                })};}))}; 
+                })};}))};
 
     vis.inflateAdjusted = stackDataForKey("adjustedValue");
     vis.rawData = stackDataForKey("value");
     vis.percentIncome = stackDataForKey("valuePercentIncome");
-    
-    
-    // Calculating percentages is dependent on the totals from the submitted dataset, 
-    // and needs to be calculated a little differently 
+
+
+    // Calculating percentages is dependent on the totals from the submitted dataset,
+    // and needs to be calculated a little differently
     vis.percent = stack(dataCategories.map(function(name) {
                     return {
                         name: name,
                         values: vis.data[name].values.map(function(d) {
                         return {
                             year: parseDate(d.year.toString()), y: d["value"]/(year_maxes[d.year])};
-                })};})); 
-    
+                })};}));
+
   // SVG drawing area (Adapted from lab 7)
-    vis.svg = d3.select("#" + vis.parentElement).append("svg")
+    vis.svg = d3.select(vis.parentElement).append("svg")
         .attr("width", vis.width + vis.margin.left + vis.margin.right)
         .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
       .append("g")
         .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
     // Scales and axes
-    // Currently makes x scale based on first layer min/max 
+    // Currently makes x scale based on first layer min/max
     vis.x = d3.time.scale()
         .range([0, vis.width])
         .domain(d3.extent(vis.inflateAdjusted[0].values, function(d) {return d.year; }));
@@ -117,7 +117,7 @@ Stacked.prototype.initVis = function() {
         .x(function(d) { return vis.x(d.year); })
         .y0(function(d) { return vis.y(d.y0); })
         .y1(function(d) { return vis.y(d.y0 + d.y); });
-    
+
    vis.svg.append("defs").append("clipPath")
         .attr("id", "clip")
         .append("rect")
@@ -141,7 +141,7 @@ Stacked.prototype.wrangleData = function() {
     var vis = this;
 
     var TYPE = d3.select("#area-chart-type").property("value");
-    vis.displayData = vis[TYPE]; 
+    vis.displayData = vis[TYPE];
 
     // Update the visualization
     vis.updateVis();
@@ -168,7 +168,7 @@ Stacked.prototype.updateVis = function() {
     // Draw the layers
     var categories = vis.svg.selectAll(".area")
       .data(vis.displayData);
-  
+
   categories.enter().append("path")
     .attr("class", "area");
 
@@ -178,15 +178,15 @@ Stacked.prototype.updateVis = function() {
     .attr("d", function(d) {return vis.area(d.values);})
 
     categories
-        .on("mouseover", function(d) 
+        .on("mouseover", function(d)
             {vis.svg.select("#category-name").text(d.name);})
-    categories  
+    categories
         .on("mouseout",function(d)
             {vis.svg.select("#category-name").text("");})
 
     categories.exit().remove();
 
-    // Call axis functions with the new domain 
+    // Call axis functions with the new domain
     vis.svg.select(".x-axis").call(vis.xAxis);
     vis.svg.select(".y-axis").call(vis.yAxis);
 }

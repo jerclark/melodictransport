@@ -31,6 +31,16 @@
         </section>
 
         <section class="vis-stacked">
+            <h1>American Household Expenditures</h1>
+
+            <select class="form-control" id="area-chart-type" onChange="areachart.wrangleData()">
+                <option value="inflateAdjusted">Inflation Adjusted Dollars</option>
+                <option value="rawData">Raw dollars</option>
+                <option value="percentIncome">Percent of Income</option>
+                <option value="percent">Percentage</option>
+            </select>
+            <div id="stacked-area-chart"></div>
+            <div id="timeline"></div>
         </section>
 
     </div>
