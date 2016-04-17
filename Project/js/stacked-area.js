@@ -12,13 +12,17 @@ var parseDate = d3.time.format("%Y").parse;
 // Set ordinal color scale
 var colorScale = d3.scale.category20();
 
+var duration = 2000
+var delay = 500
+
+
 Stacked = function(_parentElement, _data){
     this.parentElement = _parentElement;
     this.data = _data;
     this.displayData = []; // see data wrangling
 
     // DEBUG RAW DATA
-    console.log(this.data);
+    // console.log(this.data);
 
     this.initVis();
 }
@@ -39,6 +43,18 @@ Stacked.prototype.initVis = function() {
     colorScale.domain(d3.keys(vis.data))
     var dataCategories = colorScale.domain();
 
+
+
+    // Caculates year-by-year total for each year, to be used in percentage
+    // caculations below 
+    var year_maxes = {}; 
+    var years =  dataCategories.map(function(name) {
+        vis.data[name].values.map(function(d){
+                if (d.year in year_maxes){
+                    year_maxes[d.year] = year_maxes[d.year] + d.value; 
+                } else {year_maxes[d.year] =  d.value;}})});
+
+  
     var stack = d3.layout.stack()
     .values(function(d) { return d.values; });
 
@@ -48,15 +64,24 @@ Stacked.prototype.initVis = function() {
                     return {
                         name: name,
                         values: vis.data[name].values.map(function(d) {
-                        return {year: parseDate(d.year.toString()), y: d[key]};
+                        return {
+                            year: parseDate(d.year.toString()), y: d[key]};
                 })};}))}; 
-
 
     vis.inflateAdjusted = stackDataForKey("adjustedValue");
     vis.rawData = stackDataForKey("value");
     vis.percentIncome = stackDataForKey("valuePercentIncome");
     
+    
 
+    vis.percent = stack(dataCategories.map(function(name) {
+                    return {
+                        name: name,
+                        values: vis.data[name].values.map(function(d) {
+                        return {
+                            year: parseDate(d.year.toString()), y: d["value"]/(year_maxes[d.year])};
+                })};})); 
+    
   // SVG drawing area
     vis.svg = d3.select("#" + vis.parentElement).append("svg")
         .attr("width", vis.width + vis.margin.left + vis.margin.right)
@@ -64,8 +89,6 @@ Stacked.prototype.initVis = function() {
       .append("g")
         .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-
-    console.log(vis.inflateAdjusted);
     // Scales and axes
     // Currently makes x scale based on first layer min/max 
     vis.x = d3.time.scale()
@@ -96,13 +119,11 @@ Stacked.prototype.initVis = function() {
         .y0(function(d) { return vis.y(d.y0); })
         .y1(function(d) { return vis.y(d.y0 + d.y); });
     
-/*    vis.svg.append("defs").append("clipPath")
+   vis.svg.append("defs").append("clipPath")
         .attr("id", "clip")
         .append("rect")
         .attr("width", vis.width)
         .attr("height", vis.height);
-
-*/
 
     vis.svg.append("text")
     .attr("id", "category-name")
@@ -153,6 +174,7 @@ Stacked.prototype.updateVis = function() {
       .attr("class", "area");
 
   categories
+  .transition().duration(duration).delay(delay)
         .style("fill", function(d) { 
             return colorScale(d.name);
         })
