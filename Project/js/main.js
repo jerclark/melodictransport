@@ -6,7 +6,7 @@
     ds.ready(function(ds) {
 
         // Get the data for beef (for everyone)
-        var beef = ds.for({
+        var beef = ds.query({
             item: "BEEF"
         });
 
@@ -22,7 +22,7 @@
             characteristic: "02"
         };
 
-        var mortgages = ds.for(mortgageCriteria);
+        var mortgages = ds.query(mortgageCriteria);
         console.log("mortgages", mortgages);
 
 
@@ -36,8 +36,8 @@
             characteristic: "02"
         };
 
-        var mortgagesAndIncomes = ds.for(mortgageCriteria, incomeCriteria);
-        console.log(mortgagesAndIncomes);
+        var mortgagesAndIncomes = ds.query(mortgageCriteria, incomeCriteria);
+        console.log("multiple", mortgagesAndIncomes);
 
 
         // Advanced example
@@ -63,7 +63,7 @@
             item: "220211"  // property taxes
         }];
 
-        var nice = ds.for(mortgageCriteria, incomeCriteria, mergedCriteria);
+        var nice = ds.query(mortgageCriteria, incomeCriteria, mergedCriteria);
         console.log("advanced", nice);
     });
 
