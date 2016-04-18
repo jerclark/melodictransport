@@ -91,7 +91,7 @@ var areachart;
                      })});
 
 
-        areachart = new Stacked("#stacked-area-chart", expends);
+        // areachart = new Stacked("#stacked-area-chart", expends);
 
 
         //areachart = new Stacked("#stacked-area-chart", basic_expends);
@@ -99,25 +99,11 @@ var areachart;
         // Show beef consumption radar per age
         var beefdata = ds.queryDemographic({
             demographic: "LB04",
-            item: "BEEF",
-            year: 1984
+            item: "BEEF"
         });
 
-        // TODO: make a method in dataset to do this stuff
-        // return 1984 values
 
-        // value should be an array
-        // with every year
-        //
-
-        beefdata = Object.keys(beefdata).map(function(k) {
-
-            var d = beefdata[k];
-            return {
-                dimension: k,
-                value: d.values[0].adjustedValue
-            };
-        })
+        console.log("toDimensions", ds.toDimensions(beefdata));
 
         var radarDemoPicker = new DemographicPicker("radar-demo-picker");
         $(".vis-radar").append(radarDemoPicker.html());

@@ -297,6 +297,18 @@
         return this.query.apply(this, criteria);
     }
 
+    // Takes the result of queryDemographic and flips the results
+    // to have the demographics be the keys
+    Dataset.prototype.toDimensions = function(data) {
+        return Object.keys(data).map(function(k) {
+            var d = data[k];
+            return {
+                dimension: k,
+                value: d.values[0].adjustedValue,
+                values: d.values
+            };
+        });
+    };
 
     Dataset.prototype._keyFor = function(criteria) {
         console.assert(criteria.item);
