@@ -5,10 +5,9 @@
  *  @param _data            -- Array with all stations of the bike-sharing network
  */
 
-Radar = function(_parentElement, _data) {
+Radar = function(_parentElement) {
 
     this.parentElement = _parentElement;
-    this.data = _data;
 
     this.initVis();
 }
@@ -39,10 +38,17 @@ Radar.prototype.initVis = function() {
       .append("g")
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
+    var ringGroup = vis.ringGroup = vis.svg.append("g")
+      .attr("class", "r axis");
+
+    var plotGroup = vis.plotGroup = vis.svg.append("g").attr("class", "radar-plot-group");
+
+    var spokeGroup = vis.spokeGroup = vis.svg.append("g").attr("class", "a axis");
+
     /************
      * SCALES
      * **********/
-    vis.values = d3.scale.linear();
+    vis.values = d3.scale.linear().range([0, vis.radius]);
 
     vis.dimensions = d3.scale.ordinal();
 
@@ -59,7 +65,6 @@ Radar.prototype.initVis = function() {
         return d;
     });
 
-
     vis.wrangleData();
 }
 
@@ -68,11 +73,28 @@ Radar.prototype.initVis = function() {
  *  Data wrangling
  */
 
-Radar.prototype.wrangleData = function() {
+Radar.prototype.wrangleData = function(demographicCode, itemCode) {
     var vis = this;
 
-    // Currently no data wrangling/filtering needed
-    // vis.displayData = vis.data;
+    var demographicCode = this.demographicCode = $("#radar-demo-picker").val();
+    var itemCode = this.itemCode = "BEEF";
+
+    //Get the data for the selected Demographic and Item
+    var _data = ds.queryDemographic({
+        demographic: demographicCode,
+        item: itemCode,
+        year: 1984
+    });
+
+
+    //Map the data
+    vis.data = Object.keys(_data).map(function(k) {
+        var d = _data[k];
+        return {
+            dimension: k,
+            value: d.values[0].adjustedValue
+        };
+    });
 
     // Update the visualization
     vis.updateVis();
@@ -91,8 +113,7 @@ Radar.prototype.updateVis = function() {
     var values = vis.data.map(function(v){return v.value});
 
     vis.values
-      .domain([0, d3.max(values)])
-      .range([0, vis.radius]);
+      .domain([0, d3.max(values)]);
 
     vis.dimensions
       .domain(vis.data.map(function(v,a,i){
@@ -110,19 +131,25 @@ Radar.prototype.updateVis = function() {
     /************
      * RINGS
      * **********/
-    //group
-    var rings = vis.svg.append("g")
-      .attr("class", "r axis")
-      .selectAll("g")
+    var rings = vis.ringGroup.selectAll("g")
       .data(vis.values.ticks(5).slice(1))
-      .enter().append("g")
+
+    rings
+      .enter()
+      .append("g")
       .attr("class", "ring");
 
-    //circles
-    rings.append("circle")
+    rings.exit().remove();
+
+    //Circles
+    rings.selectAll("circle").remove();
+    rings
+      .append("circle")
       .attr("r", vis.values);
 
-    //labels
+
+    //Labels
+    rings.selectAll("text").remove();
     rings.append("text")
       .attr("y", function(d) { return -vis.values(d) - 4; })
       .attr("transform", "rotate(" + (vis.dimensions.range()[1] / 2) + ")") //ring labels halfway btwn noon and 1
@@ -131,11 +158,13 @@ Radar.prototype.updateVis = function() {
 
 
 
+
+
     /************
      * VALUE LINE
      * **********/
-    var plotLine= vis.svg.append("g");
-    plotLine.append("path")
+    vis.plotGroup.selectAll("path").remove();
+    vis.plotGroup.append("path")
       .datum(lineData)
       .attr("class", "line")
       .attr("d", vis.line);
@@ -145,22 +174,30 @@ Radar.prototype.updateVis = function() {
      * SPOKES
      * **********/
     //Groups
-    var spokes = vis.svg.append("g")
-      .attr("class", "a axis")
+    var spokes = vis.spokeGroup
       .selectAll("g")
-      .data(vis.data)
-      .enter().append("g")
+      .data(vis.data);
+
+    spokes
+      .enter()
+      .append("g");
+
+    spokes
       .attr("transform", function(d) {
           console.log(vis.dimensions(d.dimension));
           return "rotate(" + (vis.dimensions(d.dimension) - 90) + ")"; }
       );
 
+    spokes.exit().remove();
+
     //Lines
+    spokes.selectAll("line").remove();
     spokes.append("line")
       .attr("class", "spoke")
       .attr("x2", vis.radius);
 
     //Value Point - added here because can't attach event handlers to svg 'path markers'
+    spokes.selectAll("circle").remove();
     spokes.append("circle")
       .attr("class", "marker-circle")
       .attr("cx", function(d){return vis.values(d.value);})
@@ -175,6 +212,7 @@ Radar.prototype.updateVis = function() {
       .call(vis.tip);
 
     //Labels
+    spokes.selectAll("text").remove();
     spokes.append("text")
       .attr("x", vis.radius + 10)
       .attr("dy", ".35em")

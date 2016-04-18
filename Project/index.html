@@ -17,6 +17,7 @@
     <script src="js/dataset.js"></script>
     <script src="js/radar.js"></script>
     <script src="js/stacked-area.js"></script>
+    <script src="js/demographic-picker.js"></script>
     <script src="js/main.js"></script>
 </head>
 <body class="index">
@@ -40,19 +41,30 @@
         <section class="vis-radar">
         </section>
 
-        <section class="vis-stacked">
-            <h1>American Household Expenditures</h1>
+        <!--<section class="vis-stacked">-->
+            <!--<h1>American Household Expenditures</h1>-->
 
-            <select class="form-control" id="area-chart-type" onChange="areachart.wrangleData()">
-                <option value="inflateAdjusted">Inflation Adjusted Dollars</option>
-                <option value="rawData">Raw dollars</option>
-                <option value="percentIncome">Percent of Income</option>
-                <option value="percent">Percentage</option>
-            </select>
-            <div id="stacked-area-chart"></div>
-            <div id="timeline"></div>
-        </section>
+            <!--<select class="form-control" id="area-chart-type" onChange="areachart.wrangleData()">-->
+                <!--<option value="inflateAdjusted">Inflation Adjusted Dollars</option>-->
+                <!--<option value="rawData">Raw dollars</option>-->
+                <!--<option value="percentIncome">Percent of Income</option>-->
+                <!--<option value="percent">Percentage</option>-->
+            <!--</select>-->
+            <!--<div id="stacked-area-chart"></div>-->
+            <!--<div id="timeline"></div>-->
+        <!--</section>-->
 
     </div>
+
+    <script type="template" id="standard-dropdown">
+        <label for="<%-pickerId%>"><%-pickerName%></label>
+        <select class="form-control" id="<%-pickerId%>">
+            <% choices.forEach(function(c){ %>
+                <option value="<%-c.value%>"><%-c.name%>
+                    <% }); %>
+        </select>
+    </script>
+
+
 </body>
 </html>
