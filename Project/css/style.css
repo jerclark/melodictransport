@@ -1,2 +1,65 @@
 @import "radar-chart.css";
 @import "area-chart.css";
+@import url(https://fonts.googleapis.com/css?family=Lora:400,400italic,700,700italic);
+@import url(https://fonts.googleapis.com/css?family=Istok+Web:400,400italic,700,700italic);
+@import url(https://fonts.googleapis.com/css?family=Fjalla+One);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,900);
+
+/* palette */
+.bg-steady-grey {
+    background-color: #E9E9E9;
+}
+.bg-vitaminc {
+    background-color: #FF9900;
+}
+.bg-darkest-grey {
+    background-color: #424242;
+}
+.bg-darker-grey {
+    background-color: #BCBCBC;
+}
+.bg-blue {
+    background-color: #3299BB;
+}
+
+/* Index page */
+
+html, body {
+    background-color: #E9E9E9;
+    color: #424242;
+    font-family: Lora, serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Lato, sans-serif;
+}
+
+.jumbotron {
+    background-image: url(../img/jumbo1.jpg);
+    background-size: cover;
+    height: 900px;
+}
+
+.jumbotron p.intro {
+    margin-top: 2em;
+    background-color: #E9E9E9;
+    width: 400px;
+    padding: 20px;
+    border-left: solid 5px #FF9900;
+}
+
+.jumbotron h1, .jumbotron h2 {
+    text-align: left;
+    color: #E9E9E9;
+    opacity: 0.9;
+}
+
+.jumbotron h1 {
+    font-size: 12em;
+    line-height: 1.0;
+    font-weight: 900;
+}
+
+.jumbotron h2 {
+    font-size: 5em;
+}

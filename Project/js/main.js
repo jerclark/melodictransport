@@ -1,8 +1,8 @@
 // Variables for the visualization instances
-var areachart
+var areachart;
 
 
-    (function(cs171) {
+(function(cs171) {
 
     var ds = window.ds = new cs171.Dataset();
 
@@ -78,20 +78,18 @@ var areachart
 
         console.log("all-demographic", numVehiclesByHousingType);
 
-
-
-        subcategories = ["ALCBEVG", "APPAREL", "CASHCONT", "EDUCATN", 
-                "ENTRTAIN", "FOODTOTL", "HEALTH", "HOUSING", 
-                "INSPENSN", "MISC", "PERSCARE", "READING", 
-                "TOBACCO", "TRANS"]; 
+        subcategories = ["ALCBEVG", "APPAREL", "CASHCONT", "EDUCATN",
+                "ENTRTAIN", "FOODTOTL", "HEALTH", "HOUSING",
+                "INSPENSN", "MISC", "PERSCARE", "READING",
+                "TOBACCO", "TRANS"];
 
         expends = {};
         subcategories.map(function(s){
                 ds.items(s).map(function(d){
-                    if (d.item != s){ // Filter out aggregate items 
+                    if (d.item != s){ // Filter out aggregate items
                          expends[d.name] = ds.query({name: d.name,item: d.item})[d.name]}
                      })});
-        
+
 
         areachart = new Stacked("#stacked-area-chart", expends);
 
@@ -108,6 +106,10 @@ var areachart
         // TODO: make a method in dataset to do this stuff
         // return 1984 values
 
+        // value should be an array
+        // with every year
+        //
+
         beefdata = Object.keys(beefdata).map(function(k) {
 
             var d = beefdata[k];
@@ -115,7 +117,6 @@ var areachart
                 dimension: k,
                 value: d.values[0].adjustedValue
             };
-
         })
 
         var radar = new Radar(".vis-radar", beefdata);
