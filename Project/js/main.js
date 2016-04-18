@@ -79,31 +79,24 @@ var areachart
         console.log("all-demographic", numVehiclesByHousingType);
 
 
-        // Simplified dataset to build first iteration of stacked area chart with  -- will improve!
-        var basic_expends = ds.query({
-            name: "Housing",
-            item: "HOUSING"
-        }, {
-            name: "Healthcare",
-            item: "HEALTH"
-        }, {
-            name: "Food",
-            item: "FOODTOTL"
-        }, {
-            name: "Transportation",
-            item: "TRANS"
-        }, {
-            name: "Education",
-            item: "EDUCATN"
-        }, {
-            name: "Apparel and services",
-            item: "APPAREL"
-        }, {
-            name: "Entertainment",
-            item: "ENTRTAIN"
-        });
 
-        areachart = new Stacked("#stacked-area-chart", basic_expends);
+        subcategories = ["ALCBEVG", "APPAREL", "CASHCONT", "EDUCATN", 
+                "ENTRTAIN", "FOODTOTL", "HEALTH", "HOUSING", 
+                "INSPENSN", "MISC", "PERSCARE", "READING", 
+                "TOBACCO", "TRANS"]; 
+
+        expends = {};
+        subcategories.map(function(s){
+                ds.items(s).map(function(d){
+                    if (d.item != s){ // Filter out aggregate items 
+                         expends[d.name] = ds.query({name: d.name,item: d.item})[d.name]}
+                     })});
+        
+
+        areachart = new Stacked("#stacked-area-chart", expends);
+
+
+        //areachart = new Stacked("#stacked-area-chart", basic_expends);
 
         // Show beef consumption radar per age
         var beefdata = ds.queryDemographic({

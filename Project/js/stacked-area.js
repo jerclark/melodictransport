@@ -40,16 +40,32 @@ Stacked.prototype.initVis = function() {
     colorScale.domain(d3.keys(vis.data))
     var dataCategories = colorScale.domain();
 
-
-
     // Caculates year-by-year total for each year, to be used in percentage
     // caculations below
     var year_maxes = {};
-    var years =  dataCategories.map(function(name) {
+    dataCategories.map(function(name) {
         vis.data[name].values.map(function(d){
                 if (d.year in year_maxes){
                     year_maxes[d.year] = year_maxes[d.year] + d.value;
                 } else {year_maxes[d.year] =  d.value;}})});
+
+    var years = Object.keys(year_maxes); 
+    
+
+    dataCategories.map(function(name) {
+        years.map(function(y){
+            var found_y = false;
+            vis.data[name].values.map(function(v){
+                if (y == v.year){found_y = true;}
+                })
+            if (found_y == false){
+                // console.log(name + " missing value for" + y );
+                vis.data[name].values.push({year:parseInt(y), value: 0, income: 0, valuePercentIncome: 0, adjustedValue: 0});
+            }
+            })
+        vis.data[name].values = vis.data[name].values.sort(function(a,b){return a.year - b.year});
+    }); 
+ 
 
 
     var stack = d3.layout.stack()
