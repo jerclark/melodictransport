@@ -1,5 +1,6 @@
 // Variables for the visualization instances
 var areachart;
+var timeline; 
 
 
 (function(cs171) {
@@ -78,6 +79,9 @@ var areachart;
 
         console.log("all-demographic", numVehiclesByHousingType);
 
+
+        // Setup stacked area chart 
+
         subcategories = ["ALCBEVG", "APPAREL", "CASHCONT", "EDUCATN",
                 "ENTRTAIN", "FOODTOTL", "HEALTH", "HOUSING",
                 "INSPENSN", "MISC", "PERSCARE", "READING",
@@ -92,7 +96,30 @@ var areachart;
                         expends[d.name] = result; 
                      }})});
 
+
+
+        // Caculates year-by-year total for each year, to be used in percentage
+        // caculations below
+        var year_maxes = {};
+        Object.keys(expends).map(function(name) {
+            expends[name].values.map(function(d){
+                if (d.year in year_maxes){
+                    year_maxes[d.year] = year_maxes[d.year] + d.value;
+                } else {year_maxes[d.year] =  d.value;}})});
+
+        // Date parser to convert strings to date objects
+        var parseDate = d3.time.format("%Y").parse;
+
+        years_ds = Object.keys(year_maxes).map(function (y){
+            return {"Expenditures": year_maxes[y], 
+                    "Year": parseDate(y)}}); 
+
+        console.log(years_ds);
         areachart = new Stacked("#stacked-area-chart", expends);
+        timeline = new Timeline("timeline", years_ds);
+
+
+
 
         // Show beef consumption radar per age
         var beefdata = ds.queryDemographic({
@@ -113,3 +140,10 @@ var areachart;
 
 
 })(window.cs171);
+
+function brushed() {
+    areachart.x.domain(timeline.brush.empty() ? timeline.xContext.domain() : timeline.brush.extent());
+    areachart.svg.select(".area").attr("d", areachart.area);
+    areachart.svg.select(".x-axis").call(areachart.xAxis);
+    areachart.wrangleData();
+}
