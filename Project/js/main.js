@@ -118,7 +118,10 @@ var areachart
 
         })
 
-        var radar = new Radar(".vis-radar", beefdata);
+        var radarDemoPicker = new DemographicPicker("radar-demo-picker");
+        $(".vis-radar").append(radarDemoPicker.html());
+        var radar = new Radar(".vis-radar");
+        $("#radar-demo-picker").on("change", function(){ radar.wrangleData() });
 
 
     });
