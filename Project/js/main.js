@@ -90,8 +90,8 @@ var areachart;
                          expends[d.name] = ds.query({name: d.name,item: d.item})[d.name]}
                      })});
 
-
-        // areachart = new Stacked("#stacked-area-chart", expends);
+        
+        areachart = new Stacked("#stacked-area-chart", expends);
 
 
         //areachart = new Stacked("#stacked-area-chart", basic_expends);
@@ -105,10 +105,34 @@ var areachart;
 
         console.log("toDimensions", ds.toDimensions(beefdata));
 
+
+
+
         var radarDemoPicker = new DemographicPicker("radar-demo-picker");
-        $(".vis-radar").append(radarDemoPicker.html());
-        var radar = new Radar(".vis-radar");
+        $(".vis-radar-plot").append(radarDemoPicker.html());
+        var radarItemPicker = new ItemPicker("radar-item-picker");
+        $(".vis-radar-plot").append(radarItemPicker.html());
+
+        var radarPlot = new MultiplePlot(
+          [1984,1990],
+          Radar.prototype.constructor,
+          "radar-small-multiples"
+        );
+        $(".vis-radar-plot").append(radarPlot.html());
+        radarPlot.draw();
+
+        $("#radar-item-picker").on("change", function(){ radar.wrangleData() });
         $("#radar-demo-picker").on("change", function(){ radar.wrangleData() });
+
+
+        //var radar = new Radar(".vis-radar", {
+        //    width:300,
+        //    height:300,
+        //    margin:{top:10, bottom:10, left:10, right:10},
+        //    showLabels:false
+        //});
+        //$("#radar-demo-picker").on("change", function(){ radar.wrangleData() });
+        //$("#radar-item-picker").on("change", function(){ radar.wrangleData() });
 
 
     });

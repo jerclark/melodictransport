@@ -5,9 +5,15 @@
  *  @param _data            -- Array with all stations of the bike-sharing network
  */
 
-Radar = function(_parentElement) {
+Radar = function(_parentElement, options) {
 
     this.parentElement = _parentElement;
+    this.options = _.defaults(options, {
+        width: 800,
+        height:800,
+        margin:{top: 40, right: 40, bottom: 40, left: 40},
+        showLabels:true
+    });
 
     this.initVis();
 }
@@ -23,11 +29,9 @@ Radar.prototype.initVis = function() {
     /************
      * SCALES
      * **********/
-    var margin = {top: 40, right: 40, bottom: 40, left: 40};
-    var fullWidth = 800;
-    var fullHeight = 800;
-    var width = vis.width = fullWidth - margin.left - margin.right;
-    var height = vis.height = fullHeight - margin.top - margin.bottom;
+    var margin = vis.options.margin;
+    var width = vis.width = vis.options.width - margin.left - margin.right;
+    var height = vis.height = vis.options.height - margin.top - margin.bottom;
     var threshold = Math.min(vis.width, vis.height);
     vis.radius = threshold / 2 - (.2 * threshold);
 
@@ -77,7 +81,7 @@ Radar.prototype.wrangleData = function(demographicCode, itemCode) {
     var vis = this;
 
     var demographicCode = this.demographicCode = $("#radar-demo-picker").val();
-    var itemCode = this.itemCode = "BEEF";
+    var itemCode = this.itemCode = $("#radar-item-picker").val();
 
     //Get the data for the selected Demographic and Item
     var _data = ds.queryDemographic({
@@ -132,7 +136,7 @@ Radar.prototype.updateVis = function() {
      * RINGS
      * **********/
     var rings = vis.ringGroup.selectAll("g")
-      .data(vis.values.ticks(5).slice(1))
+      .data(vis.values.ticks(5).slice(1));
 
     rings
       .enter()
@@ -208,21 +212,25 @@ Radar.prototype.updateVis = function() {
       })
       .on("mouseout", function(e){
           vis.tip.hide();
-      })
-      .call(vis.tip);
+      });
+      //.call(vis.tip);
 
     //Labels
-    spokes.selectAll("text").remove();
-    spokes.append("text")
-      .attr("x", vis.radius + 10)
-      .attr("dy", ".35em")
-      .style("text-anchor", function(d) {
-          return vis.dimensions(d.dimension) < 360 && vis.dimensions(d.dimension) > 180 ? "end" : null;
-      })
-      .attr("transform", function(d) {
-          return vis.dimensions(d.dimension) < 360 && vis.dimensions(d.dimension) > 180 ? "rotate(180 " + (vis.radius + 10) + ",0)" : null;
-      })
-      .text(function(d) { return d.dimension; });
+    if (vis.options.showLabels) {
+        spokes.selectAll("text").remove();
+        spokes.append("text")
+          .attr("x", vis.radius + 10)
+          .attr("dy", ".35em")
+          .style("text-anchor", function (d) {
+              return vis.dimensions(d.dimension) < 360 && vis.dimensions(d.dimension) > 180 ? "end" : null;
+          })
+          .attr("transform", function (d) {
+              return vis.dimensions(d.dimension) < 360 && vis.dimensions(d.dimension) > 180 ? "rotate(180 " + (vis.radius + 10) + ",0)" : null;
+          })
+          .text(function (d) {
+              return d.dimension;
+          });
+    }
 
 
 
