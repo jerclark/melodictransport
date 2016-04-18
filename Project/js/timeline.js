@@ -11,7 +11,6 @@ this.parentElement = _parentElement;
 
   // No data wrangling, no update sequence
   this.displayData = this.data;
-
   this.initVis();
 }
 
@@ -21,12 +20,12 @@ this.parentElement = _parentElement;
  */
 
 Timeline.prototype.initVis = function(){
-	var vis = this; // read about the this
+	var vis = this;  
 
 	vis.margin = {top: 0, right: 0, bottom: 30, left: 60};
 
 	vis.width = 800 - vis.margin.left - vis.margin.right,
-  vis.height = 100 - vis.margin.top - vis.margin.bottom;
+  vis.height = 50 - vis.margin.top - vis.margin.bottom;
 
   // SVG drawing area
 	vis.svg = d3.select("#" + vis.parentElement).append("svg")
@@ -35,7 +34,6 @@ Timeline.prototype.initVis = function(){
 	  .append("g")
 	    .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
-
 	// Scales and axes
   vis.x = d3.time.scale()
 	  	.range([0, vis.width])
@@ -43,7 +41,6 @@ Timeline.prototype.initVis = function(){
 
 	vis.y = d3.scale.linear()
 			.range([vis.height, 0])
-			.domain([0, d3.max(vis.displayData, function(d) { return d.Expenditures; })]);
 
 	vis.xAxis = d3.svg.axis()
 		  .scale(vis.x)
@@ -54,33 +51,25 @@ Timeline.prototype.initVis = function(){
 	vis.area = d3.svg.area()
 			.x(function(d) { return vis.x(d.Year); })
 			.y0(vis.height)
-			.y1(function(d) { return vis.y(d.Expenditures); });
+			.y1(function(d) { return -vis.height; });
 
 	vis.svg.append("path")
       .datum(vis.displayData)
       .attr("fill", "#ccc")
       .attr("d", vis.area);
 
-
   // Initialize time scale (x-axis)
 	var xContext = d3.time.scale()
     	.range([0, vis.width])
     	.domain(d3.extent(vis.displayData, function(d) { return d.Year; }));
 
-    vis.xContext = xContext;
-
-    var xFocus = d3.time.scale()
-      .domain([0, vis.width])
-      .range(d3.extent(vis.displayData, function(d) { return d.Year; }));
-
-    vis.xFocus = xFocus;
-  
+  vis.xContext = xContext;
 
 // Initialize brush component
 	var brush = d3.svg.brush()
     	.x(xContext)
     	.on("brush", brushed);
-
+  
   vis.brush = brush;
 
   // Append brush component
@@ -91,7 +80,6 @@ Timeline.prototype.initVis = function(){
       .attr("fill", "red")
       .attr("y", -6)
       .attr("height", vis.height + 7);
-
 
   vis.svg.append("g")
       .attr("class", "x-axis axis")

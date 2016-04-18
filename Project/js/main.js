@@ -114,7 +114,6 @@ var timeline;
             return {"Expenditures": year_maxes[y], 
                     "Year": parseDate(y)}}); 
 
-        console.log(years_ds);
         areachart = new Stacked("#stacked-area-chart", expends);
         timeline = new Timeline("timeline", years_ds);
 

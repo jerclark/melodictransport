@@ -24,7 +24,6 @@ Stacked = function(_parentElement, _data){
     this.initVis();
 }
 
-
 /*
  *  Initialize area chart
  */
@@ -36,22 +35,24 @@ Stacked.prototype.initVis = function() {
     vis.width = 800 - vis.margin.left - vis.margin.right,
     vis.height = 400 - vis.margin.top - vis.margin.bottom;
 
+    var subcategories = new Set();
+    d3.keys(vis.data).map(function(k){
+    subcategories.add(vis.data[k].subcategory)}); 
+
     var colorScale = d3.scale.category20();
-    colorScale.domain(d3.keys(vis.data))
-    var dataCategories = colorScale.domain();
+    colorScale.domain(Array.from(subcategories));
+    var dataCategories = d3.keys(vis.data);
+    vis.allDataCategories = dataCategories; 
 
-    // Caculates year-by-year total for each year, to be used in percentage
-    // caculations below
-    var year_maxes = {};
-    dataCategories.map(function(name) {
-        vis.data[name].values.map(function(d){
-                if (d.year in year_maxes){
-                    year_maxes[d.year] = year_maxes[d.year] + d.value;
-                } else {year_maxes[d.year] =  d.value;}})});
+    var years = new Set();
+    dataCategories.map(function(name)
+        {vis.data[name].values.map(function(d){years.add(d.year)})}); 
 
-    var years = Object.keys(year_maxes); 
-    
+    var years = Array.from(years).sort();
+    vis.years = years; 
 
+
+    // Fills in missing year values 
     dataCategories.map(function(name) {
         years.map(function(y){
             var found_y = false;
@@ -67,38 +68,6 @@ Stacked.prototype.initVis = function() {
     }); 
  
 
-
-    var stack = d3.layout.stack()
-    .values(function(d) { return d.values; });
-
-    // Build area layout datastructure for given data key
-    function stackDataForKey(key){
-        return stack(
-                dataCategories.map(function(name) {
-                    return {
-                        name: name,
-                        subcategory: vis.data[name].subcategory,
-                        values: vis.data[name].values.map(function(d) {
-                        return {
-                            year: parseDate(d.year.toString()), y: d[key]};
-                })};}))};
-
-    vis.inflateAdjusted = stackDataForKey("adjustedValue");
-    vis.rawData = stackDataForKey("value");
-    vis.percentIncome = stackDataForKey("valuePercentIncome");
-
-
-    // Calculating percentages is dependent on the totals from the submitted dataset,
-    // and needs to be calculated a little differently
-    vis.percent = stack(dataCategories.map(function(name) {
-                    return {
-                        name: name,
-                        subcategory: vis.data[name].subcategory,
-                        values: vis.data[name].values.map(function(d) {
-                        return {
-                            year: parseDate(d.year.toString()), y: d["value"]/(year_maxes[d.year])};
-                })};}));
-
   // SVG drawing area (Adapted from lab 7)
     vis.svg = d3.select(vis.parentElement).append("svg")
         .attr("width", vis.width + vis.margin.left + vis.margin.right)
@@ -108,9 +77,15 @@ Stacked.prototype.initVis = function() {
 
     // Scales and axes
     // Currently makes x scale based on first layer min/max
+
+    vis.min_year = parseDate(d3.min(years).toString());
+    vis.max_year = parseDate(d3.max(years).toString()); 
+
+    console.log(vis.min_year)
+
     vis.x = d3.time.scale()
         .range([0, vis.width])
-        .domain(d3.extent(vis.inflateAdjusted[0].values, function(d) {return d.year; }));
+        .domain([vis.min_year, vis.max_year]);  
 
     vis.y = d3.scale.linear()
         .range([vis.height, 0]);
@@ -147,6 +122,7 @@ Stacked.prototype.initVis = function() {
     .attr("x","10")
     .attr("y","10");
 
+    vis.subcategory = 'all'; 
     vis.wrangleData();
 }
 
@@ -158,10 +134,68 @@ Stacked.prototype.initVis = function() {
 Stacked.prototype.wrangleData = function() {
     var vis = this;
 
-    var TYPE = d3.select("#area-chart-type").property("value");
-    vis.displayData = vis[TYPE];
+    vis.filteredData = vis.data; 
+
+    filteredData = {}; 
+
+    if (vis.subcategory != 'all'){
+         vis.allDataCategories.map(function(name){
+            if (vis.data[name].subcategory == vis.subcategory)
+                {filteredData[name] = vis.data[name]}})
+         vis.filteredData = filteredData; 
+         };
+
+    // console.log(vis.filteredData); 
+    var dataCategories = d3.keys(vis.filteredData);
+
+    vis.colorScaleFiltered = d3.scale.category20();
+    vis.colorScaleFiltered.domain(dataCategories);
+
+    // Caculates year-by-year total for each year, to be used in percentage
+    // caculations below
+    var year_maxes = {};
+    
+    dataCategories.map(function(name) {
+        vis.filteredData[name].values.map(function(d){
+                if (d.year in year_maxes){
+                    year_maxes[d.year] = year_maxes[d.year] + d.value;
+                } else {year_maxes[d.year] =  d.value;}})});
+
+    var stack = d3.layout.stack()
+    .values(function(d) { return d.values; });    
+
+    // Build area layout datastructure for given data key
+    function stackDataForKey(key){
+        return stack(
+                dataCategories.map(function(name) {
+                    return {
+                        name: name,
+                        subcategory: vis.filteredData [name].subcategory,
+                        values: vis.filteredData [name].values.map(function(d) {
+                        return {
+                            year: parseDate(d.year.toString()), y: d[key]};
+                })};}))};
+
+    vis.inflateAdjusted = stackDataForKey("adjustedValue");
+    vis.rawData = stackDataForKey("value");
+    vis.percentIncome = stackDataForKey("valuePercentIncome");
+
+
+    // Calculating percentages is dependent on the totals from the submitted dataset,
+    // and needs to be calculated a little differently
+    vis.percent = stack(dataCategories.map(function(name) {
+                    return {
+                        name: name,
+                        subcategory: vis.data[name].subcategory,
+                        values: vis.data[name].values.map(function(d) {
+                        return {
+                            year: parseDate(d.year.toString()), y: d["value"]/(year_maxes[d.year])};
+                })};}));
+
 
     // Update the visualization
+    var TYPE = d3.select("#area-chart-type").property("value");
+    vis.displayData = vis[TYPE]; 
     vis.updateVis();
 
 }
@@ -191,7 +225,10 @@ Stacked.prototype.updateVis = function() {
     .attr("class", "area");
 
   categories
-    .style("fill", function(d) { return colorScale(d.subcategory);})
+    .style("fill", function(d) { 
+        if (vis.subcategory == 'all'){return colorScale(d.subcategory);} 
+        else {return vis.colorScaleFiltered(d.name);}
+       })
     .transition().duration(duration).delay(delay)
     .attr("d", function(d) {return vis.area(d.values);})
 
@@ -201,6 +238,13 @@ Stacked.prototype.updateVis = function() {
     categories
         .on("mouseout",function(d)
             {vis.svg.select("#category-name").text("");})
+
+    categories
+        .on("dblclick",function(d)
+            {   
+                if (vis.subcategory == d.subcategory){vis.subcategory = 'all'} 
+                else {vis.subcategory = d.subcategory}
+                vis.wrangleData()});
 
     categories.exit().remove();
 
