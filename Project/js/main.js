@@ -86,15 +86,13 @@ var areachart;
         expends = {};
         subcategories.map(function(s){
                 ds.items(s).map(function(d){
-                    if (d.item != s){ // Filter out aggregate items
-                         expends[d.name] = ds.query({name: d.name,item: d.item})[d.name]}
-                     })});
+                    if (d.item != s){ // Filter out aggregate items 
+                        var result = ds.query({name: d.name,item: d.item})[d.name]; 
+                        result.subcategory = s;
+                        expends[d.name] = result; 
+                     }})});
 
-
-        // areachart = new Stacked("#stacked-area-chart", expends);
-
-
-        //areachart = new Stacked("#stacked-area-chart", basic_expends);
+        areachart = new Stacked("#stacked-area-chart", expends);
 
         // Show beef consumption radar per age
         var beefdata = ds.queryDemographic({

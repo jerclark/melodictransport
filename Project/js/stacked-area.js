@@ -77,6 +77,7 @@ Stacked.prototype.initVis = function() {
                 dataCategories.map(function(name) {
                     return {
                         name: name,
+                        subcategory: vis.data[name].subcategory,
                         values: vis.data[name].values.map(function(d) {
                         return {
                             year: parseDate(d.year.toString()), y: d[key]};
@@ -92,6 +93,7 @@ Stacked.prototype.initVis = function() {
     vis.percent = stack(dataCategories.map(function(name) {
                     return {
                         name: name,
+                        subcategory: vis.data[name].subcategory,
                         values: vis.data[name].values.map(function(d) {
                         return {
                             year: parseDate(d.year.toString()), y: d["value"]/(year_maxes[d.year])};
@@ -189,13 +191,13 @@ Stacked.prototype.updateVis = function() {
     .attr("class", "area");
 
   categories
-    .style("fill", function(d) { return colorScale(d.name);})
+    .style("fill", function(d) { return colorScale(d.subcategory);})
     .transition().duration(duration).delay(delay)
     .attr("d", function(d) {return vis.area(d.values);})
 
     categories
         .on("mouseover", function(d)
-            {vis.svg.select("#category-name").text(d.name);})
+            {vis.svg.select("#category-name").text(d.subcategory + ": " + d.name);})
     categories
         .on("mouseout",function(d)
             {vis.svg.select("#category-name").text("");})
