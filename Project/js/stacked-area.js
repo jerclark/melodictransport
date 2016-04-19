@@ -9,17 +9,15 @@
 // Date parser to convert strings to date objects
 var parseDate = d3.time.format("%Y").parse;
 
-// Set ordinal color scale
-
-var duration = 2000
-var delay = 500
+var duration = 1500
+var delay = 0
 
 
-Stacked = function(_parentElement, _data){
+Stacked = function(_parentElement, _data, _properties){
     this.parentElement = _parentElement;
     this.data = _data;
     this.displayData = []; // see data wrangling
-
+    this.properties = _properties; 
     this.initVis();
 }
 
@@ -31,8 +29,8 @@ Stacked.prototype.initVis = function() {
     var vis = this;
 
     vis.margin = { top: 40, right: 0, bottom: 60, left: 60 };
-    vis.width = 800 - vis.margin.left - vis.margin.right,
-    vis.height = 400 - vis.margin.top - vis.margin.bottom;
+    vis.width = vis.properties.width - vis.margin.left - vis.margin.right,
+    vis.height = vis.properties.height - vis.margin.top - vis.margin.bottom;
 
     var subcategories = new Set();
     d3.keys(vis.data).map(function(k){
@@ -257,14 +255,13 @@ Stacked.prototype.updateVis = function() {
 
     categories
         .on("dblclick",function(d)
-            {   
-                if (vis.subcategory == d.subcategory){vis.subcategory = 'all'} 
+            {   if (vis.subcategory == d.subcategory){vis.subcategory = 'all'} 
                 else {vis.subcategory = d.subcategory}
                 vis.wrangleData()});
 
     categories.exit()
-    .transition().duration(duration).delay(delay)
-    .remove();
+        .transition().duration(duration).delay(delay)
+        .remove();
 
     // Call axis functions with the new domain
     vis.svg.select(".x-axis").call(vis.xAxis);
