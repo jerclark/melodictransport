@@ -25,16 +25,26 @@
 }
 
 
-.marker-circle {
+.plot-0 {
     fill: red;
+    stroke: red;
+}
+
+.plot-1 {
+    fill: blue;
+    stroke: blue;
+}
+
+.marker-circle {
 }
 
 
 .line {
     fill: none;
-    stroke: red;
     stroke-width: 1.5px;
 }
+
+
 
 
 /* RADAR TOOLTIP */
