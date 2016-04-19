@@ -5,6 +5,10 @@
 @import url(https://fonts.googleapis.com/css?family=Fjalla+One);
 @import url(https://fonts.googleapis.com/css?family=Lato:400,900);
 
+.lil-bigger {
+    font-size: 1.5em;
+}
+
 /* palette */
 .bg-steady-grey {
     background-color: #E9E9E9;
@@ -18,8 +22,13 @@
 .bg-darker-grey {
     background-color: #BCBCBC;
 }
-.bg-blue {
+.bg-blue, .bg-info {
     background-color: #3299BB;
+    color: #E9E9E9;
+}
+
+nav.navbar.navbar-inverse {
+    border-radius: 0px;
 }
 
 /* Index page */
@@ -34,18 +43,24 @@ h1, h2, h3, h4, h5, h6 {
     font-family: Lato, sans-serif;
 }
 
+a:visited {
+
+}
+
 .jumbotron {
     background-image: url(../img/jumbo1.jpg);
     background-size: cover;
     height: 900px;
+    margin-bottom: 0px;
 }
 
 .jumbotron p.intro {
     margin-top: 2em;
     background-color: #E9E9E9;
-    width: 400px;
+    width: 450px;
     padding: 20px;
     border-left: solid 5px #FF9900;
+    opacity: 0.9;
 }
 
 .jumbotron h1, .jumbotron h2 {
@@ -63,3 +78,13 @@ h1, h2, h3, h4, h5, h6 {
 .jumbotron h2 {
     font-size: 5em;
 }
+
+
+/* Household section */
+
+.household h1, .household h2 {
+    text-align: center;
+}
+
+
+

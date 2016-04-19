@@ -1,70 +1,98 @@
 <!doctype html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CS171 Project</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <script src="lib/d3.min.js"></script>
-    <script src="lib/d3.tip.js"></script>
-    <script src="lib/jquery.min.js"></script>
-    <script src="lib/underscore.min.js"></script>
-    <script src="lib/queue.min.js"></script>
-    <script src="js/adjusted-dollars.js"></script>
-    <script src="js/dataset.js"></script>
-    <script src="js/radar.js"></script>
-    <script src="js/stacked-area.js"></script>
-    <script src="js/demographic-picker.js"></script>
-    <script src="js/main.js"></script>
-</head>
-<body class="index">
-    <div class="jumbotron">
-        <h1>The American<br>Consumer</h1>
-        <h2>25 Years Of Spending Trends</h2>
-        <p class="intro">Every year the Bureau of Labor Statistics produces The Consumer Expenditure Survey, a study that provides information on the buying habits of American consumers, including data on their expenditures, income, and consumer unit (families and single consumers) characteristics. The survey data are collected for the Bureau of Labor Statistics by the U.S. Census Bureau.</p>
-    </div>
-    <div class="container-fluid">
-        <h3>palette</h3>
-        <table width="100%">
-        <tr>
-        <td class="bg-steady-grey">&nbsp;</td>
-        <td class="bg-vitaminc">&nbsp;</td>
-        <td class="bg-darkest-grey">&nbsp;</td>
-        <td class="bg-darker-grey">&nbsp;</td>
-        <td class="bg-blue">&nbsp;</td>
-        </tr>
-        </table>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>CS171 Project</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="lib/d3.min.js"></script>
+        <script src="lib/d3.tip.js"></script>
+        <script src="lib/jquery.min.js"></script>
+        <script src="lib/underscore.min.js"></script>
+        <script src="lib/queue.min.js"></script>
+        <script src="js/adjusted-dollars.js"></script>
+        <script src="js/dataset.js"></script>
+        <script src="js/radar.js"></script>
+        <script src="js/stacked-area.js"></script>
+        <script src="js/demographic-picker.js"></script>
+        <script src="js/main.js"></script>
+    </head>
+    <body class="index">
+        <div class="jumbotron">
+            <h1>The American<br>Consumer</h1>
+            <h2>25 Years Of Spending Trends</h2>
+            <p class="intro">Every year the Bureau of Labor Statistics produces The Consumer Expenditure Survey, a study that provides information on the buying habits of American consumers, including data on their expenditures, income, and consumer unit (families and single consumers) characteristics. The survey data are collected for the Bureau of Labor Statistics by the U.S. Census Bureau.</p>
+        </div>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <span class="navbar-brand">The American Consumer</span>
 
-        <section class="vis-radar">
-        </section>
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <div class="row">
 
-        <!--<section class="vis-stacked">-->
+            <div class"row">
+                <div class="col-sm-8">
+                    <div class="vis-radar">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="glyph-intro lil-bigger">
+                        <h3>Who we are</h3>
+                        <p>
+                            During the last 25 years blah blah blah, some mildly interesting copy would go here. Quick brown fox jumped over the lazy dog.
+                        </p>
+                        <p>
+                            Just another paragraph with more things to say about the thing.
+                        </p>
+                        <p>
+                            <ul>
+                                <li>Fascinating factoid #1</li>
+                                <li>One weird trick</li>
+                                <li>You won't believe what this elderly man can do with a rutabaga</li>
+                            </ul>
+                        </p>
+                        <p class="alert alert-info">
+                            <span class="glyphicon glyphicon-info-sign"></span>&nbsp;The Radar plots in this section are designed to quickly show how consumption varies across demographics.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="household">
+                        <h1>American Household Expenditures</h1>
+                        <h2>A Many-Layered Cake Of Delicious Spending</h2>
+                        <div class="vis-stacked">
+
+                            <select class="form-control" id="area-chart-type" onChange="areachart.wrangleData()">
+                            <option value="inflateAdjusted">Inflation Adjusted Dollars</option>
+                            <option value="rawData">Raw dollars</option>
+                            <option value="percentIncome">Percent of Income</option>
+                            <option value="percent">Percentage</option>
+                            </select>
+                            <div id="stacked-area-chart"></div>
+                            <div id="timeline"></div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<section class="vis-stacked">-->
             <!--<h1>American Household Expenditures</h1>-->
-
-            <!--<select class="form-control" id="area-chart-type" onChange="areachart.wrangleData()">-->
-                <!--<option value="inflateAdjusted">Inflation Adjusted Dollars</option>-->
-                <!--<option value="rawData">Raw dollars</option>-->
-                <!--<option value="percentIncome">Percent of Income</option>-->
-                <!--<option value="percent">Percentage</option>-->
-            <!--</select>-->
-            <!--<div id="stacked-area-chart"></div>-->
-            <!--<div id="timeline"></div>-->
-        <!--</section>-->
-
-    </div>
-
-    <script type="template" id="standard-dropdown">
-        <label for="<%-pickerId%>"><%-pickerName%></label>
-        <select class="form-control" id="<%-pickerId%>">
-            <% choices.forEach(function(c){ %>
+            <!--</section>-->
+            <script type="template" id="standard-dropdown">
+            <label for="<%-pickerId%>"><%-pickerName%></label>
+            <select class="form-control" id="<%-pickerId%>">
+                <% choices.forEach(function(c){ %>
                 <option value="<%-c.value%>"><%-c.name%>
                     <% }); %>
-        </select>
-    </script>
-
-
-</body>
-</html>
+                </select>
+                </script>
+            </body>
+        </html>

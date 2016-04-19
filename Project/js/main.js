@@ -90,8 +90,8 @@ var areachart;
                          expends[d.name] = ds.query({name: d.name,item: d.item})[d.name]}
                      })});
 
-        
-        areachart = new Stacked("#stacked-area-chart", expends);
+
+        // areachart = new Stacked("#stacked-area-chart", expends);
 
 
         //areachart = new Stacked("#stacked-area-chart", basic_expends);
