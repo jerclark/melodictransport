@@ -38,22 +38,16 @@ Stacked.prototype.initVis = function() {
     d3.keys(vis.data).map(function(k){
     subcategories.add(vis.data[k].subcategory)}); 
 
-  
+    var colorPalette = colorbrewer.Purples[7].concat(
+        colorbrewer.Blues[7],
+        colorbrewer.Greens[7],
+        colorbrewer.Oranges[7],
+        colorbrewer.Reds[7],
+        colorbrewer.Greys[7]); 
 
     var categoryColors = [];
-    // var colorPalette = d3.scale.category20c().range().concat(d3.scale.category20b().range()); 
-    var colorPalette = ["#3182bd","#6baed6","#9ecae1","#c6dbef",
-                        "#e6550d","#fd8d3c","#fdae6b","#fdd0a2",
-                        "#31a354","#74c476","#a1d99b","#c7e9c0",
-                        "#756bb1","#9e9ac8","#dadaeb","#8c6d31",
-                        "#bd9e39","#e7ba52","#e7cb94","#843c39",
-                        "#d6616b","#e7969c","#7b4173","#a55194",
-                        "#ce6dbd","#de9ed6"];
-
-    for ( var i=0; i< colorPalette.length; i+=4 )
-    {
-    categoryColors.push(colorPalette[i]); 
-    }
+    for ( var i=5; i< colorPalette.length; i+=7 )
+    {categoryColors.push(colorPalette[i]);}
 
     vis.colorPalette = colorPalette;
     vis.categoryColors = categoryColors; 
@@ -167,15 +161,11 @@ Stacked.prototype.wrangleData = function() {
     var dataCategories = d3.keys(vis.filteredData);
 
     baseColor = vis.colorScale(vis.subcategory);
-    console.log(baseColor.toString())
     var i = vis.categoryColors.indexOf(baseColor.toString()); 
-    console.log(i);
 
     vis.colorScaleFiltered = d3.scale.ordinal()
             .domain(dataCategories)
-            .range(vis.colorPalette.slice(i*4, i*4 +4)); 
-
-    console.log(vis.colorScaleFiltered.range()); 
+            .range(vis.colorPalette.slice(i*7, i*7 +7)); 
 
     // Caculates year-by-year total for each year, to be used in percentage
     // caculations below
