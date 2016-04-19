@@ -35,7 +35,7 @@
                 <form class="navbar-form navbar-right">
                     <div class="form-group">
                         <label>
-                        Show values as &nbsp;
+                            Show values as &nbsp;
                         </label>
                         <select class="form-control" id="area-chart-type" onChange="areachart.wrangleData()">
                             <option value="inflateAdjusted">Inflation Adjusted Dollars</option>
@@ -51,9 +51,7 @@
             <div class="row">
                 <div class"row">
                     <div class="col-sm-8">
-                        <div class="vis-radar">
-                        </div>
-                        <div class="vis-radar-plot">
+                        <div id="radar-chart">
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -90,13 +88,15 @@
                         </div>
                     </div>
                 </div>
-                <script type="template" id="standard-dropdown">
-                <label for="<%-pickerId%>"><%-pickerName%></label>
-                <select class="form-control" id="<%-pickerId%>">
-                    <% choices.forEach(function(c){ %>
-                    <option value="<%-c.value%>"><%-c.name%>
-                        <% }); %>
-                    </select>
-                    </script>
-                </body>
-            </html>
+            </div>
+        </div>
+        <script type="template" id="standard-dropdown">
+        <label for="<%-pickerId%>"><%-pickerName%></label>
+        <select class="form-control" id="<%-pickerId%>">
+            <% choices.forEach(function(c){ %>
+            <option value="<%-c.value%>"><%-c.name%>
+                <% }); %>
+            </select>
+        </script>
+    </body>
+</html>

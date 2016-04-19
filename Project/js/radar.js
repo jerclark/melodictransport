@@ -96,13 +96,18 @@ Radar.prototype.fetchData = function() {
 Radar.prototype.wrangleData = function() {
     var vis = this;
 
-    //TODO: Fetch years from the slider
-    vis.options.years = [1984,1985];
+    //TODO: Fetch years from the timeline
+    var selectedYears = timeline.brush.empty() ? timeline.xContext.domain() : timeline.brush.extent()
+    vis.options.years = selectedYears.map(function(v){return v.getFullYear()});
+
+    console.log(vis.options.years);
 
     var allValues = vis.data.map(function(characteristic){
         var valuesForCharacteristic = [];
         _.each(vis.options.years, function(selectedYear){
-            valuesForCharacteristic.push(_.where(characteristic.values, {year: selectedYear})[0].adjustedValue);
+            var yearData = _.where(characteristic.values, {year: selectedYear})[0];
+            var value = yearData ? yearData.adjustedValue : 0;
+            valuesForCharacteristic.push(value);
         })
         return valuesForCharacteristic;
     });
@@ -179,13 +184,17 @@ Radar.prototype.updateVis = function() {
     _.each(vis.options.years, function(plotYear, ix, array){
         var vis = this;
         var yearLineData = vis.data.map(function(v,a,i){
+            var yearData = _.where(v.values, {year:plotYear})[0];
+            var value = yearData ? yearData.adjustedValue : 0;
             return [
-                vis.values(_.where(v.values, {year:plotYear})[0].adjustedValue),
+                vis.values(value),
                 vis.dimensions(v.dimension)
             ];
         });
+        var yearData = _.where(vis.data[0].values, {year:plotYear})[0];
+        var value = yearData ? yearData.adjustedValue : 0;
         yearLineData.push([
-            vis.values(_.where(vis.data[0].values, {year:plotYear})[0].adjustedValue),
+            vis.values(value),
             vis.dimensions(vis.data[0].dimension)
         ]);
 
@@ -233,7 +242,9 @@ Radar.prototype.updateVis = function() {
         spokes.append("circle")
           .attr("class", "marker-circle plot-" + i)
           .attr("cx", function (d) {
-              return vis.values(_.where(d.values, {year: plotYear})[0].adjustedValue);
+              var yearData = _.where(d.values, {year: plotYear})[0];
+              var value = yearData ? yearData.adjustedValue : 0;
+              return vis.values(value);
           })
           .attr("cy", 0)
           .attr("r", 5)
