@@ -10,7 +10,6 @@
 var parseDate = d3.time.format("%Y").parse;
 
 // Set ordinal color scale
-var colorScale = d3.scale.category20();
 
 var duration = 2000
 var delay = 500
@@ -39,8 +38,30 @@ Stacked.prototype.initVis = function() {
     d3.keys(vis.data).map(function(k){
     subcategories.add(vis.data[k].subcategory)}); 
 
-    var colorScale = d3.scale.category20();
-    colorScale.domain(Array.from(subcategories));
+  
+
+    var categoryColors = [];
+    // var colorPalette = d3.scale.category20c().range().concat(d3.scale.category20b().range()); 
+    var colorPalette = ["#3182bd","#6baed6","#9ecae1","#c6dbef",
+                        "#e6550d","#fd8d3c","#fdae6b","#fdd0a2",
+                        "#31a354","#74c476","#a1d99b","#c7e9c0",
+                        "#756bb1","#9e9ac8","#dadaeb","#8c6d31",
+                        "#bd9e39","#e7ba52","#e7cb94","#843c39",
+                        "#d6616b","#e7969c","#7b4173","#a55194",
+                        "#ce6dbd","#de9ed6"];
+
+    for ( var i=0; i< colorPalette.length; i+=4 )
+    {
+    categoryColors.push(colorPalette[i]); 
+    }
+
+    vis.colorPalette = colorPalette;
+    vis.categoryColors = categoryColors; 
+
+    vis.colorScale = d3.scale.ordinal()
+        .domain(Array.from(subcategories))
+        .range(categoryColors);
+
     var dataCategories = d3.keys(vis.data);
     vis.allDataCategories = dataCategories; 
 
@@ -80,8 +101,6 @@ Stacked.prototype.initVis = function() {
 
     vis.min_year = parseDate(d3.min(years).toString());
     vis.max_year = parseDate(d3.max(years).toString()); 
-
-    console.log(vis.min_year)
 
     vis.x = d3.time.scale()
         .range([0, vis.width])
@@ -145,11 +164,18 @@ Stacked.prototype.wrangleData = function() {
          vis.filteredData = filteredData; 
          };
 
-    // console.log(vis.filteredData); 
     var dataCategories = d3.keys(vis.filteredData);
 
-    vis.colorScaleFiltered = d3.scale.category20();
-    vis.colorScaleFiltered.domain(dataCategories);
+    baseColor = vis.colorScale(vis.subcategory);
+    console.log(baseColor.toString())
+    var i = vis.categoryColors.indexOf(baseColor.toString()); 
+    console.log(i);
+
+    vis.colorScaleFiltered = d3.scale.ordinal()
+            .domain(dataCategories)
+            .range(vis.colorPalette.slice(i*4, i*4 +4)); 
+
+    console.log(vis.colorScaleFiltered.range()); 
 
     // Caculates year-by-year total for each year, to be used in percentage
     // caculations below
@@ -226,7 +252,7 @@ Stacked.prototype.updateVis = function() {
 
   categories
     .style("fill", function(d) { 
-        if (vis.subcategory == 'all'){return colorScale(d.subcategory);} 
+        if (vis.subcategory == 'all'){return vis.colorScale(d.subcategory);} 
         else {return vis.colorScaleFiltered(d.name);}
        })
     .transition().duration(duration).delay(delay)
@@ -246,7 +272,9 @@ Stacked.prototype.updateVis = function() {
                 else {vis.subcategory = d.subcategory}
                 vis.wrangleData()});
 
-    categories.exit().remove();
+    categories.exit()
+    .transition().duration(duration).delay(delay)
+    .remove();
 
     // Call axis functions with the new domain
     vis.svg.select(".x-axis").call(vis.xAxis);
