@@ -80,7 +80,9 @@ var timeline;
         console.log("all-demographic", numVehiclesByHousingType);
 
 
-        // Setup stacked area chart 
+    /*
+    *  Setup area chart
+    */
 
         subcategories = ["ALCBEVG", "APPAREL", "CASHCONT", "EDUCATN",
                 "ENTRTAIN", "FOODTOTL", "HEALTH", "HOUSING",
@@ -98,8 +100,7 @@ var timeline;
 
 
 
-        // Caculates year-by-year total for each year, to be used in percentage
-        // caculations below
+        // This is needed for the current dataformat expected by timeline. Will refactor soon. 
         var year_maxes = {};
         Object.keys(expends).map(function(name) {
             expends[name].values.map(function(d){
@@ -112,12 +113,23 @@ var timeline;
 
         years_ds = Object.keys(year_maxes).map(function (y){
             return {"Expenditures": year_maxes[y], 
-                    "Year": parseDate(y)}}); 
+                    "Year": parseDate(y)}});
 
-        areachart = new Stacked("#stacked-area-chart", expends);
-        timeline = new Timeline("timeline", years_ds);
+        var areachartProperties = {
+            width: 800,
+            height: 400,
+            margin: { top: 40, right: 0, bottom: 60, left: 60 }};
+
+        areachart = new Stacked("#stacked-area-chart", expends, areachartProperties);
+        
+
+         var timelineProperties = {
+            width: 800,
+            height: 50,
+            margin: { top: 0, right: 0, bottom: 30, left: 60 }};
 
 
+        timeline = new Timeline("timeline", years_ds, timelineProperties);
 
 
         // Show beef consumption radar per age

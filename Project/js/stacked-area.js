@@ -131,9 +131,9 @@ Stacked.prototype.initVis = function() {
         .attr("height", vis.height);
 
     vis.svg.append("text")
-    .attr("id", "category-name")
-    .attr("x","10")
-    .attr("y","10");
+        .attr("id", "category-name")
+        .attr("x","10")
+        .attr("y","10");
 
     vis.subcategory = 'all'; 
     vis.wrangleData();

@@ -5,12 +5,14 @@
  * @param _data						-- the  
  */
 
-Timeline = function(_parentElement, _data){
+Timeline = function(_parentElement, _data, _properties){
 this.parentElement = _parentElement;
   this.data = _data;
 
   // No data wrangling, no update sequence
   this.displayData = this.data;
+  this.properties = _properties; 
+
   this.initVis();
 }
 
@@ -22,10 +24,9 @@ this.parentElement = _parentElement;
 Timeline.prototype.initVis = function(){
 	var vis = this;  
 
-	vis.margin = {top: 0, right: 0, bottom: 30, left: 60};
-
-	vis.width = 800 - vis.margin.left - vis.margin.right,
-  vis.height = 50 - vis.margin.top - vis.margin.bottom;
+	vis.margin = vis.properties.margin; 
+	vis.width = vis.properties.width - vis.margin.left - vis.margin.right,
+  vis.height = vis.properties.height - vis.margin.top - vis.margin.bottom;
 
   // SVG drawing area
 	vis.svg = d3.select("#" + vis.parentElement).append("svg")
