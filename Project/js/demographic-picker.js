@@ -25,9 +25,7 @@ DemographicPicker.prototype.html = function(){
   return this._html;
 }
 
-/**
- * Created by jerclark on 4/17/16.
- */
+
 
 ItemPicker = function(pickerId) {
 
