@@ -1,6 +1,7 @@
 // Variables for the visualization instances
 var areachart;
-var timeline; 
+var timeline;
+var radarChart;
 
 
 (function(cs171) {
@@ -99,7 +100,6 @@ var timeline;
                      }})});
 
 
-
         // This is needed for the current dataformat expected by timeline. Will refactor soon. 
         var year_maxes = {};
         Object.keys(expends).map(function(name) {
@@ -141,10 +141,32 @@ var timeline;
 
         console.log("toDimensions", ds.toDimensions(beefdata));
 
+
+
+
+
+
+        //var radarPlot = new MultiplePlot(
+        //  [1984,1990],
+        //  Radar.prototype.constructor,
+        //  "radar-small-multiples"
+        //);
+        //$(".vis-radar-plot").append(radarPlot.html());
+        //radarPlot.draw();
+
         var radarDemoPicker = new DemographicPicker("radar-demo-picker");
-        $(".vis-radar").append(radarDemoPicker.html());
-        var radar = new Radar(".vis-radar");
-        $("#radar-demo-picker").on("change", function(){ radar.wrangleData() });
+        $("#radar-chart").append(radarDemoPicker.html());
+        var radarItemPicker = new ItemPicker("radar-item-picker");
+        $("#radar-chart").append(radarItemPicker.html());
+        radarChart = new Radar("#radar-chart", {
+            width:600,
+            height:600,
+            margin:{top:10, bottom:10, left:10, right:10},
+            showLabels:true
+        });
+        $("#radar-demo-picker").on("change", function(){ radarChart.fetchData() });
+        $("#radar-item-picker").on("change", function(){ radarChart.fetchData() });
+
 
 
     });
@@ -157,4 +179,5 @@ function brushed() {
     areachart.svg.select(".area").attr("d", areachart.area);
     areachart.svg.select(".x-axis").call(areachart.xAxis);
     areachart.wrangleData();
+    radarChart.wrangleData();
 }
