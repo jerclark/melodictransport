@@ -1,0 +1,772 @@
+[
+  {
+    "item": "ALCBEVG",
+    "name": "Alcoholic beverages",
+    "subcategory": "ALCBEVG"
+  },
+  {
+    "item": "APPAREL",
+    "name": "Apparel and services",
+    "subcategory": "APPAREL"
+  },
+  {
+    "item": "BOYS",
+    "name": "Apparel, Boys, 2 to 15",
+    "subcategory": "APPAREL"
+  },
+  {
+    "item": "FOOTWEAR",
+    "name": "Footwear",
+    "subcategory": "APPAREL"
+  },
+  {
+    "item": "GIRLS",
+    "name": "Apparel, Girls, 2 to 15",
+    "subcategory": "APPAREL"
+  },
+  {
+    "item": "INFANT",
+    "name": "Apparel, Children under 2",
+    "subcategory": "APPAREL"
+  },
+  {
+    "item": "MENBOYS",
+    "name": "Apparel, Men and boys",
+    "subcategory": "APPAREL"
+  },
+  {
+    "item": "MENS",
+    "name": "Apparel, Men, 16 and over",
+    "subcategory": "APPAREL"
+  },
+  {
+    "item": "OTHAPPRL",
+    "name": "Other apparel products and services",
+    "subcategory": "APPAREL"
+  },
+  {
+    "item": "WMNSGRLS",
+    "name": "Apparel, Women and girls",
+    "subcategory": "APPAREL"
+  },
+  {
+    "item": "WOMENS",
+    "name": "Apparel, Women, 16 and over",
+    "subcategory": "APPAREL"
+  },
+  {
+    "item": "CASHCONT",
+    "name": "Cash contributions",
+    "subcategory": "CASHCONT"
+  },
+  {
+    "item": "CHGASLI",
+    "name": "Net change in total assets and liabilities",
+    "subcategory": "CHGASLI"
+  },
+  {
+    "item": "CHGASSET",
+    "name": "Net change in total assets",
+    "subcategory": "CHGASLI"
+  },
+  {
+    "item": "CHGLIAB",
+    "name": "Net change in total liabilities",
+    "subcategory": "CHGASLI"
+  },
+  {
+    "item": "CONSUNIT",
+    "name": "Number of consumer units (in thousands)",
+    "subcategory": "CONSUNIT"
+  },
+  {
+    "item": "EDUCATN",
+    "name": "Education",
+    "subcategory": "EDUCATN"
+  },
+  {
+    "item": "ENTEROTH",
+    "name": "Entertainment: other supplies, equip., & services",
+    "subcategory": "ENTRTAIN"
+  },
+  {
+    "item": "ENTRTAIN",
+    "name": "Entertainment",
+    "subcategory": "ENTRTAIN"
+  },
+  {
+    "item": "FEESADM",
+    "name": "Entertainment: fees and admissions",
+    "subcategory": "ENTRTAIN"
+  },
+  {
+    "item": "PETS",
+    "name": "Pets",
+    "subcategory": "ENTRTAIN"
+  },
+  {
+    "item": "PETSPLAY",
+    "name": "Pets, toys, and playground equipment",
+    "subcategory": "ENTRTAIN"
+  },
+  {
+    "item": "TOYS",
+    "name": "Toys, hobbies, and playground equipment",
+    "subcategory": "ENTRTAIN"
+  },
+  {
+    "item": "TVAUDIO",
+    "name": "Audio and visual equipment and services",
+    "subcategory": "ENTRTAIN"
+  },
+  {
+    "item": "080110",
+    "name": "Eggs",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "190904",
+    "name": "Food prep. by consumer unit, out-of-town trips",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "ANIMAL",
+    "name": "Meats, poultry, fish, and eggs",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "BAKERY",
+    "name": "Bakery products",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "BEEF",
+    "name": "Beef",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "CERBAKRY",
+    "name": "Cereals and bakery products",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "CEREAL",
+    "name": "Cereals and cereal products",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "DAIRY",
+    "name": "Dairy products",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "FATSOILS",
+    "name": "Fats and oils",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "FISHSEA",
+    "name": "Fish and seafood",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "FOODAWAY",
+    "name": "Food away from home",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "FOODHOME",
+    "name": "Food at home",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "FOODTOTL",
+    "name": "Food",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "FRESHVEG",
+    "name": "Fresh vegetables",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "FRSHFRUT",
+    "name": "Fresh fruits",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "FRUITVEG",
+    "name": "Fruits and vegetables",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "MILKCRM",
+    "name": "Fresh milk and cream",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "MISCFOOD",
+    "name": "Miscellaneous foods",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "NALCBEVG",
+    "name": "Nonalcoholic beverages",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "OTHDAIRY",
+    "name": "Other dairy products",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "OTHRFOOD",
+    "name": "Other food at home",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "OTHRMEAT",
+    "name": "Other meats",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "PORK",
+    "name": "Pork",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "POULTRY",
+    "name": "Poultry",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "PROCFRUT",
+    "name": "Processed fruits",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "PROCVEG",
+    "name": "Processed vegetables",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "SWEETS",
+    "name": "Sugar and other sweets",
+    "subcategory": "FOODTOTL"
+  },
+  {
+    "item": "DRUGS",
+    "name": "Drugs: Prescription and nonprescription",
+    "subcategory": "HEALTH"
+  },
+  {
+    "item": "HEALTH",
+    "name": "Healthcare",
+    "subcategory": "HEALTH"
+  },
+  {
+    "item": "HLTHINSR",
+    "name": "Health insurance",
+    "subcategory": "HEALTH"
+  },
+  {
+    "item": "MEDSERVS",
+    "name": "Medical services",
+    "subcategory": "HEALTH"
+  },
+  {
+    "item": "MEDSUPPL",
+    "name": "Medical supplies",
+    "subcategory": "HEALTH"
+  },
+  {
+    "item": "220211",
+    "name": "Property taxes",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "270102",
+    "name": "Cellular phone service",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "ELECTRIC",
+    "name": "Electricity",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "FLOORCOV",
+    "name": "Floor coverings",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "FURNITUR",
+    "name": "Furniture",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "HHFURNSH",
+    "name": "Household furnishings and equipment",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "HHOPER",
+    "name": "Household operations",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "HHOTHXPN",
+    "name": "Other household expenses",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "HHPERSRV",
+    "name": "Personal services",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "HHTXTILE",
+    "name": "Household textiles",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "HKPGOTHR",
+    "name": "Other household products",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "HKPGSUPP",
+    "name": "Housekeeping supplies",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "HOUSING",
+    "name": "Housing",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "LAUNDRY",
+    "name": "Laundry and cleaning supplies",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "MAJAPPL",
+    "name": "Major appliances",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "MISCHHEQ",
+    "name": "Miscellaneous household equipment",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "NATRLGAS",
+    "name": "Natural gas",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "OTHLODGE",
+    "name": "Other lodging",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "OTHRFUEL",
+    "name": "Fuel oil and other fuels",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "OWNDWELL",
+    "name": "Owned dwellings",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "OWNEXPEN",
+    "name": "Maintenance, rep., ins., oth. exp., owned dwelling",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "OWNMORTG",
+    "name": "Mortgage interest and charges",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "PHONE",
+    "name": "Telephone services",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "POSTAGE",
+    "name": "Postage and stationery",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "RESPHONE",
+    "name": "Residential phone service, VOIP, and phone cards",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "RNTDWELL",
+    "name": "Rented dwellings",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "SHELTER",
+    "name": "Shelter",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "SMAPPHWR",
+    "name": "Small appliances, misc. housewares",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "UTILS",
+    "name": "Utilities, fuels, and public services",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "WATER",
+    "name": "Water and other public services",
+    "subcategory": "HOUSING"
+  },
+  {
+    "item": "INCAFTTX",
+    "name": "Income after taxes",
+    "subcategory": "INCAFTTX"
+  },
+  {
+    "item": "900000",
+    "name": "Wages and salaries",
+    "subcategory": "INCBEFTX"
+  },
+  {
+    "item": "INCBEFTX",
+    "name": "Money income before taxes",
+    "subcategory": "INCBEFTX"
+  },
+  {
+    "item": "INDIVRNT",
+    "name": "Interest, dividends, rent income, property income",
+    "subcategory": "INCBEFTX"
+  },
+  {
+    "item": "OTHBNFTS",
+    "name": "Unemp. & workers' compen., veterans benefits",
+    "subcategory": "INCBEFTX"
+  },
+  {
+    "item": "OTHREGIN",
+    "name": "Unemp and workrs' comp, vet bnfits, reg contrib",
+    "subcategory": "INCBEFTX"
+  },
+  {
+    "item": "OTHRINC",
+    "name": "Other income",
+    "subcategory": "INCBEFTX"
+  },
+  {
+    "item": "REGCONT",
+    "name": "Regular contributions for support",
+    "subcategory": "INCBEFTX"
+  },
+  {
+    "item": "RETIRINC",
+    "name": "Social Security, private & government retirement",
+    "subcategory": "INCBEFTX"
+  },
+  {
+    "item": "SFEMPINC",
+    "name": "Self-employment income",
+    "subcategory": "INCBEFTX"
+  },
+  {
+    "item": "WELFARE",
+    "name": "Public assist., spplmntl. secrty. inc., foodstamps",
+    "subcategory": "INCBEFTX"
+  },
+  {
+    "item": "INSPENSN",
+    "name": "Personal insurance and pensions",
+    "subcategory": "INSPENSN"
+  },
+  {
+    "item": "LIFEINSR",
+    "name": "Life and other personal insurance",
+    "subcategory": "INSPENSN"
+  },
+  {
+    "item": "PENSIONS",
+    "name": "Pensions and Social Security",
+    "subcategory": "INSPENSN"
+  },
+  {
+    "item": "MISC",
+    "name": "Miscellaneous expenditures",
+    "subcategory": "MISC"
+  },
+  {
+    "item": "PERSCARE",
+    "name": "Personal care products and services",
+    "subcategory": "PERSCARE"
+  },
+  {
+    "item": "FEDTAXES",
+    "name": "Federal income taxes",
+    "subcategory": "PERSTAX"
+  },
+  {
+    "item": "OTHRTAX",
+    "name": "Other taxes",
+    "subcategory": "PERSTAX"
+  },
+  {
+    "item": "PERSTAX",
+    "name": "Personal taxes",
+    "subcategory": "PERSTAX"
+  },
+  {
+    "item": "STATETAX",
+    "name": "State and local income taxes",
+    "subcategory": "PERSTAX"
+  },
+  {
+    "item": "READING",
+    "name": "Reading",
+    "subcategory": "READING"
+  },
+  {
+    "item": "980010",
+    "name": "Number of People in CU",
+    "subcategory": "TITLECU"
+  },
+  {
+    "item": "980020",
+    "name": "Age of reference person",
+    "subcategory": "TITLECU"
+  },
+  {
+    "item": "980030",
+    "name": "Number of Earners",
+    "subcategory": "TITLECU"
+  },
+  {
+    "item": "980050",
+    "name": "Number of Children under 18",
+    "subcategory": "TITLECU"
+  },
+  {
+    "item": "980060",
+    "name": "Adults 65 and older",
+    "subcategory": "TITLECU"
+  },
+  {
+    "item": "INCAFTAX",
+    "name": "Income after taxes",
+    "subcategory": "TITLECU"
+  },
+  {
+    "item": "INCBFTAX",
+    "name": "Income before taxes",
+    "subcategory": "TITLECU"
+  },
+  {
+    "item": "TITLEACU",
+    "name": "Average number in consumer unit:",
+    "subcategory": "TITLECU"
+  },
+  {
+    "item": "VEHICLES",
+    "name": "Number of Vehicles",
+    "subcategory": "TITLECU"
+  },
+  {
+    "item": "800721",
+    "name": "Estimated market value of owned home",
+    "subcategory": "TITLEOFI"
+  },
+  {
+    "item": "910050",
+    "name": "Est. monthly rental value of owned home",
+    "subcategory": "TITLEOFI"
+  },
+  {
+    "item": "MRTPRINP",
+    "name": "Mortgage principal paid, owned property",
+    "subcategory": "TITLEOFI"
+  },
+  {
+    "item": "OTHRMONY",
+    "name": "Other money receipts",
+    "subcategory": "TITLEOFI"
+  },
+  {
+    "item": "980210",
+    "name": "Percent Men reference persons",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "980220",
+    "name": "Percent Women reference persons",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "980230",
+    "name": "Percent Homeowner with mortgage",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "980240",
+    "name": "Percent Homeowner without mortgage",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "980260",
+    "name": "Percent Renter",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "980270",
+    "name": "Percent Black or African American",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "980285",
+    "name": "Percent Hispanic or Latino",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "980286",
+    "name": "Percent Not Hispanic or Latino",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "980290",
+    "name": "Percent Elementary (1-8)",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "980300",
+    "name": "Percent High school (9-12)",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "980310",
+    "name": "Percent College",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "980320",
+    "name": "Percent Never attended school and other",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "980350",
+    "name": "At least one vehicle owned or leased",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "HOMEOWN",
+    "name": "Percent Homeowner",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "TITLEEDU",
+    "name": "Education of reference person:",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "TITLEHOP",
+    "name": "Hispanic or Latino origin of reference person:",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "TITLEHT",
+    "name": "Housing tenure:",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "TITLERRP",
+    "name": "Race of reference person:",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "TITLESRP",
+    "name": "Reference person:",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "WHTNDOTH",
+    "name": "Percent White, Asian, and All Other Races",
+    "subcategory": "TITLEPD"
+  },
+  {
+    "item": "TOBACCO",
+    "name": "Tobacco products and smoking supplies",
+    "subcategory": "TOBACCO"
+  },
+  {
+    "item": "TOTALEXP",
+    "name": "Total average annual expenditures",
+    "subcategory": "TOTALEXP"
+  },
+  {
+    "item": "500110",
+    "name": "Vehicle insurance",
+    "subcategory": "TRANS"
+  },
+  {
+    "item": "CAREPAIR",
+    "name": "Vehicle maintenance and repairs",
+    "subcategory": "TRANS"
+  },
+  {
+    "item": "GASOIL",
+    "name": "Gasoline and motor oil",
+    "subcategory": "TRANS"
+  },
+  {
+    "item": "NEWCARS",
+    "name": "Vehicle purchases: Cars and trucks, new",
+    "subcategory": "TRANS"
+  },
+  {
+    "item": "OTHVEHCL",
+    "name": "Other vehicle purchases",
+    "subcategory": "TRANS"
+  },
+  {
+    "item": "PUBTRANS",
+    "name": "Public transportation",
+    "subcategory": "TRANS"
+  },
+  {
+    "item": "TRANS",
+    "name": "Transportation",
+    "subcategory": "TRANS"
+  },
+  {
+    "item": "USEDCARS",
+    "name": "Vehicle purchases: Cars and trucks, used",
+    "subcategory": "TRANS"
+  },
+  {
+    "item": "VEHFINCH",
+    "name": "Vehicle finance charges",
+    "subcategory": "TRANS"
+  },
+  {
+    "item": "VEHOTHXP",
+    "name": "Other vehicle expenses",
+    "subcategory": "TRANS"
+  },
+  {
+    "item": "VEHPURCH",
+    "name": "Vehicle purchases (net outlay)",
+    "subcategory": "TRANS"
+  },
+  {
+    "item": "VEHRNTLC",
+    "name": "Vehicle. rent., leas., licen., oth. charges",
+    "subcategory": "TRANS"
+  }
+]

@@ -13,52 +13,66 @@ var radarChart;
     });
 
     function showArea() {
-        /*
-        *  Setup area chart
-        */
+        var subcategories = ["ALCBEVG", "APPAREL", "CASHCONT", "EDUCATN",
+            "ENTRTAIN", "FOODTOTL", "HEALTH", "HOUSING",
+            "INSPENSN", "MISC", "PERSCARE", "READING",
+            "TOBACCO", "TRANS"
+        ];
 
-        subcategories = ["ALCBEVG", "APPAREL", "CASHCONT", "EDUCATN",
-                "ENTRTAIN", "FOODTOTL", "HEALTH", "HOUSING",
-                "INSPENSN", "MISC", "PERSCARE", "READING",
-                "TOBACCO", "TRANS"];
+        console.time('subcats2');
+        var expends = ds.items().filter(function(i) {
+            return i.item !== i.subcategory;
+        }).reduce(function(acc, d) {
+            var c = {
+                name: d.name,
+                item: d.item,
+                demographic: "LB01",
+                characteristic: "01"
+            };
 
-        expends = {};
-        subcategories.map(function(s){
-                ds.items(s).map(function(d){
-                    if (d.item != s){ // Filter out aggregate items
-                        var result = ds.query({name: d.name,item: d.item})[d.name];
-                        result.subcategory = s;
-                        expends[d.name] = result;
-                     }})});
-
-
-        var year_maxes = {};
-        Object.keys(expends).map(function(name) {
-            expends[name].values.map(function(d){
-                if (d.year in year_maxes){
-                    year_maxes[d.year] = year_maxes[d.year] + d.value;
-                } else {year_maxes[d.year] =  d.value;}})});
+            if (ds.exists(c)) {
+                acc[d.name] = ds.querySingle(c);
+            }
+            return acc;
+        }, {});
+        console.timeEnd('subcats2');
 
         // Date parser to convert strings to date objects
         var parseDate = d3.time.format("%Y").parse;
 
-        years_ds = Object.keys(year_maxes).map(function (y){
-            return {"Expenditures": year_maxes[y],
-                    "Year": parseDate(y)}});
+        var yearDataset = _.chain(expends)
+            .values()
+            .reduce(function(obj, val) {
+                val.values.forEach(function(val) {
+                    obj[val.year] = (obj[val.year] || 0) + val.value;
+                });
+                return obj;
+            }, {})
+            .map(function(v, k) {
+                return {
+                    Expenditures: v,
+                    Year: parseDate(k)
+                };
+            })
+            .value();
+
+        console.log(yearDataset);
 
         var areachartProperties = {
             width: 800,
             height: 400,
-            margin: { top: 40, right: 0, bottom: 60, left: 60 }};
+            margin: { top: 40, right: 0, bottom: 60, left: 60 }
+        };
 
         areachart = new Stacked("#stacked-area-chart", expends, areachartProperties);
 
-         var timelineProperties = {
+        var timelineProperties = {
             width: 800,
             height: 50,
-            margin: { top: 0, right: 0, bottom: 30, left: 60 }};
+            margin: { top: 0, right: 0, bottom: 30, left: 60 }
+        };
 
-        timeline = new Timeline("timeline", years_ds, timelineProperties);
+        timeline = new Timeline("timeline", yearDataset, timelineProperties);
     }
 
     function showRadar() {
@@ -67,13 +81,13 @@ var radarChart;
         var radarItemPicker = new ItemPicker("radar-item-picker");
         $("#radar-chart").append(radarItemPicker.html());
         radarChart = new Radar("#radar-chart", {
-            width:600,
-            height:600,
-            margin:{top:10, bottom:10, left:10, right:10},
-            showLabels:true
+            width: 600,
+            height: 600,
+            margin: { top: 10, bottom: 10, left: 10, right: 10 },
+            showLabels: true
         });
-        $("#radar-demo-picker").on("change", function(){ radarChart.fetchData() });
-        $("#radar-item-picker").on("change", function(){ radarChart.fetchData() });
+        $("#radar-demo-picker").on("change", function() { radarChart.fetchData() });
+        $("#radar-item-picker").on("change", function() { radarChart.fetchData() });
     }
 
 

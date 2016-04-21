@@ -1,0 +1,94 @@
+[
+  {
+    "subcategory": "CHGASLI",
+    "name": "Net change in total assets and liabilities"
+  },
+  {
+    "subcategory": "TITLEOFI",
+    "name": "Other financial informations:"
+  },
+  {
+    "subcategory": "CONSUNIT",
+    "name": "Number of consumer units (in thousands)"
+  },
+  {
+    "subcategory": "TITLECU",
+    "name": "Consumer unit characteristics:"
+  },
+  {
+    "subcategory": "TITLEPD",
+    "name": "Percent distribution:"
+  },
+  {
+    "subcategory": "ALCBEVG",
+    "name": "Alcoholic beverages"
+  },
+  {
+    "subcategory": "APPAREL",
+    "name": "Apparel and services"
+  },
+  {
+    "subcategory": "CASHCONT",
+    "name": "Cash contributions"
+  },
+  {
+    "subcategory": "EDUCATN",
+    "name": "Education"
+  },
+  {
+    "subcategory": "ENTRTAIN",
+    "name": "Entertainment"
+  },
+  {
+    "subcategory": "FOODTOTL",
+    "name": "Food"
+  },
+  {
+    "subcategory": "HEALTH",
+    "name": "Healthcare"
+  },
+  {
+    "subcategory": "HOUSING",
+    "name": "Housing"
+  },
+  {
+    "subcategory": "INSPENSN",
+    "name": "Personal insurance and pensions"
+  },
+  {
+    "subcategory": "MISC",
+    "name": "Miscellaneous expenditures"
+  },
+  {
+    "subcategory": "PERSCARE",
+    "name": "Personal care products and services"
+  },
+  {
+    "subcategory": "READING",
+    "name": "Reading"
+  },
+  {
+    "subcategory": "TOBACCO",
+    "name": "Tobacco products and smoking supplies"
+  },
+  {
+    "subcategory": "TOTALEXP",
+    "name": "Total average annual expenditures"
+  },
+  {
+    "subcategory": "TRANS",
+    "name": "Transportation"
+  },
+  {
+    "subcategory": "INCAFTTX",
+    "name": "Income after taxes"
+  },
+  {
+    "subcategory": "INCBEFTX",
+    "name": "Money income before taxes"
+  },
+  {
+    "subcategory": "PERSTAX",
+    "name": "Personal taxes"
+  }
+]

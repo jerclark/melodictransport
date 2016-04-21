@@ -1,0 +1,54 @@
+[
+  {
+    "demographic": "LB01",
+    "name": "Quintiles of income before taxes"
+  },
+  {
+    "demographic": "LB02",
+    "name": "Income before taxes"
+  },
+  {
+    "demographic": "LB04",
+    "name": "Age of reference person"
+  },
+  {
+    "demographic": "LB05",
+    "name": "Size of consumer unit"
+  },
+  {
+    "demographic": "LB06",
+    "name": "Composition of consumer unit"
+  },
+  {
+    "demographic": "LB07",
+    "name": "Number of earners"
+  },
+  {
+    "demographic": "LB08",
+    "name": "Housing tenure and type of area"
+  },
+  {
+    "demographic": "LB09",
+    "name": "Race of reference person"
+  },
+  {
+    "demographic": "LB10",
+    "name": "Hispanic or Latino origin of reference person"
+  },
+  {
+    "demographic": "LB11",
+    "name": "Region of residence"
+  },
+  {
+    "demographic": "LB12",
+    "name": "Occupation of reference person"
+  },
+  {
+    "demographic": "LB13",
+    "name": "Education of reference person"
+  },
+  {
+    "demographic": "LB14",
+    "name": "Highest education level of any member"
+  }
+]

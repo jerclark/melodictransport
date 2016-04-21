@@ -5,6 +5,7 @@
     var INCOME_BEFORE_TAXES = {
         item: "INCBEFTX"
     };
+
     var YV = function(d) {
         return {
             year: d.year,
@@ -12,20 +13,6 @@
         };
     }
     var $adjusted = cs171.$adjusted;
-
-    // Trim every value of each key in an object
-    function trim(obj) {
-        return Object.keys(obj).reduce(function(o, k) {
-            o[k] = (o[k] || "").trim()
-            return o;
-        }, obj);
-    }
-
-    function typeValue(d) {
-        d.year = parseInt(d.year, 10);
-        d.value = parseFloat(d.value);
-        return d;
-    }
 
     // Returns a filtering function where field = value
     function filterBy(field, value) {
@@ -49,84 +36,47 @@
 
     Dataset.prototype._loadData = function(callback) {
 
+        console.time('loading dataset');
         queue()
-            .defer(d3.tsv, "data/cx/cx.demographics")
-            .defer(d3.tsv, "data/cx/cx.characteristics")
-            .defer(d3.tsv, "data/cx/cx.subcategory")
-            .defer(d3.tsv, "data/cx/cx.item")
-            .defer(d3.tsv, "data/cx/cx.data.1.AllData")
-            .defer(d3.json, "data/events/disasters.json")
-            .defer(d3.json, "data/events/presidents.json")
+            .defer(d3.json, "data/clean/dataset.json")
+            .defer(d3.json, "data/clean/disasters.json")
+            .defer(d3.json, "data/clean/presidents.json")
 
-        .await(function(errors,
-            demographics,
-            characteristics,
-            subcategories,
-            items,
-            values,
-
-            /* events */
-            disasters,
-            presidents) {
+        .await(function(errors, fulldata, disasters, presidents) {
 
             if (errors) console.log(errors);
 
-            // TODO: clean up in Node, dump to JSON
+            this._datasets = fulldata;
+            this._datasets.disasters = disasters;
+            this._datasets.presidents = presidents;
 
-            demographics = demographics.map(trim);
-            characteristics = characteristics.map(trim);
-            subcategories = subcategories.map(trim);
-            items = items.map(trim);
-            values = values.map(trim).map(typeValue);
-
-            this._datasets = {
-                demographics: demographics,
-                characteristics: characteristics,
-                subcategories: subcategories,
-                items: items,
-                values: values,
-                disasters: disasters,
-                presidents: presidents
-            };
+            this._datasets.indexed = this._datasets.values.reduce(function(obj, v) {
+                obj[v.id] = obj[v.id] || [];
+                obj[v.id].push({ year: v.year, value: v.value });
+                return obj;
+            });
 
             this.isLoaded = true;
+            console.timeEnd('loading dataset');
 
             callback(this);
 
         }.bind(this));
     }
 
-
     Dataset.prototype.demographics = function() {
-        var t = function(d) {
-            return {
-                demographic: d.demographics_code,
-                name: d.demographics_text
-            };
-        }
-        return this._datasets.demographics.map(t);
+        return this._datasets.demographics;
     }
-
 
     Dataset.prototype.characteristics = function(demographic) {
-        var t = function(d) {
-            return {
-                demographic: d.demographics_code,
-                characteristic: d.characteristics_code,
-                name: d.characteristics_text
-            };
-        }
-
         if (demographic) {
             return _.where(this._datasets.characteristics, {
-                demographics_code: demographic
-            }).map(t);
-        }
-        else {
-            return this._datasets.characteristics.map(t);
+                demographic: demographic
+            });
+        } else {
+            return this._datasets.characteristics;
         }
     }
-
 
     // Merges two or more datasets together. The "name" of the resulting
     // dataset is "dataset 1 name-dataset 2 name": all the names with
@@ -173,43 +123,37 @@
     // If subcategory is not give, returns every item code
 
     Dataset.prototype.items = function(subcategory) {
-        var t = function(d) {
-            return {
-                item: d.item_code,
-                name: d.item_text,
-                subcategory: d.subcategory_code
-            };
-        }
-
         if (subcategory) {
-            return _.chain(this._datasets.items)
-                .where({
-                    subcategory_code: subcategory
-                })
-                .map(t)
-                .value()
+            return _.where(this._datasets.items, {
+                subcategory: subcategory
+            });
         } else {
-            return this._datasets.items.map(t);
+            return this._datasets.items;
         }
+    }
+
+    Dataset.prototype.item = function(code) {
+        console.assert(code, "pass an item code to get an item");
+        return _.where(this._datasets.items, { item: code });
     }
 
     Dataset.prototype.itemText = function(item) {
         return _.findWhere(this._datasets.items, {
-            item_code: item
-        }).item_text;
+            item: item
+        }).name;
     };
 
     Dataset.prototype.demographicText = function(demographic) {
         return _.findWhere(this._datasets.demographics, {
-            demographics_code: demographic
-        }).demographics_text;
+            demographic: demographic
+        }).name;
     };
 
     Dataset.prototype.characteristicText = function(demographic, characteristic) {
         return _.findWhere(this._datasets.characteristics, {
-            demographics_code: demographic,
-            characteristics_code: characteristic
-        }).characteristics_text;;
+            demographic: demographic,
+            characteristic: characteristic
+        }).name;;
     };
 
     // Given a datum { year: 1000, value : n } adds relative values to the
@@ -224,22 +168,35 @@
         });
     };
 
+    Dataset.prototype.exists = function(criteria) {
+        return (this._keyFor(criteria) in this._datasets.indexed);
+    };
+
+
     Dataset.prototype.singleResult = function(criteria) {
+        var item = this.item(criteria.item);
+        var key = this._keyFor(criteria);
+        var values = this._datasets.indexed[key];
+
+        if (!values) {
+            console.assert(values, "values should be there! keys is", key);
+            return undefined;
+        }
+
         return {
             name: criteria.name,
+            subcategory: item.subcategory,
             item: criteria.item,
             itemText: this.itemText(criteria.item),
             demographic: criteria.demographic,
             demographicText: this.demographicText(criteria.demographic),
             characteristic: criteria.characteristic,
             characteristicText: this.characteristicText(criteria.demographic, criteria.characteristic),
-            values: _.where(this._datasets.values, {
-                    series_id: this._keyFor(criteria)
-                })
-                .map(YV)
-                .map(_.partial(this.includeRelativeValues, _, criteria), this)
+            values: this._datasets.indexed[key].map(_.partial(this.includeRelativeValues, _, criteria), this)
         };
     };
+
+    Dataset.prototype.querySingle = Dataset.prototype.singleResult;
 
     // Returns n results in an object with keys corresponding the names given in the criteria
     Dataset.prototype.query = function( /* criteria, criteria, ...*/ ) {
@@ -281,7 +238,7 @@
         var includeAll = !!criteria.includeAll;
 
         var chars = this.characteristics(demographic);
-        if (!includeAll) chars = _.reject(chars, function(d){
+        if (!includeAll) chars = _.reject(chars, function(d) {
             return d.characteristic === "01"
         });
 
@@ -346,7 +303,7 @@
         criteria = _defaultCriteria(criteria);
 
         return _.where(this._datasets.values, {
-            series_id: this._keyFor(criteria)
+            id: this._keyFor(criteria)
         }).map(YV);
     }, function(criteria) {
         return hashCriteria(null, criteria);

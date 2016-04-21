@@ -1,0 +1,572 @@
+[
+  {
+    "demographic": "LB01",
+    "characteristic": "01",
+    "name": "All Consumer Units"
+  },
+  {
+    "demographic": "LB01",
+    "characteristic": "02",
+    "name": "Lowest 20 percent income quintile"
+  },
+  {
+    "demographic": "LB01",
+    "characteristic": "03",
+    "name": "Second 20 percent income quintile"
+  },
+  {
+    "demographic": "LB01",
+    "characteristic": "04",
+    "name": "Third 20 percent income quintile"
+  },
+  {
+    "demographic": "LB01",
+    "characteristic": "05",
+    "name": "Fourth 20 percent income quintile"
+  },
+  {
+    "demographic": "LB01",
+    "characteristic": "06",
+    "name": "Highest 20 percent income quintile"
+  },
+  {
+    "demographic": "LB01",
+    "characteristic": "A1",
+    "name": "Total complete income reporters"
+  },
+  {
+    "demographic": "LB01",
+    "characteristic": "A2",
+    "name": "Incomplete income reports"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "01",
+    "name": "All Consumer Units"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "02",
+    "name": "Before tax income of less than $5,000"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "03",
+    "name": "$5,000 to $9,999 before tax income"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "04",
+    "name": "$10,000 to $14,999 before tax income"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "05",
+    "name": "$15,000 to $19,999 before tax income"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "06",
+    "name": "$20,000 to $29,999 before tax income"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "07",
+    "name": "$30,000 to $39,999 before tax income"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "08",
+    "name": "$40,000 to $49,999 before tax income"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "09",
+    "name": "$50,000 to $69,999 before tax income"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "10",
+    "name": "Before tax income of $70,000 and over"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "11",
+    "name": "Before tax income of less than $70,000(from 2003)"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "12",
+    "name": "$70,000 to $79,999 before tax income(from 2003)"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "13",
+    "name": "$80,000 to $99,999 before tax income(from 2003)"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "14",
+    "name": "Before tax income of $100,000 and over(from 2003)"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "15",
+    "name": "$100,000 to $119,999 before tax income(from 2003)"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "16",
+    "name": "$120,000 to $149,999 before tax income(from 2003)"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "17",
+    "name": "Before tax income of $150,000 and over(from 2003)"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "A1",
+    "name": "Before tax income of $50,000 and over"
+  },
+  {
+    "demographic": "LB02",
+    "characteristic": "A2",
+    "name": "Total complete income reporters"
+  },
+  {
+    "demographic": "LB04",
+    "characteristic": "01",
+    "name": "All Consumer Units"
+  },
+  {
+    "demographic": "LB04",
+    "characteristic": "02",
+    "name": "Reference person under age 25"
+  },
+  {
+    "demographic": "LB04",
+    "characteristic": "03",
+    "name": "Reference person between age 25 and 34"
+  },
+  {
+    "demographic": "LB04",
+    "characteristic": "04",
+    "name": "Reference person between age 35 and 44"
+  },
+  {
+    "demographic": "LB04",
+    "characteristic": "05",
+    "name": "Reference person between age 45 and 54"
+  },
+  {
+    "demographic": "LB04",
+    "characteristic": "06",
+    "name": "Reference person between age 55 and 64"
+  },
+  {
+    "demographic": "LB04",
+    "characteristic": "07",
+    "name": "Reference person over age 65"
+  },
+  {
+    "demographic": "LB04",
+    "characteristic": "08",
+    "name": "Reference person between age 65 and 74"
+  },
+  {
+    "demographic": "LB04",
+    "characteristic": "09",
+    "name": "Reference person over the age of 75"
+  },
+  {
+    "demographic": "LB05",
+    "characteristic": "01",
+    "name": "All Consumer Units"
+  },
+  {
+    "demographic": "LB05",
+    "characteristic": "02",
+    "name": "One person consumer unit"
+  },
+  {
+    "demographic": "LB05",
+    "characteristic": "03",
+    "name": "Two or more people in consumer unit"
+  },
+  {
+    "demographic": "LB05",
+    "characteristic": "04",
+    "name": "Two people in consumer unit"
+  },
+  {
+    "demographic": "LB05",
+    "characteristic": "05",
+    "name": "Three people in consumer unit"
+  },
+  {
+    "demographic": "LB05",
+    "characteristic": "06",
+    "name": "Four people in consumer unit"
+  },
+  {
+    "demographic": "LB05",
+    "characteristic": "07",
+    "name": "Five or more people in consumer unit"
+  },
+  {
+    "demographic": "LB05",
+    "characteristic": "A1",
+    "name": "Five people in consumer unit"
+  },
+  {
+    "demographic": "LB05",
+    "characteristic": "A2",
+    "name": "Six or more people in consumer unit"
+  },
+  {
+    "demographic": "LB06",
+    "characteristic": "01",
+    "name": "All Consumer Units"
+  },
+  {
+    "demographic": "LB06",
+    "characteristic": "02",
+    "name": "Total husband and wife consumer units"
+  },
+  {
+    "demographic": "LB06",
+    "characteristic": "03",
+    "name": "Husband and wife only consumer units"
+  },
+  {
+    "demographic": "LB06",
+    "characteristic": "04",
+    "name": "Total husband and wife with children cons. units"
+  },
+  {
+    "demographic": "LB06",
+    "characteristic": "05",
+    "name": "Husband and wife w/ children, oldest child under 6"
+  },
+  {
+    "demographic": "LB06",
+    "characteristic": "06",
+    "name": "Husband and wife w/ children, oldest child 6 to 17"
+  },
+  {
+    "demographic": "LB06",
+    "characteristic": "07",
+    "name": "Husband & wife w/ children, old. child 18 or over"
+  },
+  {
+    "demographic": "LB06",
+    "characteristic": "08",
+    "name": "Other husband and wife consumer units"
+  },
+  {
+    "demographic": "LB06",
+    "characteristic": "09",
+    "name": "One parent, at least one child under 18"
+  },
+  {
+    "demographic": "LB06",
+    "characteristic": "10",
+    "name": "Single person and other consumer units"
+  },
+  {
+    "demographic": "LB07",
+    "characteristic": "01",
+    "name": "All Consumer Units"
+  },
+  {
+    "demographic": "LB07",
+    "characteristic": "02",
+    "name": "Single Consumers, no earner"
+  },
+  {
+    "demographic": "LB07",
+    "characteristic": "03",
+    "name": "Single Consumers, one earner"
+  },
+  {
+    "demographic": "LB07",
+    "characteristic": "04",
+    "name": "Consumer units of two or more people, no earners"
+  },
+  {
+    "demographic": "LB07",
+    "characteristic": "05",
+    "name": "CUs of two or more people, one earner"
+  },
+  {
+    "demographic": "LB07",
+    "characteristic": "06",
+    "name": "CUs of two or more people, two earners"
+  },
+  {
+    "demographic": "LB07",
+    "characteristic": "07",
+    "name": "CUs of two or more people, three or more earners"
+  },
+  {
+    "demographic": "LB08",
+    "characteristic": "01",
+    "name": "All Consumer Units"
+  },
+  {
+    "demographic": "LB08",
+    "characteristic": "02",
+    "name": "Housing tenure: home owner"
+  },
+  {
+    "demographic": "LB08",
+    "characteristic": "03",
+    "name": "Housing tenure: homeowner with mortgage(from 2003)"
+  },
+  {
+    "demographic": "LB08",
+    "characteristic": "04",
+    "name": "Housing tenure: homeowner w/o mortgage(from 2003)"
+  },
+  {
+    "demographic": "LB08",
+    "characteristic": "05",
+    "name": "Housing tenure: renter"
+  },
+  {
+    "demographic": "LB08",
+    "characteristic": "06",
+    "name": "Type of area: urban"
+  },
+  {
+    "demographic": "LB08",
+    "characteristic": "07",
+    "name": "Type of area: urban: central city(from 2003)"
+  },
+  {
+    "demographic": "LB08",
+    "characteristic": "08",
+    "name": "Type of area: urban: other urban(from 2003)"
+  },
+  {
+    "demographic": "LB08",
+    "characteristic": "09",
+    "name": "Type of area: rural"
+  },
+  {
+    "demographic": "LB09",
+    "characteristic": "01",
+    "name": "All Consumer Units"
+  },
+  {
+    "demographic": "LB09",
+    "characteristic": "02",
+    "name": "Race of ref. person: White, Asian, and All Others"
+  },
+  {
+    "demographic": "LB09",
+    "characteristic": "03",
+    "name": "Race of rf. pers.: White and All Others(from 2003)"
+  },
+  {
+    "demographic": "LB09",
+    "characteristic": "04",
+    "name": "Race of reference person: Asian(from 2003)"
+  },
+  {
+    "demographic": "LB09",
+    "characteristic": "05",
+    "name": "Race of ref. person: Black or African American"
+  },
+  {
+    "demographic": "LB10",
+    "characteristic": "01",
+    "name": "All Consumer Units"
+  },
+  {
+    "demographic": "LB10",
+    "characteristic": "02",
+    "name": "Origin of reference person: Hispanic or Latino"
+  },
+  {
+    "demographic": "LB10",
+    "characteristic": "03",
+    "name": "Origin of reference person: Not Hispanic or Latino"
+  },
+  {
+    "demographic": "LB10",
+    "characteristic": "04",
+    "name": "Not Hispanic or Latino: White and All Other Races"
+  },
+  {
+    "demographic": "LB10",
+    "characteristic": "05",
+    "name": "Not Hispanic or Latino: Black or African-American"
+  },
+  {
+    "demographic": "LB11",
+    "characteristic": "01",
+    "name": "All Consumer Units"
+  },
+  {
+    "demographic": "LB11",
+    "characteristic": "02",
+    "name": "Region of residence: northeast"
+  },
+  {
+    "demographic": "LB11",
+    "characteristic": "03",
+    "name": "Region of residence: midwest"
+  },
+  {
+    "demographic": "LB11",
+    "characteristic": "04",
+    "name": "Region of residence: south"
+  },
+  {
+    "demographic": "LB11",
+    "characteristic": "05",
+    "name": "Region of residence: west"
+  },
+  {
+    "demographic": "LB12",
+    "characteristic": "01",
+    "name": "All Consumer Units"
+  },
+  {
+    "demographic": "LB12",
+    "characteristic": "02",
+    "name": "Self-employed workers"
+  },
+  {
+    "demographic": "LB12",
+    "characteristic": "03",
+    "name": "Total wage and salary earners"
+  },
+  {
+    "demographic": "LB12",
+    "characteristic": "04",
+    "name": "Wage & salary earners: managers and professionals"
+  },
+  {
+    "demographic": "LB12",
+    "characteristic": "05",
+    "name": "Wage & salary: tech., sales, and clerical workers"
+  },
+  {
+    "demographic": "LB12",
+    "characteristic": "06",
+    "name": "Wage & salary earners: service workers"
+  },
+  {
+    "demographic": "LB12",
+    "characteristic": "07",
+    "name": "Wage & salary: construction workers & mechanics"
+  },
+  {
+    "demographic": "LB12",
+    "characteristic": "08",
+    "name": "Wage & salary: Operators, fabricators & laborers"
+  },
+  {
+    "demographic": "LB12",
+    "characteristic": "09",
+    "name": "Retired"
+  },
+  {
+    "demographic": "LB12",
+    "characteristic": "10",
+    "name": "Occupation: all other, including not reporting"
+  },
+  {
+    "demographic": "LB13",
+    "characteristic": "01",
+    "name": "All Consumer Units"
+  },
+  {
+    "demographic": "LB13",
+    "characteristic": "02",
+    "name": "Total, less than college graduate"
+  },
+  {
+    "demographic": "LB13",
+    "characteristic": "03",
+    "name": "Less than high school graduate"
+  },
+  {
+    "demographic": "LB13",
+    "characteristic": "04",
+    "name": "High school graduate"
+  },
+  {
+    "demographic": "LB13",
+    "characteristic": "05",
+    "name": "High school graduate with some college"
+  },
+  {
+    "demographic": "LB13",
+    "characteristic": "06",
+    "name": "Associate degree"
+  },
+  {
+    "demographic": "LB13",
+    "characteristic": "07",
+    "name": "Total, college graduate"
+  },
+  {
+    "demographic": "LB13",
+    "characteristic": "08",
+    "name": "Bachelor's degree"
+  },
+  {
+    "demographic": "LB13",
+    "characteristic": "09",
+    "name": "Master's, professional, doctorate"
+  },
+  {
+    "demographic": "LB14",
+    "characteristic": "01",
+    "name": "All Consumer Units"
+  },
+  {
+    "demographic": "LB14",
+    "characteristic": "02",
+    "name": "Less than college graduate: Total"
+  },
+  {
+    "demographic": "LB14",
+    "characteristic": "03",
+    "name": "Less than college graduate: Less than high school graduate"
+  },
+  {
+    "demographic": "LB14",
+    "characteristic": "04",
+    "name": "Less than college graduate: High school graduate"
+  },
+  {
+    "demographic": "LB14",
+    "characteristic": "05",
+    "name": "Less than college graduate: High schoo graduate with some college"
+  },
+  {
+    "demographic": "LB14",
+    "characteristic": "06",
+    "name": "Less than college graduate: Associate's degree"
+  },
+  {
+    "demographic": "LB14",
+    "characteristic": "07",
+    "name": "College graduate: Total"
+  },
+  {
+    "demographic": "LB14",
+    "characteristic": "08",
+    "name": "College graduate: Bachelor's degree"
+  },
+  {
+    "demographic": "LB14",
+    "characteristic": "09",
+    "name": "College graduate: Master's, professional, doctoral degree"
+  }
+]
