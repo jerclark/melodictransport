@@ -20,8 +20,12 @@ var radarChart;
         ];
 
         console.time('subcats2');
+
         var expends = ds.items().filter(function(i) {
-            return i.item !== i.subcategory;
+            return i.item !== i.subcategory &&
+            // Ensure we're only querying for items that are expenses
+            // (Excludes info about income) 
+            subcategories.indexOf(i.subcategory) > -1;
         }).reduce(function(acc, d) {
             var c = {
                 name: d.name,
@@ -32,6 +36,9 @@ var radarChart;
 
             if (ds.exists(c)) {
                 acc[d.name] = ds.querySingle(c);
+                // This line should not be needed, but querySingle is currently returning null 
+                // subcategories for some reason 
+                acc[d.name].subcategory = d.subcategory; 
             }
             return acc;
         }, {});
@@ -56,7 +63,7 @@ var radarChart;
             })
             .value();
 
-        console.log(yearDataset);
+       //  console.log(yearDataset);
 
         var areachartProperties = {
             width: 800,
