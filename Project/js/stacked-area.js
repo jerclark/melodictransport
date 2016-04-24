@@ -152,6 +152,12 @@ Stacked.prototype.initVis = function() {
         .y0(function(d) { return vis.y(d.y0); })
         .y1(function(d) { return vis.y(d.y0 + d.y); });
 
+    vis.areaExit = d3.svg.area()
+        .interpolate("cardinal")
+        .x(function(d) { return vis.x(d.year); })
+        .y0(function(d) { return vis.y(0); })
+        .y1(function(d) { return vis.y(0); });
+
    vis.svg.append("defs").append("clipPath")
         .attr("id", "clip")
         .append("rect")
@@ -322,6 +328,7 @@ Stacked.prototype.updateVis = function() {
 
     layers.exit()
         .transition().duration(duration).delay(delay)
+        .attr("d", function(d) {return vis.areaExit(d.values);})
         .remove();
 
 
