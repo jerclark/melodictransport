@@ -33,35 +33,35 @@ Stacked.prototype.initVis = function() {
     vis.margin = vis.properties.margin;
     vis.width = vis.properties.width - vis.margin.left - vis.margin.right;
     vis.legendMargin = { top: 0, right: 1, bottom: 20, left: 1 }; 
-    vis.legendArea = 100; 
+    vis.legendArea = 65; 
     vis.legendHeight = vis.legendArea - vis.legendMargin.top - vis.legendMargin.bottom; 
     vis.legendWidth = vis.width - vis.legendMargin.right - vis.legendMargin.left; 
     
     vis.areaChartHeight = vis.properties.height - vis.margin.top - vis.margin.bottom - vis.legendHeight; 
 
-
     function isSingleton(s){
-        var singletons = ["ALCBEVG","CASHCONT","EDUCATN","PERSCARE","READING","TOBACCO"];
+        var singletons = ["ALCBEVG","CASHCONT","EDUCATN","PERSCARE","READING","TOBACCO", "MISC"];
             return singletons.indexOf(s) > -1
         };
- 
     
-     var dataCategories = d3.keys(vis.data);
-    vis.allDataCategories = dataCategories; 
+    var dataItems = d3.keys(vis.data);
+    vis.alldataItems = dataItems; 
 
+    //Build complete array of years used in dataset 
     var years = new Set();
-    dataCategories.map(function(name)
+    dataItems.map(function(name)
         {vis.data[name].values.map(function(d){years.add(d.year)})}); 
 
-    var years = Array.from(years).sort();
+    years = Array.from(years).sort();
     vis.years = years;
 
-
-    dataCategories.map(function(name) {
-
+    // Initial data cleaning 
+    dataItems.map(function(name) {
+        
+        // Groups singleton items under miscellanies category 
         if (isSingleton(vis.data[name].subcategory)){vis.data[name].subcategory = "MISC"}; 
 
-        // Fills in missing year values
+        // Fills in missing year values with zeors 
         years.map(function(y){
             var found_y = false;
             vis.data[name].values.map(function(v){
@@ -77,22 +77,25 @@ Stacked.prototype.initVis = function() {
     
 
 
+    // Complete list of subcategories
     var subcategories = new Set();
     d3.keys(vis.data).map(function(k){
     subcategories.add(vis.data[k].subcategory)});
+    vis.subcategories = Array.from(subcategories).sort();
 
-    vis.subcategories = Array.from(subcategories);
 
     var colorPalette = colorbrewer.Purples[7].concat(
         colorbrewer.Blues[7],
-        colorbrewer.Greens[7],
+        colorbrewer.YlGn[7],
         colorbrewer.Oranges[7],
         colorbrewer.Reds[7],
-        colorbrewer.Greys[7]); 
+        colorbrewer.RdYlGn[7],
+        colorbrewer.PuRd[7]); 
 
     var categoryColors = [];
     for ( var i=5; i< colorPalette.length; i+=7 )
-    {categoryColors.push(colorPalette[i]);}
+    {categoryColors.push(colorPalette[i-1]);
+    categoryColors.push(colorPalette[i+1]);}
 
     vis.colorPalette = colorPalette;
     vis.categoryColors = categoryColors; 
@@ -191,13 +194,13 @@ Stacked.prototype.wrangleData = function() {
     filteredData = {}; 
 
     if (vis.subcategory != 'all'){
-         vis.allDataCategories.map(function(name){
+         vis.alldataItems.map(function(name){
             if (vis.data[name].subcategory == vis.subcategory)
                 {filteredData[name] = vis.data[name]}})
          vis.filteredData = filteredData; 
          };
 
-    var dataCategories = d3.keys(vis.filteredData);
+    var dataItems = d3.keys(vis.filteredData);
 
     baseColor = vis.colorScale(vis.subcategory);
     var i = vis.categoryColors.indexOf(baseColor.toString()); 
@@ -205,14 +208,14 @@ Stacked.prototype.wrangleData = function() {
     
     // Create an ordinal scale based on the color of the category 
     vis.colorScaleFiltered = d3.scale.ordinal()
-            .domain(dataCategories)
+            .domain(dataItems)
             .range(vis.colorPalette.slice(i*7, i*7 +7)); 
 
     // Caculates year-by-year total for each year, to be used in percentage
     // caculations below
     var year_maxes = {};
     
-    dataCategories.map(function(name) {
+    dataItems.map(function(name) {
         vis.filteredData[name].values.map(function(d){
                 if (d.year in year_maxes){
                     year_maxes[d.year] = year_maxes[d.year] + d.value;
@@ -224,7 +227,7 @@ Stacked.prototype.wrangleData = function() {
     // Build area layout datastructure for given data key
     function stackDataForKey(key){
         return stack(
-                dataCategories.map(function(name) {
+                dataItems.map(function(name) {
                     return {
                         name: name,
                         subcategory: vis.filteredData [name].subcategory,
@@ -240,7 +243,7 @@ Stacked.prototype.wrangleData = function() {
 
     // Calculating percentages is dependent on the totals from the submitted dataset,
     // and needs to be calculated a little differently
-    vis.percent = stack(dataCategories.map(function(name) {
+    vis.percent = stack(dataItems.map(function(name) {
                     return {
                         name: name,
                         subcategory: vis.data[name].subcategory,
