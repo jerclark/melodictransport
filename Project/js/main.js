@@ -67,8 +67,8 @@ var radarChart;
 
         var areachartProperties = {
             width: 800,
-            height: 400,
-            margin: { top: 40, right: 0, bottom: 60, left: 60 }
+            height: 500,
+            margin: { top: 20, right: 0, bottom: 20, left: 60 }
         };
 
         areachart = new Stacked("#stacked-area-chart", expends, areachartProperties);

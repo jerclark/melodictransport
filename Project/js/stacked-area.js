@@ -28,13 +28,24 @@ Stacked = function(_parentElement, _data, _properties){
 Stacked.prototype.initVis = function() {
     var vis = this;
 
-    vis.margin = { top: 40, right: 0, bottom: 60, left: 60 };
-    vis.width = vis.properties.width - vis.margin.left - vis.margin.right,
-    vis.height = vis.properties.height - vis.margin.top - vis.margin.bottom;
+    
+
+    vis.margin = vis.properties.margin;
+    vis.width = vis.properties.width - vis.margin.left - vis.margin.right;
+    vis.legendMargin = { top: 0, right: 1, bottom: 20, left: 1 }; 
+    vis.legendArea = 100; 
+    vis.legendHeight = vis.legendArea - vis.legendMargin.top - vis.legendMargin.bottom; 
+    vis.legendWidth = vis.width - vis.legendMargin.right - vis.legendMargin.left; 
+    
+    vis.areaChartHeight = vis.properties.height - vis.margin.top - vis.margin.bottom - vis.legendHeight; 
+    
+
 
     var subcategories = new Set();
     d3.keys(vis.data).map(function(k){
-    subcategories.add(vis.data[k].subcategory)}); 
+    subcategories.add(vis.data[k].subcategory)});
+
+    vis.subcategories = Array.from(subcategories);
 
     var colorPalette = colorbrewer.Purples[7].concat(
         colorbrewer.Blues[7],
@@ -84,7 +95,7 @@ Stacked.prototype.initVis = function() {
   // SVG drawing area (Adapted from lab 7)
     vis.svg = d3.select(vis.parentElement).append("svg")
         .attr("width", vis.width + vis.margin.left + vis.margin.right)
-        .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
+        .attr("height", vis.areaChartHeight + vis.margin.top + vis.margin.bottom + vis.legendArea)
       .append("g")
         .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
@@ -99,7 +110,7 @@ Stacked.prototype.initVis = function() {
         .domain([vis.min_year, vis.max_year]);  
 
     vis.y = d3.scale.linear()
-        .range([vis.height, 0]);
+        .range([vis.areaChartHeight, 0]);
 
     vis.xAxis = d3.svg.axis()
         .scale(vis.x)
@@ -111,7 +122,7 @@ Stacked.prototype.initVis = function() {
 
     vis.svg.append("g")
         .attr("class", "x-axis axis")
-        .attr("transform", "translate(0," + vis.height + ")");
+        .attr("transform", "translate(0," + vis.areaChartHeight + ")");
 
     vis.svg.append("g")
             .attr("class", "y-axis axis");
@@ -126,12 +137,27 @@ Stacked.prototype.initVis = function() {
         .attr("id", "clip")
         .append("rect")
         .attr("width", vis.width)
-        .attr("height", vis.height);
+        .attr("height", vis.areaChartHeight);
 
     vis.svg.append("text")
         .attr("id", "category-name")
         .attr("x","10")
         .attr("y","10");
+    
+    vis.legend_entry_height = 10; 
+    vis.legend_x = 0 
+    vis.legend_y = vis.properties.height - vis.legendHeight;  
+    // Append legend background 
+    vis.svg.append("rect")
+        .attr("id", "legendBackground")
+        .attr("x", vis.legend_x)
+        .attr("y", vis.legend_y)
+        .attr("width", vis.legendWidth )
+        .attr("height", vis.legendHeight -25 )
+        .style("stroke", "black")
+        .style("fill","#fff") 
+        .style("opacity", .75); 
+
 
     vis.subcategory = 'all'; 
     vis.wrangleData();
@@ -161,6 +187,8 @@ Stacked.prototype.wrangleData = function() {
     baseColor = vis.colorScale(vis.subcategory);
     var i = vis.categoryColors.indexOf(baseColor.toString()); 
 
+    
+    // Create an ordinal scale based on the color of the category 
     vis.colorScaleFiltered = d3.scale.ordinal()
             .domain(dataCategories)
             .range(vis.colorPalette.slice(i*7, i*7 +7)); 
@@ -176,7 +204,7 @@ Stacked.prototype.wrangleData = function() {
                 } else {year_maxes[d.year] =  d.value;}})});
 
     var stack = d3.layout.stack()
-    .values(function(d) { return d.values; });    
+        .values(function(d) { return d.values; });    
 
     // Build area layout datastructure for given data key
     function stackDataForKey(key){
@@ -232,36 +260,60 @@ Stacked.prototype.updateVis = function() {
     ]);
 
     // Draw the layers
-    var categories = vis.svg.selectAll(".area")
+    var layers = vis.svg.selectAll(".area")
       .data(vis.displayData);
 
-  categories.enter().append("path")
-    .attr("class", "area");
+    layers.enter().append("path")
+        .attr("class", "area");
 
-  categories
-    .style("fill", function(d) { 
-        if (vis.subcategory == 'all'){return vis.colorScale(d.subcategory);} 
-        else {return vis.colorScaleFiltered(d.name);}
-       })
-    .transition().duration(duration).delay(delay)
-    .attr("d", function(d) {return vis.area(d.values);})
+    layers
+        .style("fill", function(d) { 
+            if (vis.subcategory == 'all'){return vis.colorScale(d.subcategory);} 
+            else {return vis.colorScaleFiltered(d.name);}
+        })
+        .transition().duration(duration).delay(delay)
+        .attr("d", function(d) {return vis.area(d.values);})
 
-    categories
+    layers
         .on("mouseover", function(d)
             {vis.svg.select("#category-name").text(d.subcategory + ": " + d.name);})
-    categories
+    layers
         .on("mouseout",function(d)
             {vis.svg.select("#category-name").text("");})
 
-    categories
+    layers
         .on("dblclick",function(d)
             {   if (vis.subcategory == d.subcategory){vis.subcategory = 'all'} 
                 else {vis.subcategory = d.subcategory}
                 vis.wrangleData()});
 
-    categories.exit()
+    layers.exit()
         .transition().duration(duration).delay(delay)
         .remove();
+
+    var spacer = vis.legendWidth / (vis.subcategories.length ); 
+
+    var legend = vis.svg.selectAll('g.legendEntry')
+        .data(vis.subcategories)
+        .enter()
+        .append('g').attr('class', 'legendEntry');
+
+    legend
+        .append('rect')
+        .attr("x", function(d, i) {
+            return vis.legend_x + 10 +  (i * spacer );})
+        .attr("y", vis.legend_y + 5)
+        .attr("width", 10)
+        .attr("height", 10)
+        .style("stroke", "black")
+        .style("stroke-width", 1)
+        .style("fill", function(d){return vis.colorScale(d);}); 
+
+     legend.append('text')
+        .attr("x", function(d, i) {
+            return vis.legend_x + 25 +  (i * spacer );})
+        .attr("y", vis.legend_y + 15)
+        .text(function(d){ return d; });
 
     // Call axis functions with the new domain
     vis.svg.select(".x-axis").call(vis.xAxis);
