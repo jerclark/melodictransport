@@ -203,7 +203,6 @@ Stacked.prototype.wrangleData = function() {
 
     var dataItems = d3.keys(vis.filteredData);
 
-    console.log(vis.filteredData);
     // Caculates year-by-year total for each year, to be used in percentage
     // caculations below
     var year_maxes = {};
@@ -276,12 +275,9 @@ Stacked.prototype.updateVis = function() {
             else {return k;}
     }
 
-    (["Apparel","Entertainment","Food","Healthcare"])
-    var subcategoryNames = d3.scale.ordinal()
-        .domain(vis.subcategories)
-        .range
-
-    console.log(vis.displayData);
+    function inFilteredView(){
+        return (vis.subcategory != 'all'); 
+    }
 
     // Get the maximum of the multi-dimensional array or in other words, get the highest peak of the uppermost layer
     vis.y.domain([0, d3.max(vis.displayData, function(d) {
@@ -304,20 +300,19 @@ Stacked.prototype.updateVis = function() {
             else {return vis.subColorScale(vis.subsubcategoryColorscale(d.subcategory))(d.name);}
         })
         .transition().duration(duration).delay(delay)
-        .attr("d", function(d) {return vis.area(d.values);})
+        .attr("d", function(d) {return vis.area(d.values);});
 
     layers
         .on("mouseover", function(d)
             {vis.svg.select("#category-name").text(d.subcategory + ": " + d.name);
             vis.svg.select("#"+d.subcategory).style("fill", "yellow");
+            });
 
-            })
     layers
         .on("mouseout",function(d)
             {vis.svg.select("#category-name").text("");
-            vis.svg.select("#"+d.subcategory).style("fill", "#fff");
-
-            })
+            vis.svg.select("#"+d.subcategory).style("fill", "none");
+            });
 
     layers
         .on("dblclick",function(d)
@@ -329,6 +324,8 @@ Stacked.prototype.updateVis = function() {
         .transition().duration(duration).delay(delay)
         .remove();
 
+
+
     var spacer = (vis.legendWidth - 5) / (vis.subcategories.length ); 
 
     var legend = vis.svg.selectAll('g.legendEntry')
@@ -336,6 +333,10 @@ Stacked.prototype.updateVis = function() {
         .enter()
         .append('g')
         .attr('class', 'legendEntry')
+        .on("mouseover", function(d)
+            {vis.svg.select("#"+d).style("fill", "yellow");})
+        .on("mouseout", function(d)
+            {vis.svg.select("#"+d).style("fill", "none");})
         .on("dblclick",function(d)
             {   if (vis.subcategory == d){vis.subcategory = 'all'} 
                 else {vis.subcategory = d}
@@ -356,7 +357,7 @@ Stacked.prototype.updateVis = function() {
             d3.select(this).style("fill", "yellow");
             })
         .on("mouseout", function() {
-             d3.select(this).style("fill", "#fff");
+             d3.select(this).style("fill", "none");
         })
 
 
