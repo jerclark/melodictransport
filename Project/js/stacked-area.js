@@ -76,7 +76,6 @@ Stacked.prototype.initVis = function() {
     }); 
     
 
-
     // Complete list of subcategories
     var subcategories = new Set();
     d3.keys(vis.data).map(function(k){
@@ -84,31 +83,33 @@ Stacked.prototype.initVis = function() {
     vis.subcategories = Array.from(subcategories).sort();
 
 
-    var colorPalette = colorbrewer.Purples[7].concat(
-        colorbrewer.Blues[7],
-        colorbrewer.YlGn[7],
-        colorbrewer.Oranges[7],
-        colorbrewer.Reds[7],
-        colorbrewer.RdYlGn[7],
-        colorbrewer.PuRd[7]); 
-
-    var categoryColors = [];
-    for ( var i=5; i< colorPalette.length; i+=7 )
-    {categoryColors.push(colorPalette[i-1]);
-    categoryColors.push(colorPalette[i+1]);}
-
-    vis.colorPalette = colorPalette;
-    vis.categoryColors = categoryColors; 
-
-    vis.colorScale = d3.scale.ordinal()
-        .domain(Array.from(subcategories))
-        .range(categoryColors);
-
-   
-
-
+    var colorPallets = [colorbrewer.Purples[9], colorbrewer.Blues[9],colorbrewer.YlGn[9],colorbrewer.Oranges[9],colorbrewer.Reds[9],colorbrewer.RdYlGn[9],colorbrewer.PuRd[9]];
     
- 
+    // Main colors, used at top level 
+    var subcategoryColors = [];
+
+    // color palletes used for zoomed view 
+    var subcategoryPalettes = []
+
+    colorPallets.map(function(cP){
+    {subcategoryColors.push(cP[4]);
+     subcategoryColors.unshift(cP[7]);
+     subcategoryPalettes.push(cP);
+     subcategoryPalettes.unshift(cP);
+    } });
+
+    vis.subsubcategoryColorscale = d3.scale.ordinal()
+        .domain(Array.from(subcategories))
+        .range(subcategoryColors);
+
+    var subColorScales = subcategoryPalettes.map(function(cP){
+        return d3.scale.ordinal().range(cP); 
+    });
+
+    vis.subColorScale = d3.scale.ordinal()
+        .domain((subcategoryColors))
+        .range(subColorScales); 
+    
 
   // SVG drawing area (Adapted from lab 7)
     vis.svg = d3.select(vis.parentElement).append("svg")
@@ -202,15 +203,6 @@ Stacked.prototype.wrangleData = function() {
 
     var dataItems = d3.keys(vis.filteredData);
 
-    baseColor = vis.colorScale(vis.subcategory);
-    var i = vis.categoryColors.indexOf(baseColor.toString()); 
-
-    
-    // Create an ordinal scale based on the color of the category 
-    vis.colorScaleFiltered = d3.scale.ordinal()
-            .domain(dataItems)
-            .range(vis.colorPalette.slice(i*7, i*7 +7)); 
-
     // Caculates year-by-year total for each year, to be used in percentage
     // caculations below
     var year_maxes = {};
@@ -286,8 +278,8 @@ Stacked.prototype.updateVis = function() {
 
     layers
         .style("fill", function(d) { 
-            if (vis.subcategory == 'all'){return vis.colorScale(d.subcategory);} 
-            else {return vis.colorScaleFiltered(d.name);}
+            if (vis.subcategory == 'all'){return vis.subsubcategoryColorscale(d.subcategory);} 
+            else {return vis.subColorScale(vis.subsubcategoryColorscale(d.subcategory))(d.name);}
         })
         .transition().duration(duration).delay(delay)
         .attr("d", function(d) {return vis.area(d.values);})
@@ -325,7 +317,7 @@ Stacked.prototype.updateVis = function() {
         .attr("height", 10)
         .style("stroke", "black")
         .style("stroke-width", 1)
-        .style("fill", function(d){return vis.colorScale(d);}); 
+        .style("fill", function(d){return vis.subsubcategoryColorscale(d);}); 
 
      legend.append('text')
         .attr("x", function(d, i) {
