@@ -38,6 +38,42 @@ Stacked.prototype.initVis = function() {
     vis.legendWidth = vis.width - vis.legendMargin.right - vis.legendMargin.left; 
     
     vis.areaChartHeight = vis.properties.height - vis.margin.top - vis.margin.bottom - vis.legendHeight; 
+
+
+    function isSingleton(s){
+        var singletons = ["ALCBEVG","CASHCONT","EDUCATN","PERSCARE","READING","TOBACCO"];
+            return singletons.indexOf(s) > -1
+        };
+ 
+    
+     var dataCategories = d3.keys(vis.data);
+    vis.allDataCategories = dataCategories; 
+
+    var years = new Set();
+    dataCategories.map(function(name)
+        {vis.data[name].values.map(function(d){years.add(d.year)})}); 
+
+    var years = Array.from(years).sort();
+    vis.years = years;
+
+
+    dataCategories.map(function(name) {
+
+        if (isSingleton(vis.data[name].subcategory)){vis.data[name].subcategory = "MISC"}; 
+
+        // Fills in missing year values
+        years.map(function(y){
+            var found_y = false;
+            vis.data[name].values.map(function(v){
+                if (y == v.year){found_y = true;}
+                })
+            if (found_y == false){
+                // console.log(name + " missing value for" + y );
+                vis.data[name].values.push({year:parseInt(y), value: 0, income: 0, valuePercentIncome: 0, adjustedValue: 0});
+            }
+            })
+        vis.data[name].values = vis.data[name].values.sort(function(a,b){return a.year - b.year});
+    }); 
     
 
 
@@ -65,31 +101,10 @@ Stacked.prototype.initVis = function() {
         .domain(Array.from(subcategories))
         .range(categoryColors);
 
-    var dataCategories = d3.keys(vis.data);
-    vis.allDataCategories = dataCategories; 
-
-    var years = new Set();
-    dataCategories.map(function(name)
-        {vis.data[name].values.map(function(d){years.add(d.year)})}); 
-
-    var years = Array.from(years).sort();
-    vis.years = years; 
+   
 
 
-    // Fills in missing year values 
-    dataCategories.map(function(name) {
-        years.map(function(y){
-            var found_y = false;
-            vis.data[name].values.map(function(v){
-                if (y == v.year){found_y = true;}
-                })
-            if (found_y == false){
-                // console.log(name + " missing value for" + y );
-                vis.data[name].values.push({year:parseInt(y), value: 0, income: 0, valuePercentIncome: 0, adjustedValue: 0});
-            }
-            })
-        vis.data[name].values = vis.data[name].values.sort(function(a,b){return a.year - b.year});
-    }); 
+    
  
 
   // SVG drawing area (Adapted from lab 7)

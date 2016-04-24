@@ -16,16 +16,24 @@ var radarChart;
         var subcategories = ["ALCBEVG", "APPAREL", "CASHCONT", "EDUCATN",
             "ENTRTAIN", "FOODTOTL", "HEALTH", "HOUSING",
             "INSPENSN", "MISC", "PERSCARE", "READING",
-            "TOBACCO", "TRANS"
-        ];
+            "TOBACCO", "TRANS"];
+
+
+        function isSingleton(s){
+            var singletons = ["ALCBEVG","CASHCONT","EDUCATN","PERSCARE","READING","TOBACCO", "MISC"];
+            return singletons.indexOf(s) > -1
+        };
 
         console.time('subcats2');
 
         var expends = ds.items().filter(function(i) {
-            return i.item !== i.subcategory &&
-            // Ensure we're only querying for items that are expenses
-            // (Excludes info about income) 
-            subcategories.indexOf(i.subcategory) > -1;
+            
+            // We only want items that are in the expenses array above, and that are either a singleton,
+            // or if they are not a singleton, their tittle does not match the subcategory
+            if (subcategories.indexOf(i.subcategory) > -1){
+                return i.item !== i.subcategory || isSingleton(i.subcategory)}
+            else {return false; }
+
         }).reduce(function(acc, d) {
             var c = {
                 name: d.name,
@@ -44,6 +52,8 @@ var radarChart;
         }, {});
         console.timeEnd('subcats2');
 
+
+        //console.log(expends);
         // Date parser to convert strings to date objects
         var parseDate = d3.time.format("%Y").parse;
 
