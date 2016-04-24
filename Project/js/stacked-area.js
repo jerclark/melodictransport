@@ -203,6 +203,7 @@ Stacked.prototype.wrangleData = function() {
 
     var dataItems = d3.keys(vis.filteredData);
 
+    console.log(vis.filteredData);
     // Caculates year-by-year total for each year, to be used in percentage
     // caculations below
     var year_maxes = {};
@@ -222,8 +223,8 @@ Stacked.prototype.wrangleData = function() {
                 dataItems.map(function(name) {
                     return {
                         name: name,
-                        subcategory: vis.filteredData [name].subcategory,
-                        values: vis.filteredData [name].values.map(function(d) {
+                        subcategory: vis.filteredData[name].subcategory,
+                        values: vis.filteredData[name].values.map(function(d) {
                         return {
                             year: parseDate(d.year.toString()), y: d[key]};
                 })};}))};
@@ -261,6 +262,27 @@ Stacked.prototype.updateVis = function() {
 
     var vis = this;
 
+    function getFullSubcategoryName(k){
+        var names = {"APPAREL":"Apparel",
+                    "ENTRTAIN":"Entertain.",
+                    "FOODTOTL":"Food",
+                    "HEALTH":"Healthcare",
+                    "HOUSING":"Housing",
+                    "INSPENSN":"Pensions",
+                    "MISC":"Misc.",
+                    "TRANS":"Transport."
+                    };
+        if (_.has(names,k)){return names[k]}
+            else {return k;}
+    }
+
+    (["Apparel","Entertainment","Food","Healthcare"])
+    var subcategoryNames = d3.scale.ordinal()
+        .domain(vis.subcategories)
+        .range
+
+    console.log(vis.displayData);
+
     // Get the maximum of the multi-dimensional array or in other words, get the highest peak of the uppermost layer
     vis.y.domain([0, d3.max(vis.displayData, function(d) {
             return d3.max(d.values, function(e) {
@@ -286,10 +308,16 @@ Stacked.prototype.updateVis = function() {
 
     layers
         .on("mouseover", function(d)
-            {vis.svg.select("#category-name").text(d.subcategory + ": " + d.name);})
+            {vis.svg.select("#category-name").text(d.subcategory + ": " + d.name);
+            vis.svg.select("#"+d.subcategory).style("fill", "yellow");
+
+            })
     layers
         .on("mouseout",function(d)
-            {vis.svg.select("#category-name").text("");})
+            {vis.svg.select("#category-name").text("");
+            vis.svg.select("#"+d.subcategory).style("fill", "#fff");
+
+            })
 
     layers
         .on("dblclick",function(d)
@@ -301,20 +329,44 @@ Stacked.prototype.updateVis = function() {
         .transition().duration(duration).delay(delay)
         .remove();
 
-    var spacer = vis.legendWidth / (vis.subcategories.length ); 
+    var spacer = (vis.legendWidth - 5) / (vis.subcategories.length ); 
 
     var legend = vis.svg.selectAll('g.legendEntry')
         .data(vis.subcategories)
         .enter()
-        .append('g').attr('class', 'legendEntry');
+        .append('g')
+        .attr('class', 'legendEntry')
+        .on("dblclick",function(d)
+            {   if (vis.subcategory == d){vis.subcategory = 'all'} 
+                else {vis.subcategory = d}
+                vis.wrangleData()});
+
+
+    legend
+        .append('rect')
+        .attr("class", "legendBgBox")
+        .attr('id',function(d){return d;})
+        .attr("x", function(d, i) {
+            return vis.legend_x + 10 +  (i * spacer );})
+        .attr("y", vis.legend_y + 5)
+        .attr("width", spacer - 8)
+        .attr("height", 12)
+        .style("fill", "#fff")
+        .on("mouseover", function() {
+            d3.select(this).style("fill", "yellow");
+            })
+        .on("mouseout", function() {
+             d3.select(this).style("fill", "#fff");
+        })
+
 
     legend
         .append('rect')
         .attr("x", function(d, i) {
             return vis.legend_x + 10 +  (i * spacer );})
         .attr("y", vis.legend_y + 5)
-        .attr("width", 10)
-        .attr("height", 10)
+        .attr("width", 9)
+        .attr("height", 9)
         .style("stroke", "black")
         .style("stroke-width", 1)
         .style("fill", function(d){return vis.subsubcategoryColorscale(d);}); 
@@ -323,7 +375,8 @@ Stacked.prototype.updateVis = function() {
         .attr("x", function(d, i) {
             return vis.legend_x + 25 +  (i * spacer );})
         .attr("y", vis.legend_y + 15)
-        .text(function(d){ return d; });
+        .style("font-size", 12)
+        .text(function(d){ return getFullSubcategoryName(d); });
 
     // Call axis functions with the new domain
     vis.svg.select(".x-axis").call(vis.xAxis);
