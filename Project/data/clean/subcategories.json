@@ -1,93 +1,116 @@
 [
   {
+    "category": "ADDENDA",
     "subcategory": "CHGASLI",
     "name": "Net change in total assets and liabilities"
   },
   {
+    "category": "ADDENDA",
     "subcategory": "TITLEOFI",
     "name": "Other financial informations:"
   },
   {
+    "category": "CUCHARS",
     "subcategory": "CONSUNIT",
     "name": "Number of consumer units (in thousands)"
   },
   {
+    "category": "CUCHARS",
     "subcategory": "TITLECU",
     "name": "Consumer unit characteristics:"
   },
   {
+    "category": "CUCHARS",
     "subcategory": "TITLEPD",
     "name": "Percent distribution:"
   },
   {
+    "category": "EXPEND",
     "subcategory": "ALCBEVG",
     "name": "Alcoholic beverages"
   },
   {
+    "category": "EXPEND",
     "subcategory": "APPAREL",
     "name": "Apparel and services"
   },
   {
+    "category": "EXPEND",
     "subcategory": "CASHCONT",
     "name": "Cash contributions"
   },
   {
+    "category": "EXPEND",
     "subcategory": "EDUCATN",
     "name": "Education"
   },
   {
+    "category": "EXPEND",
     "subcategory": "ENTRTAIN",
     "name": "Entertainment"
   },
   {
+    "category": "EXPEND",
     "subcategory": "FOODTOTL",
     "name": "Food"
   },
   {
+    "category": "EXPEND",
     "subcategory": "HEALTH",
     "name": "Healthcare"
   },
   {
+    "category": "EXPEND",
     "subcategory": "HOUSING",
     "name": "Housing"
   },
   {
+    "category": "EXPEND",
     "subcategory": "INSPENSN",
     "name": "Personal insurance and pensions"
   },
   {
+    "category": "EXPEND",
     "subcategory": "MISC",
     "name": "Miscellaneous expenditures"
   },
   {
+    "category": "EXPEND",
     "subcategory": "PERSCARE",
     "name": "Personal care products and services"
   },
   {
+    "category": "EXPEND",
     "subcategory": "READING",
     "name": "Reading"
   },
   {
+    "category": "EXPEND",
     "subcategory": "TOBACCO",
     "name": "Tobacco products and smoking supplies"
   },
   {
+    "category": "EXPEND",
     "subcategory": "TOTALEXP",
     "name": "Total average annual expenditures"
   },
   {
+    "category": "EXPEND",
     "subcategory": "TRANS",
     "name": "Transportation"
   },
   {
+    "category": "INCOME",
     "subcategory": "INCAFTTX",
     "name": "Income after taxes"
   },
   {
+    "category": "INCOME",
     "subcategory": "INCBEFTX",
     "name": "Money income before taxes"
   },
   {
+    "category": "INCOME",
     "subcategory": "PERSTAX",
     "name": "Personal taxes"
   }
