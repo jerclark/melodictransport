@@ -68,6 +68,16 @@
         return this._datasets.demographics;
     }
 
+    Dataset.prototype.subcategories = function() {
+        return this._datasets.subcategories;
+    }
+
+    Dataset.prototype.expenditures = function() {
+        return _.where(this._datasets.subcategories, {
+            category: "EXPEND"
+        });
+    }
+
     Dataset.prototype.characteristics = function(demographic) {
         if (demographic) {
             return _.where(this._datasets.characteristics, {
@@ -234,9 +244,8 @@
 
     // Returns n results in an object with keys corresponding the names given in the criteria
     Dataset.prototype.query = function( /* criteria, criteria, ...*/ ) {
-        var args = Array.from(arguments);
+        var args = (Array.isArray(arguments[0])) ? arguments[0] : Array.from(arguments);
         console.assert(args.length > 0, "you need to pass some criteria here");
-
         return args.reduce(function(result, criteria) {
 
             // Deal with merged criteria
@@ -287,6 +296,8 @@
 
         return this.query.apply(this, criteria);
     };
+
+
 
     // Takes the result of queryDemographic and flips the results
     // to have the demographics be the keys
@@ -342,6 +353,8 @@
     }, function(criteria) {
         return hashCriteria(null, criteria);
     });
+
+
 
 
 })(window.cs171 || (window.cs171 = {}));

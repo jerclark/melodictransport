@@ -2,6 +2,7 @@
 var areachart;
 var timeline;
 var radarChart;
+var treePlot;
 
 $(function() {
     $('.filtering-nav').scrollToFixed();
@@ -15,6 +16,7 @@ $(function() {
     ds.ready(function(ds) {
         showArea();
         showRadar();
+        showTrees();
     });
 
     function showArea() {
@@ -54,7 +56,7 @@ $(function() {
         console.timeEnd('subcats2');
 
 
-        //console.log(expends);
+        console.log(expends);
         // Date parser to convert strings to date objects
         var parseDate = d3.time.format("%Y").parse;
 
@@ -93,6 +95,7 @@ $(function() {
         timeline = new Timeline("#timeline", yearDataset, timelineProperties);
     }
 
+
     function showRadar() {
         var radarDemoPicker = new DemographicPicker("radar-demo-picker");
         $("#radar-chart").append(radarDemoPicker.html());
@@ -108,6 +111,11 @@ $(function() {
         $("#radar-item-picker").on("change", function() { radarChart.fetchData() });
     }
 
+
+    function showTrees(){
+        treePlot = new TreePlot("#vis-tree");
+    }
+
     // Handle brush events
     $(document).on("brushed", function(e, timeline) {
         areachart.x.domain(timeline.brush.empty()
@@ -118,6 +126,7 @@ $(function() {
         // TODO: recalculate the data here in the controller instead
         areachart.wrangleData();
         radarChart.wrangleData();
+        treePlot.wrangleData();
     });
 
 })(window.cs171);
