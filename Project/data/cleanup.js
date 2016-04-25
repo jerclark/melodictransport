@@ -3,6 +3,7 @@
 var queue = require("d3-queue").queue;
 var fs = require("fs");
 var d3 = require("d3");
+var _ = require("underscore");
 
 // Code adapted from https://github.com/snemvalts/dollarinflation
 
@@ -111,6 +112,7 @@ function json(filename, cb) {
 
         output.subcategories = subcategories.map(trim).map(function(d) {
             return {
+                category: d.category_code,
                 subcategory: d.subcategory_code,
                 name: d.subcategory_text
             };
@@ -120,7 +122,8 @@ function json(filename, cb) {
             return {
                 item: d.item_code,
                 name: d.item_text,
-                subcategory: d.subcategory_code
+                subcategory: d.subcategory_code,
+                category: _.findWhere(output.subcategories, { subcategory: d.subcategory_code }).category
             };
         });
 

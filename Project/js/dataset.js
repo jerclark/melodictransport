@@ -78,6 +78,25 @@
         }
     }
 
+    Dataset.prototype.subcategories = function(category) {
+        if (category) {
+            return _.where(this.subcategories(), {
+                category: category
+            });
+        }
+        else {
+            return this._datasets.subcategories;
+        }
+    };
+
+    Dataset.prototype.subcategory = function(subcategory) {
+        return _.findWhere(this.subcategories(), { subcategory: subcategory });
+    };
+
+    Dataset.prototype.subcategoryText = function(subcategory) {
+        return this.subcategory(subcategory).name;
+    };
+
     // Merges two or more datasets together. The "name" of the resulting
     // dataset is "dataset 1 name-dataset 2 name": all the names with
     // dashes between them. The values are added indiscriminately
@@ -134,7 +153,7 @@
 
     Dataset.prototype.item = function(code) {
         console.assert(code, "pass an item code to get an item");
-        return _.where(this._datasets.items, { item: code });
+        return _.findWhere(this.items(), { item: code });
     }
 
     Dataset.prototype.itemText = function(item) {
@@ -183,17 +202,26 @@
             return undefined;
         }
 
+        values = values.map(_.partial(this.includeRelativeValues, _, criteria), this);
+
         return {
             name: criteria.name,
             subcategory: item.subcategory,
+            subcategoryText: this.subcategoryText(item.subcategory),
             item: criteria.item,
             itemText: this.itemText(criteria.item),
             demographic: criteria.demographic,
             demographicText: this.demographicText(criteria.demographic),
             characteristic: criteria.characteristic,
             characteristicText: this.characteristicText(criteria.demographic, criteria.characteristic),
-            values: this._datasets.indexed[key].map(_.partial(this.includeRelativeValues, _, criteria), this)
+            minValue: _.min(values, this.valueOf),
+            maxValue: _.min(values, this.valueOf),
+            values: values
         };
+    };
+
+    Dataset.prototype.valueOf = function(v) {
+        return v.value;
     };
 
     Dataset.prototype.querySingle = Dataset.prototype.singleResult;
@@ -252,7 +280,7 @@
         });
 
         return this.query.apply(this, criteria);
-    }
+    };
 
     // Takes the result of queryDemographic and flips the results
     // to have the demographics be the keys
@@ -268,9 +296,9 @@
     };
 
     Dataset.prototype._keyFor = function(criteria) {
-        console.assert(criteria.item);
-        console.assert(criteria.demographic);
-        console.assert(criteria.characteristic);
+        console.assert(criteria.item, "you need an item code");
+        console.assert(criteria.demographic, "you need a demographic");
+        console.assert(criteria.characteristic, "you need a characteristic");
 
         var k = "CXU";
         k += criteria.item;
@@ -285,7 +313,7 @@
         criteria = _defaultCriteria(criteria);
         if ("name" in criteria) delete criteria.name;
         return (year ? year.toString() + "|" : "") + JSON.stringify(criteria);
-    }
+    };
 
     // Returns the income before taxes for a given demo / characteristic and
     // year. Defaults to everyone / all demographics.

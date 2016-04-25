@@ -3,8 +3,13 @@ var areachart;
 var timeline;
 var radarChart;
 
+$(function() {
+    $('.filtering-nav').scrollToFixed();
+});
+
 (function(cs171) {
 
+    var FULL_WIDTH = 1366;
     var ds = window.ds = new cs171.Dataset();
 
     ds.ready(function(ds) {
@@ -13,11 +18,7 @@ var radarChart;
     });
 
     function showArea() {
-        var subcategories = ["ALCBEVG", "APPAREL", "CASHCONT", "EDUCATN",
-            "ENTRTAIN", "FOODTOTL", "HEALTH", "HOUSING",
-            "INSPENSN", "MISC", "PERSCARE", "READING",
-            "TOBACCO", "TRANS"];
-
+        var expenditures = _.pluck(ds.subcategories("EXPEND"), "subcategory");
 
         function isSingleton(s){
             var singletons = ["ALCBEVG","CASHCONT","EDUCATN","PERSCARE","READING","TOBACCO", "MISC"];
@@ -27,10 +28,10 @@ var radarChart;
         console.time('subcats2');
 
         var expends = ds.items().filter(function(i) {
-            
+
             // We only want items that are in the expenses array above, and that are either a singleton,
             // or if they are not a singleton, their tittle does not match the subcategory
-            if (subcategories.indexOf(i.subcategory) > -1){
+            if (expenditures.indexOf(i.subcategory) > -1){
                 return i.item !== i.subcategory || isSingleton(i.subcategory)}
             else {return false; }
 
@@ -44,9 +45,9 @@ var radarChart;
 
             if (ds.exists(c)) {
                 acc[d.name] = ds.querySingle(c);
-                // This line should not be needed, but querySingle is currently returning null 
-                // subcategories for some reason 
-                acc[d.name].subcategory = d.subcategory; 
+            }
+            else {
+                console.error("doesn't exist?", c);
             }
             return acc;
         }, {});
@@ -76,17 +77,17 @@ var radarChart;
        //  console.log(yearDataset);
 
         var areachartProperties = {
-            width: 800,
-            height: 500,
+            width: FULL_WIDTH,
+            height: 1000,
             margin: { top: 20, right: 0, bottom: 20, left: 60 }
         };
 
         areachart = new Stacked("#stacked-area-chart", expends, areachartProperties);
 
         var timelineProperties = {
-            width: 800,
-            height: 50,
-            margin: { top: 0, right: 0, bottom: 30, left: 60 }
+            width: FULL_WIDTH,
+            height: 100,
+            margin: { top: 0, right: 0, bottom: 30, left: 0 }
         };
 
         timeline = new Timeline("timeline", yearDataset, timelineProperties);
@@ -98,7 +99,7 @@ var radarChart;
         var radarItemPicker = new ItemPicker("radar-item-picker");
         $("#radar-chart").append(radarItemPicker.html());
         radarChart = new Radar("#radar-chart", {
-            width: 600,
+            width: FULL_WIDTH / 2,
             height: 600,
             margin: { top: 10, bottom: 10, left: 10, right: 10 },
             showLabels: true

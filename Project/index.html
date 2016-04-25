@@ -13,6 +13,7 @@
         <script src="lib/jquery.min.js"></script>
         <script src="lib/underscore.min.js"></script>
         <script src="lib/queue.min.js"></script>
+        <script src="lib/jquery-scrolltofixed.js"></script>
         <script src="js/timeline.js"></script>
         <script src="js/colorbrewer.js"></script>
         <script src="js/adjusted-dollars.js"></script>
@@ -29,26 +30,33 @@
             <h2>25 Years Of Spending Trends</h2>
             <p class="intro">Every year the Bureau of Labor Statistics produces The Consumer Expenditure Survey, a study that provides information on the buying habits of American consumers, including data on their expenditures, income, and consumer unit (families and single consumers) characteristics. The survey data are collected for the Bureau of Labor Statistics by the U.S. Census Bureau.</p>
         </div>
-        <nav class="navbar navbar-default">
+        <section class="filtering-nav bg-white">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <span class="navbar-brand">The American Consumer</span>
+                    <form class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <label>
+                                Show values as &nbsp;
+                            </label>
+                            <select class="form-control" id="area-chart-type" onChange="areachart.wrangleData()">
+                                <option value="inflateAdjusted">Inflation Adjusted Dollars</option>
+                                <option value="rawData">Raw dollars</option>
+                                <option value="percentIncome">Percent of Income</option>
+                                <option value="percent">Percentage</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </nav>
             <div class="container-fluid">
-                <span class="navbar-brand">The American Consumer</span>
-                <form class="navbar-form navbar-right">
-                    <div class="form-group">
-                        <label>
-                            Show values as &nbsp;
-                        </label>
-                        <select class="form-control" id="area-chart-type" onChange="areachart.wrangleData()">
-                            <option value="inflateAdjusted">Inflation Adjusted Dollars</option>
-                            <option value="rawData">Raw dollars</option>
-                            <option value="percentIncome">Percent of Income</option>
-                            <option value="percent">Percentage</option>
-                        </select>
-                    </div>
-                </form>
+                <div id="timeline"></div>
             </div>
-        </nav>
-        <div class="container-fluid">
-            <div class="row">
+        </section>
+
+
+        <div class="radar-charts">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-8">
                         <div id="radar-chart">
@@ -76,6 +84,10 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="layer-cake">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="household">
@@ -83,7 +95,6 @@
                             <h2>A Many-Layered Cake Of Delicious Spending</h2>
                             <div class="vis-stacked">
                                 <div id="stacked-area-chart"></div>
-                                <div id="timeline"></div>
                             </div>
                         </div>
                     </div>

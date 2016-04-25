@@ -26,6 +26,9 @@
     background-color: #3299BB;
     color: #E9E9E9;
 }
+.bg-white {
+    background-color: #F8F8F8;
+}
 
 nav.navbar.navbar-inverse {
     border-radius: 0px;
@@ -43,7 +46,20 @@ h1, h2, h3, h4, h5, h6 {
     font-family: Lato, sans-serif;
 }
 
+.container-fluid {
+    width: 1366px;
+}
+
 /* floating nav */
+
+.filtering-nav {
+    height: 180px;
+    border-bottom: 1px solid #e7e7e7;
+}
+
+.radar-charts {
+    padding-top: 40px;
+}
 
 #area-chart-type {
     width: 400px;
