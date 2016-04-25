@@ -16,12 +16,24 @@ var radarChart;
         var subcategories = ["ALCBEVG", "APPAREL", "CASHCONT", "EDUCATN",
             "ENTRTAIN", "FOODTOTL", "HEALTH", "HOUSING",
             "INSPENSN", "MISC", "PERSCARE", "READING",
-            "TOBACCO", "TRANS"
-        ];
+            "TOBACCO", "TRANS"];
+
+
+        function isSingleton(s){
+            var singletons = ["ALCBEVG","CASHCONT","EDUCATN","PERSCARE","READING","TOBACCO", "MISC"];
+            return singletons.indexOf(s) > -1
+        };
 
         console.time('subcats2');
+
         var expends = ds.items().filter(function(i) {
-            return i.item !== i.subcategory;
+            
+            // We only want items that are in the expenses array above, and that are either a singleton,
+            // or if they are not a singleton, their tittle does not match the subcategory
+            if (subcategories.indexOf(i.subcategory) > -1){
+                return i.item !== i.subcategory || isSingleton(i.subcategory)}
+            else {return false; }
+
         }).reduce(function(acc, d) {
             var c = {
                 name: d.name,
@@ -32,11 +44,16 @@ var radarChart;
 
             if (ds.exists(c)) {
                 acc[d.name] = ds.querySingle(c);
+                // This line should not be needed, but querySingle is currently returning null 
+                // subcategories for some reason 
+                acc[d.name].subcategory = d.subcategory; 
             }
             return acc;
         }, {});
         console.timeEnd('subcats2');
 
+
+        //console.log(expends);
         // Date parser to convert strings to date objects
         var parseDate = d3.time.format("%Y").parse;
 
@@ -56,12 +73,12 @@ var radarChart;
             })
             .value();
 
-        console.log(yearDataset);
+       //  console.log(yearDataset);
 
         var areachartProperties = {
             width: 800,
-            height: 400,
-            margin: { top: 40, right: 0, bottom: 60, left: 60 }
+            height: 500,
+            margin: { top: 20, right: 0, bottom: 20, left: 60 }
         };
 
         areachart = new Stacked("#stacked-area-chart", expends, areachartProperties);

@@ -100,7 +100,7 @@ Radar.prototype.wrangleData = function() {
     var selectedYears = timeline.brush.empty() ? timeline.xContext.domain() : timeline.brush.extent()
     vis.options.years = selectedYears.map(function(v){return v.getFullYear()});
 
-    console.log(vis.options.years);
+    // console.log(vis.options.years);
 
     var allValues = vis.data.map(function(characteristic){
         var valuesForCharacteristic = [];
@@ -223,7 +223,7 @@ Radar.prototype.updateVis = function() {
 
     spokes
       .attr("transform", function(d) {
-          console.log(vis.dimensions(d.dimension));
+        //  console.log(vis.dimensions(d.dimension));
           return "rotate(" + (vis.dimensions(d.dimension) - 90) + ")"; }
       );
 

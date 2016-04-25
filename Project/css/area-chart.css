@@ -16,6 +16,8 @@
   clip-path: url(#clip);
 }
 .area:hover {
+  stroke: #FFFF00;
+  stroke-width: 1; 
   opacity: 1;
 }
 
@@ -23,4 +25,11 @@
   stroke: #fff;
   fill-opacity: .125;
   shape-rendering: crispEdges;
+}
+
+.hover {
+    fill: yellow;
+    stroke: "black";
+    stroke-width: 1;
+    fill-opacity: .125;
 }
