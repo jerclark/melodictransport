@@ -141,7 +141,9 @@
 
     // If subcategory is not give, returns every item code
 
-    Dataset.prototype.items = function(subcategory) {
+    Dataset.prototype.items = function(subcategory, includeTop) {
+        includeTop = !!includeTop;
+
         if (subcategory) {
             return _.where(this._datasets.items, {
                 subcategory: subcategory
@@ -149,6 +151,10 @@
         } else {
             return this._datasets.items;
         }
+    }
+
+    Dataset.prototype.isSingleItemSubcategory = function(subcategory) {
+        return this.items(subcategory).length === 1;
     }
 
     Dataset.prototype.item = function(code) {

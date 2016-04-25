@@ -28,7 +28,7 @@ Timeline.prototype.initVis = function() {
         vis.height = vis.properties.height - vis.margin.top - vis.margin.bottom;
 
     // SVG drawing area
-    vis.svg = d3.select("#" + vis.parentElement).append("svg")
+    vis.svg = d3.select(vis.parentElement).append("svg")
         .attr("width", vis.width + vis.margin.left + vis.margin.right)
         .attr("height", vis.height + vis.margin.top + vis.margin.bottom)
         .append("g")
@@ -47,7 +47,6 @@ Timeline.prototype.initVis = function() {
     vis.xAxis = d3.svg.axis()
         .scale(vis.x)
         .orient("bottom");
-
 
     // SVG area path generator
     vis.area = d3.svg.area()
@@ -74,9 +73,14 @@ Timeline.prototype.initVis = function() {
     vis.xContext = xContext;
 
     // Initialize brush component
+
     var brush = d3.svg.brush()
         .x(xContext)
-        .on("brush", brushed);
+        .on("brush", function() {
+            console.log('brush args', arguments);
+
+            $(this.parentElement).trigger('brushed', [this]);
+        }.bind(this));
 
     vis.brush = brush;
 

@@ -90,7 +90,7 @@ $(function() {
             margin: { top: 0, right: 0, bottom: 30, left: 0 }
         };
 
-        timeline = new Timeline("timeline", yearDataset, timelineProperties);
+        timeline = new Timeline("#timeline", yearDataset, timelineProperties);
     }
 
     function showRadar() {
@@ -108,13 +108,17 @@ $(function() {
         $("#radar-item-picker").on("change", function() { radarChart.fetchData() });
     }
 
+    // Handle brush events
+    $(document).on("brushed", function(e, timeline) {
+        areachart.x.domain(timeline.brush.empty()
+            ? timeline.xContext.domain() : timeline.brush.extent());
+        areachart.svg.select(".area").attr("d", areachart.area);
+        areachart.svg.select(".x-axis").call(areachart.xAxis);
+
+        // TODO: recalculate the data here in the controller instead
+        areachart.wrangleData();
+        radarChart.wrangleData();
+    });
 
 })(window.cs171);
 
-function brushed() {
-    areachart.x.domain(timeline.brush.empty() ? timeline.xContext.domain() : timeline.brush.extent());
-    areachart.svg.select(".area").attr("d", areachart.area);
-    areachart.svg.select(".x-axis").call(areachart.xAxis);
-    areachart.wrangleData();
-    radarChart.wrangleData();
-}
