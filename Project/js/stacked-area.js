@@ -17,7 +17,7 @@ Stacked = function(_parentElement, _data, _properties){
     this.parentElement = _parentElement;
     this.data = _data;
     this.displayData = []; // see data wrangling
-    this.properties = _properties; 
+    this.properties = _properties;
     this.initVis();
 }
 
@@ -28,40 +28,40 @@ Stacked = function(_parentElement, _data, _properties){
 Stacked.prototype.initVis = function() {
     var vis = this;
 
-    
+
 
     vis.margin = vis.properties.margin;
     vis.width = vis.properties.width - vis.margin.left - vis.margin.right;
-    vis.legendMargin = { top: 0, right: 1, bottom: 20, left: 1 }; 
-    vis.legendArea = 65; 
-    vis.legendHeight = vis.legendArea - vis.legendMargin.top - vis.legendMargin.bottom; 
-    vis.legendWidth = vis.width - vis.legendMargin.right - vis.legendMargin.left; 
-    
-    vis.areaChartHeight = vis.properties.height - vis.margin.top - vis.margin.bottom - vis.legendHeight; 
+    vis.legendMargin = { top: 0, right: 1, bottom: 20, left: 1 };
+    vis.legendArea = 65;
+    vis.legendHeight = vis.legendArea - vis.legendMargin.top - vis.legendMargin.bottom;
+    vis.legendWidth = vis.width - vis.legendMargin.right - vis.legendMargin.left;
+
+    vis.areaChartHeight = vis.properties.height - vis.margin.top - vis.margin.bottom - vis.legendHeight;
 
     function isSingleton(s){
         var singletons = ["ALCBEVG","CASHCONT","EDUCATN","PERSCARE","READING","TOBACCO", "MISC"];
             return singletons.indexOf(s) > -1
         };
-    
-    var dataItems = d3.keys(vis.data);
-    vis.alldataItems = dataItems; 
 
-    //Build complete array of years used in dataset 
+    var dataItems = d3.keys(vis.data);
+    vis.alldataItems = dataItems;
+
+    //Build complete array of years used in dataset
     var years = new Set();
     dataItems.map(function(name)
-        {vis.data[name].values.map(function(d){years.add(d.year)})}); 
+        {vis.data[name].values.map(function(d){years.add(d.year)})});
 
     years = Array.from(years).sort();
     vis.years = years;
 
-    // Initial data cleaning 
+    // Initial data cleaning
     dataItems.map(function(name) {
-        
-        // Groups singleton items under miscellanies category 
-        if (isSingleton(vis.data[name].subcategory)){vis.data[name].subcategory = "MISC"}; 
 
-        // Fills in missing year values with zeors 
+        // Groups singleton items under miscellanies category
+        if (isSingleton(vis.data[name].subcategory)){vis.data[name].subcategory = "MISC"};
+
+        // Fills in missing year values with zeors
         years.map(function(y){
             var found_y = false;
             vis.data[name].values.map(function(v){
@@ -73,8 +73,8 @@ Stacked.prototype.initVis = function() {
             }
             })
         vis.data[name].values = vis.data[name].values.sort(function(a,b){return a.year - b.year});
-    }); 
-    
+    });
+
 
     // Complete list of subcategories
     var subcategories = new Set();
@@ -84,11 +84,11 @@ Stacked.prototype.initVis = function() {
 
 
     var colorPallets = [colorbrewer.Purples[9], colorbrewer.Blues[9],colorbrewer.YlGn[9],colorbrewer.Oranges[9],colorbrewer.Reds[9],colorbrewer.RdYlGn[9],colorbrewer.PuRd[9]];
-    
-    // Main colors, used at top level 
+
+    // Main colors, used at top level
     var subcategoryColors = [];
 
-    // color palletes used for zoomed view 
+    // color palletes used for zoomed view
     var subcategoryPalettes = []
 
     colorPallets.map(function(cP){
@@ -103,13 +103,13 @@ Stacked.prototype.initVis = function() {
         .range(subcategoryColors);
 
     var subColorScales = subcategoryPalettes.map(function(cP){
-        return d3.scale.ordinal().range(cP); 
+        return d3.scale.ordinal().range(cP);
     });
 
     vis.subColorScale = d3.scale.ordinal()
         .domain((subcategoryColors))
-        .range(subColorScales); 
-    
+        .range(subColorScales);
+
 
   // SVG drawing area (Adapted from lab 7)
     vis.svg = d3.select(vis.parentElement).append("svg")
@@ -122,11 +122,11 @@ Stacked.prototype.initVis = function() {
     // Currently makes x scale based on first layer min/max
 
     vis.min_year = parseDate(d3.min(years).toString());
-    vis.max_year = parseDate(d3.max(years).toString()); 
+    vis.max_year = parseDate(d3.max(years).toString());
 
     vis.x = d3.time.scale()
         .range([0, vis.width])
-        .domain([vis.min_year, vis.max_year]);  
+        .domain([vis.min_year, vis.max_year]);
 
     vis.y = d3.scale.linear()
         .range([vis.areaChartHeight, 0]);
@@ -168,11 +168,11 @@ Stacked.prototype.initVis = function() {
         .attr("id", "category-name")
         .attr("x","10")
         .attr("y","10");
-    
-    vis.legend_entry_height = 10; 
-    vis.legend_x = 0 
-    vis.legend_y = vis.properties.height - vis.legendHeight;  
-    // Append legend background 
+
+    vis.legend_entry_height = 10;
+    vis.legend_x = 0
+    vis.legend_y = vis.properties.height - vis.legendHeight;
+    // Append legend background
     vis.svg.append("rect")
         .attr("id", "legendBackground")
         .attr("x", vis.legend_x)
@@ -180,11 +180,11 @@ Stacked.prototype.initVis = function() {
         .attr("width", vis.legendWidth )
         .attr("height", vis.legendHeight -25 )
         .style("stroke", "black")
-        .style("fill","#fff") 
-        .style("opacity", .75); 
+        .style("fill","#fff")
+        .style("opacity", .75);
 
 
-    vis.subcategory = 'all'; 
+    vis.subcategory = 'all';
     vis.wrangleData();
 }
 
@@ -196,15 +196,15 @@ Stacked.prototype.initVis = function() {
 Stacked.prototype.wrangleData = function() {
     var vis = this;
 
-    vis.filteredData = vis.data; 
+    vis.filteredData = vis.data;
 
-    filteredData = {}; 
+    filteredData = {};
 
     if (vis.subcategory != 'all'){
          vis.alldataItems.map(function(name){
             if (vis.data[name].subcategory == vis.subcategory)
                 {filteredData[name] = vis.data[name]}})
-         vis.filteredData = filteredData; 
+         vis.filteredData = filteredData;
          };
 
     var dataItems = d3.keys(vis.filteredData);
@@ -212,7 +212,7 @@ Stacked.prototype.wrangleData = function() {
     // Caculates year-by-year total for each year, to be used in percentage
     // caculations below
     var year_maxes = {};
-    
+
     dataItems.map(function(name) {
         vis.filteredData[name].values.map(function(d){
                 if (d.year in year_maxes){
@@ -220,7 +220,7 @@ Stacked.prototype.wrangleData = function() {
                 } else {year_maxes[d.year] =  d.value;}})});
 
     var stack = d3.layout.stack()
-        .values(function(d) { return d.values; });    
+        .values(function(d) { return d.values; });
 
     // Build area layout datastructure for given data key
     function stackDataForKey(key){
@@ -253,7 +253,7 @@ Stacked.prototype.wrangleData = function() {
 
     // Update the visualization
     var TYPE = d3.select("#area-chart-type").property("value");
-    vis.displayData = vis[TYPE]; 
+    vis.displayData = vis[TYPE];
     vis.updateVis();
 
 }
@@ -282,7 +282,7 @@ Stacked.prototype.updateVis = function() {
     }
 
     function inFilteredView(){
-        return (vis.subcategory != 'all'); 
+        return (vis.subcategory != 'all');
     }
 
     // Get the maximum of the multi-dimensional array or in other words, get the highest peak of the uppermost layer
@@ -301,8 +301,8 @@ Stacked.prototype.updateVis = function() {
         .attr("class", "area");
 
     layers
-        .style("fill", function(d) { 
-            if (vis.subcategory == 'all'){return vis.subsubcategoryColorscale(d.subcategory);} 
+        .style("fill", function(d) {
+            if (vis.subcategory == 'all'){return vis.subsubcategoryColorscale(d.subcategory);}
             else {return vis.subColorScale(vis.subsubcategoryColorscale(d.subcategory))(d.name);}
         })
         .transition().duration(duration).delay(delay)
@@ -322,7 +322,7 @@ Stacked.prototype.updateVis = function() {
 
     layers
         .on("dblclick",function(d)
-            {   if (vis.subcategory == d.subcategory){vis.subcategory = 'all'} 
+            {   if (vis.subcategory == d.subcategory){vis.subcategory = 'all'}
                 else {vis.subcategory = d.subcategory}
                 vis.wrangleData()});
 
@@ -333,7 +333,7 @@ Stacked.prototype.updateVis = function() {
 
 
 
-    var spacer = (vis.legendWidth - 5) / (vis.subcategories.length ); 
+    var spacer = (vis.legendWidth - 5) / (vis.subcategories.length );
 
     var legend = vis.svg.selectAll('g.legendEntry')
         .data(vis.subcategories)
@@ -345,7 +345,7 @@ Stacked.prototype.updateVis = function() {
         .on("mouseout", function(d)
             {vis.svg.select("#"+d).style("fill", "none");})
         .on("dblclick",function(d)
-            {   if (vis.subcategory == d){vis.subcategory = 'all'} 
+            {   if (vis.subcategory == d){vis.subcategory = 'all'}
                 else {vis.subcategory = d}
                 vis.wrangleData()});
 
@@ -377,7 +377,7 @@ Stacked.prototype.updateVis = function() {
         .attr("height", 9)
         .style("stroke", "black")
         .style("stroke-width", 1)
-        .style("fill", function(d){return vis.subsubcategoryColorscale(d);}); 
+        .style("fill", function(d){return vis.subsubcategoryColorscale(d);});
 
      legend.append('text')
         .attr("x", function(d, i) {
