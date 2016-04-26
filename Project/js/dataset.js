@@ -336,7 +336,7 @@
     // year. Defaults to everyone / all demographics.
 
     Dataset.prototype.incomeForYear = _.memoize(function(year, criteria) {
-        return _.findWhere(this.incomes(), {
+        return _.findWhere(this.incomes(criteria), {
             year: year
         }).value;
     }, hashCriteria);
@@ -353,8 +353,6 @@
     }, function(criteria) {
         return hashCriteria(null, criteria);
     });
-
-
 
 
 })(window.cs171 || (window.cs171 = {}));

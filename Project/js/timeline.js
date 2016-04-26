@@ -8,13 +8,16 @@ Timeline = function(_parentElement, _data, _properties) {
     this.parentElement = _parentElement;
     this.data = _data;
 
-    // No data wrangling, no update sequence
     this.displayData = this.data;
+    this.eventsData = _properties.events;
     this.properties = _properties;
 
     this.initVis();
 }
 
+Timeline.prototype.updatevis = function() {
+    var vis = this;
+};
 
 /*
  * Initialize area chart with brushing component
@@ -34,12 +37,14 @@ Timeline.prototype.initVis = function() {
         .append("g")
         .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
+    var yearsExtent = d3.extent(vis.displayData, function(d) {
+        return d.Year;
+    });
+
     // Scales and axes
     vis.x = d3.time.scale()
         .range([0, vis.width])
-        .domain(d3.extent(vis.displayData, function(d) {
-            return d.Year;
-        }));
+        .domain(yearsExtent);
 
     vis.y = d3.scale.linear()
         .range([vis.height, 0])
@@ -60,15 +65,13 @@ Timeline.prototype.initVis = function() {
 
     vis.svg.append("path")
         .datum(vis.displayData)
-        .attr("fill", "#ccc")
+        .attr("fill", "transparent")
         .attr("d", vis.area);
 
     // Initialize time scale (x-axis)
     var xContext = d3.time.scale()
         .range([0, vis.width])
-        .domain(d3.extent(vis.displayData, function(d) {
-            return d.Year;
-        }));
+        .domain(yearsExtent);
 
     vis.xContext = xContext;
 
@@ -77,8 +80,6 @@ Timeline.prototype.initVis = function() {
     var brush = d3.svg.brush()
         .x(xContext)
         .on("brush", function() {
-            console.log('brush args', arguments);
-
             $(this.parentElement).trigger('brushed', [this]);
         }.bind(this));
 
@@ -89,7 +90,8 @@ Timeline.prototype.initVis = function() {
         .attr("class", "x brush")
         .call(brush)
         .selectAll("rect")
-        .attr("fill", "red")
+        .attr("fill", "#424242")
+        .attr("opacity", 0.3)
         .attr("y", -6)
         .attr("height", vis.height + 7);
 
@@ -97,4 +99,63 @@ Timeline.prototype.initVis = function() {
         .attr("class", "x-axis axis")
         .attr("transform", "translate(0," + vis.height + ")")
         .call(vis.xAxis);
+
+    console.log('yearsExtent', yearsExtent);
+
+    // Event markers
+    var evdata = this.eventsData.filter(function(d) {
+        var from = yearsExtent[0].getFullYear();
+        var to = yearsExtent[1].getFullYear();
+
+        return (d.termBegin >= from && d.termBegin <= to) ||
+                (d.termEnd <= to && d.termEnd >= from)
+    });
+
+    var parseDate = d3.time.format("%Y").parse;
+
+    var linex = function(d) { return xContext(parseDate('' + d.termBegin)); };
+
+    function translate(x, y) {
+        return "translate(" + x + ", " + y + ")";
+    }
+
+    var eventMarkers = vis.svg
+        .append("g")
+        .attr("class", "event-markers")
+        .selectAll("line.event-marker")
+        .data(evdata)
+        .enter()
+        .append("g")
+        .attr("transform", function(d) {
+            var x = linex(d);
+            if (x < 0) {
+                x = 0;
+            }
+            return translate(x, 0);
+        });
+
+    eventMarkers
+        .append("line")
+        .attr("stroke", function(d) {
+            if (linex(d) < 0) return "transparent";
+
+            return d.party === "Republican" ? "red" : "blue";
+        })
+        .attr("stroke-width", 2)
+        .attr("class", "event-marker")
+        .attr("x1", 0)
+        .attr("x2", 0)
+        .attr("y1", 0)
+        .attr("y2", vis.height)
+
+    eventMarkers
+        .append("text")
+        .attr("transform", translate(10, 20))
+        .text(function(d) {
+            return d.name.trim();
+        });
+
+    console.log(evdata);
+
+
 }

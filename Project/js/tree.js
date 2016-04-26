@@ -32,6 +32,7 @@ TreePlot.prototype.wrangleData = function(){
     }
   });
 
+  var expenditureList = ds.expenditures();
   var expenditureData = ds.query(expenditureCriteria);
   var plotData = vis.plotData = [];
   _.each(vis.years, function(_year){
@@ -43,6 +44,7 @@ TreePlot.prototype.wrangleData = function(){
         for (var a in yearValues) {
           preparedData[a] = yearValues[a];
         }
+        preparedData.icons = _.findWhere(expenditureList, {subcategory: expendData.name}).icons;
         yearData.push(preparedData);
       }
     });
@@ -86,7 +88,7 @@ Tree = function(_parentElement, _data, _options) {
   this.options = _.defaults(_options, {
     width: 800,
     height:800,
-    margin:{top: 40, right: 40, bottom: 40, left: 40}
+    margin:{top: 40, right: 75, bottom: 40, left: 75}
   });
 
   this.data = _data;
@@ -134,7 +136,7 @@ Tree.prototype.initVis = function() {
   /************
    * SCALES
    * **********/
-  vis.trunk = d3.scale.linear().range([vis.ground, (vis.height - vis.ground)]).domain([0, 200000]);
+  vis.trunk = d3.scale.linear().range([vis.ground, (vis.height - vis.ground)]).domain([0, 300000]);
 
   vis.branchHeight = d3.scale.ordinal();
 
@@ -144,7 +146,17 @@ Tree.prototype.initVis = function() {
 
   vis.leaves = d3.scale.linear();
 
+
+  /************
+   * TOOTIP
+   * **********/
+  vis.tip = d3.tip().attr('class', 'd3-tip').html(function(d) {
+    return d;
+  });
+
+
   vis.wrangleData();
+
 
 }
 
@@ -170,7 +182,7 @@ Tree.prototype.updateVis = function(){
    * Trunk
    * **********/
   vis.trunkX = vis.width/2;
-  vis.leafRadius = 10;
+  vis.leafRadius = 18;
   var trunkHeight = vis.trunk(vis.income);
   var healthyBranchSlope = .2;
 
@@ -189,6 +201,12 @@ Tree.prototype.updateVis = function(){
     .domain(vis.data.map(function(v){return v.itemText;}))
     .rangeRoundPoints([trunkBase, trunkTop], 1.0);
 
+  var lengthDomain = [0,100];
+  var lengthRange = [0,vis.width/2];
+  vis.branchLength
+      .domain([.01,100])
+      .range([1,vis.width/2]);
+
   var branches = vis.svg.selectAll(".branch")
     .data(vis.data);
 
@@ -203,7 +221,7 @@ Tree.prototype.updateVis = function(){
     .attr("d", function(d, i){
       var branchTrunkX = d.branchTrunkX = vis.trunkX;
       var branchTrunkY = d.branchTrunkY = vis.branchHeight(d.itemText);
-      var branchTipX = d.branchTipX = vis.trunkX  + (branchDirection(i) * (trunkHeight * (d.valuePercentIncome * .02)));
+      var branchTipX = d.branchTipX = vis.trunkX  + (branchDirection(i) * (trunkHeight * (d.valuePercentIncome * .02))); //vis.trunkX + (vis.branchLength(d.valuePercentIncome) * branchDirection(i));
       var branchTipY = d.branchTipY = ((-healthyBranchSlope) * Math.abs(branchTipX - branchTrunkX)) + branchTrunkY;
       var branchMidX = d.branchMidX = branchTrunkX - ((branchTrunkX - branchTipX) / 2);
       var branchMidY = d.branchMidY =((-healthyBranchSlope) * Math.abs(branchTipX - branchTrunkX)) + branchTrunkY;
@@ -211,27 +229,44 @@ Tree.prototype.updateVis = function(){
       return d3.svg.line().interpolate("basis")(lineData);
     });
 
-  //berries and leaf
-  branches
-    .append("circle")
-    .attr("class", "branch-leaf")
-    .attr("cx", function(d, i){
-      return (d.branchTipX);
-    })
-    .attr("cy", function(d){
-      return d.branchTipY;
-    })
-    .attr("r", vis.leafRadius);
-
   branches
     .append("text")
     .attr("class", "leaf-label")
-    .attr("x", function(d, i){return (d.branchTipX + (branchDirection(i) * (vis.leafRadius + 10)));})
-    .attr("dy", function(d){return (d.branchTipY);})
+    .attr("x", function(d, i){return (d.branchTipX);}) // + (branchDirection(i) * (vis.leafRadius + 10)));})
+    .attr("dy", function(d){return (d.branchTipY + 7.5);})
     .attr("text-anchor", function(d,i){
       return (i % 2 == 0) ? "end" : "start";
     })
-    .text(function(d){return d.itemText;});
+    .text(function(d){
+      var charCode =  (d.icons) ? ('0x' + d.icons[0]) : '0xf042';
+      return String.fromCharCode(charCode);
+    })
+    .on("mouseenter", function(e){
+      vis.tip.show(e.itemText + "<br>" + Math.round(e.valuePercentIncome) + "% of income");
+    })
+    .on("mouseout", function(e){
+      vis.tip.hide();
+    })
+    .call(vis.tip);
+
+  //berries and leaf
+  branches
+      .append("circle")
+      .attr("class", "branch-leaf")
+      .attr("cx", function(d, i){
+        return (d.branchTipX);
+      })
+      .attr("cy", function(d){
+        return d.branchTipY;
+      })
+      .attr("r", vis.leafRadius)
+      .on("mouseenter", function(e){
+        vis.tip.show(e.itemText + "<br>" + Math.round(e.valuePercentIncome) + "% of income");
+      })
+      .on("mouseout", function(e){
+        vis.tip.hide();
+      })
+      .call(vis.tip);
 
 
 }
@@ -240,4 +275,6 @@ Tree.prototype.updateVis = function(){
 function branchDirection(branchIndex){
   return ((branchIndex % 2) == 0) ? -1 : 1;
 }
+
+
 

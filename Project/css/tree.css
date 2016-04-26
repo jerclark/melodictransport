@@ -22,13 +22,13 @@
 }
 
 .branch-leaf {
-    fill: darkgreen;
-    stroke: green;
+    fill: none;
+    stroke: none;
     stroke-width: 1px;
 }
 
 .leaf-label {
-    background-color: #E9E9E9;
-    color: #424242;
-    font-family: Lora, serif;
+    fill: green;
+    font-family: FontAwesome;
+    font-size: 20px;
 }
