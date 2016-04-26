@@ -28,8 +28,6 @@ Stacked = function(_parentElement, _data, _properties){
 Stacked.prototype.initVis = function() {
     var vis = this;
 
-    
-
     vis.margin = vis.properties.margin;
     vis.width = vis.properties.width - vis.margin.left - vis.margin.right;
     vis.legendMargin = { top: 0, right: 1, bottom: 20, left: 1 }; 
@@ -37,7 +35,7 @@ Stacked.prototype.initVis = function() {
     vis.legendHeight = vis.legendArea - vis.legendMargin.top - vis.legendMargin.bottom; 
     vis.legendWidth = vis.width - vis.legendMargin.right - vis.legendMargin.left; 
     
-    vis.areaChartHeight = vis.properties.height - vis.margin.top - vis.margin.bottom - vis.legendHeight; 
+    vis.areaChartHeight = vis.properties.height - vis.margin.top - vis.margin.bottom - vis.legendHeight ; 
 
     function isSingleton(s){
         var singletons = ["ALCBEVG","CASHCONT","EDUCATN","PERSCARE","READING","TOBACCO", "MISC"];
@@ -129,7 +127,7 @@ Stacked.prototype.initVis = function() {
         .domain([vis.min_year, vis.max_year]);  
 
     vis.y = d3.scale.linear()
-        .range([vis.areaChartHeight, 0]);
+        .range([vis.areaChartHeight , 0]);
 
     vis.xAxis = d3.svg.axis()
         .scale(vis.x)
@@ -146,12 +144,15 @@ Stacked.prototype.initVis = function() {
     vis.svg.append("g")
             .attr("class", "y-axis axis");
 
+    
     vis.area = d3.svg.area()
         .interpolate("cardinal")
         .x(function(d) { return vis.x(d.year); })
         .y0(function(d) { return vis.y(d.y0); })
         .y1(function(d) { return vis.y(d.y0 + d.y); });
 
+    
+    // Used for transitions in and out 
     vis.areaExit = d3.svg.area()
         .interpolate("cardinal")
         .x(function(d) { return vis.x(d.year); })
@@ -163,16 +164,29 @@ Stacked.prototype.initVis = function() {
         .append("rect")
         .attr("width", vis.width)
         .attr("height", vis.areaChartHeight);
+    
+    // Y axis label
+    vis.svg.append("text")
+        .attr("id", "y-axis-label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", (0 - vis.margin.left ))
+        .attr("x",0 - (vis.areaChartHeight / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .text("Value");
 
+    // Slice label 
     vis.svg.append("text")
         .attr("id", "category-name")
         .attr("x","10")
-        .attr("y","10");
+        .attr("y","0");
     
+   
+    // Append legend background
     vis.legend_entry_height = 10; 
     vis.legend_x = 0 
     vis.legend_y = vis.properties.height - vis.legendHeight;  
-    // Append legend background 
+ 
     vis.svg.append("rect")
         .attr("id", "legendBackground")
         .attr("x", vis.legend_x)
@@ -182,7 +196,6 @@ Stacked.prototype.initVis = function() {
         .style("stroke", "black")
         .style("fill","#fff") 
         .style("opacity", .75); 
-
 
     vis.subcategory = 'all'; 
     vis.wrangleData();
@@ -250,12 +263,18 @@ Stacked.prototype.wrangleData = function() {
                             year: parseDate(d.year.toString()), y: d["value"]/(year_maxes[d.year])};
                 })};}));
 
-
+   
+    var TYPE = d3.select("#area-chart-type").property("value");
     var yAxisFormats = {inflateAdjusted : "$,.4s", rawData : "$,.4s",  percent : ",.2p", percentIncome : ",.2p",}; 
     vis.yAxis.tickFormat(function(d) { return d3.format(yAxisFormats[TYPE])(d);});
 
+    var yAxisTitles = {inflateAdjusted : "Inflation adjusted dollars", rawData : "2014 Dollars",  percent : "% Overtime", percentIncome : "% of Average Income"};
+    vis.svg.select("#y-axis-label").text((yAxisTitles[TYPE]));
+
+    console.log(TYPE);
+
     // Update the visualization
-    var TYPE = d3.select("#area-chart-type").property("value");
+ 
     vis.displayData = vis[TYPE]; 
     vis.updateVis();
 
@@ -290,7 +309,6 @@ Stacked.prototype.updateVis = function() {
 
     var highlight_color = "#7997a1"
 
-
     // Get the maximum of the multi-dimensional array or in other words, get the highest peak of the uppermost layer
     vis.y.domain([0, d3.max(vis.displayData, function(d) {
             return d3.max(d.values, function(e) {
@@ -301,7 +319,7 @@ Stacked.prototype.updateVis = function() {
 
     // Draw the layers
     var layers = vis.svg.selectAll(".area")
-      .data(vis.displayData);
+        .data(vis.displayData);
 
     layers.enter().append("path")
         .attr("class", "area")
@@ -324,7 +342,6 @@ Stacked.prototype.updateVis = function() {
     layers
         .on("mouseout",function(d)
             {vis.svg.select("#category-name").text("");
- 
             if (!inFilteredView()){vis.svg.select("#"+d.subcategory).style("fill", "none");}
             });
 
@@ -364,7 +381,6 @@ Stacked.prototype.updateVis = function() {
                 else {vis.subcategory = d}
                 vis.wrangleData()});
 
-
     legend
         .append('rect')
         .attr("class", "legendBgBox")
@@ -379,10 +395,8 @@ Stacked.prototype.updateVis = function() {
             d3.select(this).style("fill", highlight_color);
             })
         .on("mouseout", function() {
-            if (inFilteredView()){console.log("Filtered!");}
-                else {d3.select(this).style("fill", "none");}   
+            if (!inFilteredView()){d3.select(this).style("fill", "none");}   
         })
-
 
     legend
         .append('rect')
@@ -401,6 +415,7 @@ Stacked.prototype.updateVis = function() {
         .attr("y", vis.legend_y + 15)
         .style("font-size", 12)
         .text(function(d){ return getFullSubcategoryName(d); });
+
 
 
     // Call axis functions with the new domain
