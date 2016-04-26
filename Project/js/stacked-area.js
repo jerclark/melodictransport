@@ -83,7 +83,7 @@ Stacked.prototype.initVis = function() {
     vis.subcategories = Array.from(subcategories).sort();
 
 
-    var colorPallets = [colorbrewer.Purples[9], colorbrewer.Blues[9],colorbrewer.YlGn[9],colorbrewer.Oranges[9],colorbrewer.Reds[9],colorbrewer.RdYlGn[9],colorbrewer.PuRd[9]];
+    var colorPallets = [colorbrewer.Purples[6],colorbrewer.Blues[6],colorbrewer.YlGn[6],colorbrewer.Oranges[6],colorbrewer.Reds[6],colorbrewer.RdYlGn[6],colorbrewer.PuRd[6]];
     
     // Main colors, used at top level 
     var subcategoryColors = [];
@@ -92,8 +92,8 @@ Stacked.prototype.initVis = function() {
     var subcategoryPalettes = []
 
     colorPallets.map(function(cP){
-    {subcategoryColors.push(cP[4]);
-     subcategoryColors.unshift(cP[7]);
+    {subcategoryColors.push(cP[2]);
+     subcategoryColors.unshift(cP[5]);
      subcategoryPalettes.push(cP);
      subcategoryPalettes.unshift(cP);
     } });
@@ -251,6 +251,9 @@ Stacked.prototype.wrangleData = function() {
                 })};}));
 
 
+    var yAxisFormats = {inflateAdjusted : "$,.4s", rawData : "$,.4s",  percent : ",.2p", percentIncome : ",.2p",}; 
+    vis.yAxis.tickFormat(function(d) { return d3.format(yAxisFormats[TYPE])(d);});
+
     // Update the visualization
     var TYPE = d3.select("#area-chart-type").property("value");
     vis.displayData = vis[TYPE]; 
@@ -285,6 +288,9 @@ Stacked.prototype.updateVis = function() {
         return (vis.subcategory != 'all'); 
     }
 
+    var highlight_color = "#7997a1"
+
+
     // Get the maximum of the multi-dimensional array or in other words, get the highest peak of the uppermost layer
     vis.y.domain([0, d3.max(vis.displayData, function(d) {
             return d3.max(d.values, function(e) {
@@ -298,7 +304,8 @@ Stacked.prototype.updateVis = function() {
       .data(vis.displayData);
 
     layers.enter().append("path")
-        .attr("class", "area");
+        .attr("class", "area")
+        .attr("d", function(d) {return vis.areaExit(d.values);});
 
     layers
         .style("fill", function(d) { 
@@ -311,19 +318,27 @@ Stacked.prototype.updateVis = function() {
     layers
         .on("mouseover", function(d)
             {vis.svg.select("#category-name").text(d.subcategory + ": " + d.name);
-            vis.svg.select("#"+d.subcategory).style("fill", "yellow");
+            if (!inFilteredView()){vis.svg.select("#"+d.subcategory).style("fill", highlight_color);}
             });
 
     layers
         .on("mouseout",function(d)
             {vis.svg.select("#category-name").text("");
-            vis.svg.select("#"+d.subcategory).style("fill", "none");
+ 
+            if (!inFilteredView()){vis.svg.select("#"+d.subcategory).style("fill", "none");}
             });
 
     layers
         .on("dblclick",function(d)
-            {   if (vis.subcategory == d.subcategory){vis.subcategory = 'all'} 
-                else {vis.subcategory = d.subcategory}
+            {   if (inFilteredView()){
+                    vis.subcategory = 'all';
+                    vis.svg.select("#"+d.subcategory).style("fill", "none");
+                } 
+                else {
+                    vis.subcategory = d.subcategory
+                    vis.svg.select("#"+d.subcategory).style("fill", highlight_color);
+
+                }
                 vis.wrangleData()});
 
     layers.exit()
@@ -332,16 +347,16 @@ Stacked.prototype.updateVis = function() {
         .remove();
 
 
+    // SubCatagory Legend 
 
     var spacer = (vis.legendWidth - 5) / (vis.subcategories.length ); 
 
     var legend = vis.svg.selectAll('g.legendEntry')
         .data(vis.subcategories)
-        .enter()
-        .append('g')
+        .enter().append('g')
         .attr('class', 'legendEntry')
         .on("mouseover", function(d)
-            {vis.svg.select("#"+d).style("fill", "yellow");})
+            {vis.svg.select("#"+d).style("fill", highlight_color);})
         .on("mouseout", function(d)
             {vis.svg.select("#"+d).style("fill", "none");})
         .on("dblclick",function(d)
@@ -361,10 +376,11 @@ Stacked.prototype.updateVis = function() {
         .attr("height", 12)
         .style("fill", "#fff")
         .on("mouseover", function() {
-            d3.select(this).style("fill", "yellow");
+            d3.select(this).style("fill", highlight_color);
             })
         .on("mouseout", function() {
-             d3.select(this).style("fill", "none");
+            if (inFilteredView()){console.log("Filtered!");}
+                else {d3.select(this).style("fill", "none");}   
         })
 
 
@@ -386,7 +402,8 @@ Stacked.prototype.updateVis = function() {
         .style("font-size", 12)
         .text(function(d){ return getFullSubcategoryName(d); });
 
+
     // Call axis functions with the new domain
     vis.svg.select(".x-axis").call(vis.xAxis);
-    vis.svg.select(".y-axis").call(vis.yAxis);
+    vis.svg.select(".y-axis").transition().duration(duration).delay(delay).call(vis.yAxis);
 }
