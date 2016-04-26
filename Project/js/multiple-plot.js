@@ -31,14 +31,11 @@ MultiplePlot.prototype.plotConstructor = function(){
 }
 
 
-MultiplePlot.prototype.draw = function(multiData){
+MultiplePlot.prototype.draw = function(multiData, chartOptions){
   var vis = this;
   _.each(multiData, function(data, i){
-    new vis.plotConstructor("#" + vis.plotId + "-" + (i + 1), data, {
-      width: 600,
-      height: 600,
-      margin: {top: 10, bottom: 10, left: 10, right: 10}
-    });
+    $("#" + vis.plotId + "-" + (i + 1)).append("<h3 class='multi-chart-title'>" + data.chartTitle + "</h3>");
+    new vis.plotConstructor("#" + vis.plotId + "-" + (i + 1), data.chartData, chartOptions);
   });
 
 

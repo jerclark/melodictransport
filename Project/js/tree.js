@@ -1,10 +1,38 @@
 TreePlot = function(_parentElement, _options) {
   var vis = this;
   vis.parentElement = _parentElement;
+
+  //Create the grid layout with the controls, legend and the trees
+  vis.container = d3.select(vis.parentElement).append("div")
+    .attr("class", "container-fluid");
+
+  vis.controlDiv = vis.container
+    .append("div")
+    .attr("class", "row")
+    .attr("id", "tree-controls");
+
+  vis.gridDiv = vis.container
+    .append("div")
+    .attr("class", "row")
+    .append("div")
+    .attr("class", "col-md-8")
+    .attr("id", "tree-grid");
+
+  /************
+   * CONTROLS
+   * **********/
+
+  //Demographic picker. Remove some.
   vis.demoPicker = new DemographicPicker("tree-demo-picker");
-  $(_parentElement).append(this.demoPicker.html());
+  $("#tree-controls").append("<div class='col-md-3'>" + this.demoPicker.html() + "</div>");
+  $('#tree-demo-picker option:contains("Income before taxes")').remove();
+  $('#tree-demo-picker option:contains("Highest education level of any member")').remove();
+
+
   vis.charPicker = new CharacteristicPicker("tree-char-picker", $("#tree-demo-picker").val());
-  $("#vis-tree").append(this.charPicker.html());
+  $("#tree-controls").append("<div class='col-md-3'>" + this.charPicker.html() + "</div>");
+
+  //Events
   $("#tree-demo-picker").on("change", function(e){
     vis.charPicker.updatePicker($(this).val());
     $("#tree-char-picker").html(vis.charPicker.html());
@@ -13,6 +41,9 @@ TreePlot = function(_parentElement, _options) {
     vis.wrangleData();
   });
 
+  /************
+   * WRANGLE PLOT DATA
+   * **********/
   vis.wrangleData();
 
 }
@@ -36,7 +67,7 @@ TreePlot.prototype.wrangleData = function(){
   var expenditureData = ds.query(expenditureCriteria);
   var plotData = vis.plotData = [];
   _.each(vis.years, function(_year){
-    var yearData = [];
+    var yearData = {chartTitle: _year, chartData: []};
     _.values(expenditureData).forEach(function(expendData){
       if (expendData.name !== "TOTALEXP") {
         var preparedData = _.clone(expendData);
@@ -45,7 +76,7 @@ TreePlot.prototype.wrangleData = function(){
           preparedData[a] = yearValues[a];
         }
         preparedData.icons = _.findWhere(expenditureList, {subcategory: expendData.name}).icons;
-        yearData.push(preparedData);
+        yearData.chartData.push(preparedData);
       }
     });
     plotData.push(yearData);
@@ -67,9 +98,15 @@ TreePlot.prototype.updatePlot = function(){
     Tree.prototype.constructor,
     "tree-plot"
   );
-  $(vis.parentElement).append(vis.plot.html());
+  $("#tree-grid").append(vis.plot.html());
 
-  vis.plot.draw(vis.plotData);
+  var chartOptions = {
+    width: 400,
+    height:400,
+    margin:{top: 40, right: 75, bottom: 40, left: 75}
+  };
+
+  vis.plot.draw(vis.plotData, chartOptions);
 
 }
 
@@ -86,15 +123,12 @@ Tree = function(_parentElement, _data, _options) {
 
   this.parentElement = _parentElement;
   this.options = _.defaults(_options, {
-    width: 800,
-    height:800,
+    width: 500,
+    height:500,
     margin:{top: 40, right: 75, bottom: 40, left: 75}
   });
 
   this.data = _data;
-  this.income = window.cs171.$adjusted (this.data[0].year, this.data[0].income);
-
-
 
   this.initVis();
 
@@ -122,6 +156,16 @@ Tree.prototype.initVis = function() {
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 
+  //Check for income, return if there is none
+  if (_.isUndefined(vis.data[0].income)){
+    svg.append("text")
+      .text("NO DATA");
+    return;
+  }else{
+    vis.income = window.cs171.$adjusted (vis.data[0].year, vis.data[0].income);
+  }
+
+
   /************
    * Ground
    * **********/
@@ -136,7 +180,10 @@ Tree.prototype.initVis = function() {
   /************
    * SCALES
    * **********/
-  vis.trunk = d3.scale.linear().range([vis.ground, (vis.height - vis.ground)]).domain([0, 300000]);
+  vis.trunk = d3.scale.linear()
+    .range([(vis.height - vis.ground) + (vis.height / 4), vis.height])
+    .domain([5000, 100000])
+    .clamp(true);
 
   vis.branchHeight = d3.scale.ordinal();
 
@@ -183,15 +230,43 @@ Tree.prototype.updateVis = function(){
    * **********/
   vis.trunkX = vis.width/2;
   vis.leafRadius = 18;
+
   var trunkHeight = vis.trunk(vis.income);
   var healthyBranchSlope = .2;
-
   var trunkBase = vis.ground;
   var trunkTop = vis.ground - trunkHeight;
-  vis.svg.append("path")
-    .datum([[vis.trunkX, vis.ground], [vis.trunkX, vis.ground - vis.trunk(vis.income)]])
+
+  vis.trunk = vis.svg.append("g")
+    .attr("id", "trunk");
+
+  vis.trunk.append("path")
+    .datum([[vis.trunkX, vis.ground], [vis.trunkX, trunkTop]])
     .attr("id", "trunk-line")
     .attr("d", d3.svg.line());
+
+  vis.trunk
+    .append("circle")
+    .attr("class", "tree-top-bulb")
+    .attr("cx", vis.trunkX) //function(d, i){return (d.branchTipX);}) // + (branchDirection(i) * (vis.leafRadius + 10)));})
+    .attr("cy", trunkTop) //function(d){return (d.branchTipY + 7.5);})
+    .attr("r", 5);
+
+  vis.trunk
+    .append("text")
+    .attr("class", "tree-top-label")
+    .attr("x", vis.trunkX) //function(d, i){return (d.branchTipX);}) // + (branchDirection(i) * (vis.leafRadius + 10)));})
+    .attr("dy", trunkTop - 20) //function(d){return (d.branchTipY + 7.5);})
+    .attr("text-anchor", "middle")
+    .text("$" + Math.round(vis.income) + " (income in 2014 dollars)");
+    //.on("mouseenter", function(e){
+    //  vis.tip.show("Average Income (in 2014 dollars): $" + Math.round(vis.income));
+    //})
+    //.on("mouseout", function(e){
+    //  vis.tip.hide();
+    //})
+    //.call(vis.tip);
+
+
 
 
   /************

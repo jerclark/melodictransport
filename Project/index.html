@@ -88,7 +88,31 @@
                 </div>
             </div>
         </div>
-        <div id="vis-tree">
+        <div class="tree-charts">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="glyph-intro lil-bigger">
+                            <h3>The Money Tree</h3>
+                            <p>
+                                The trees represent the beginning and end of the selected range in the timeline. Slide, expand or contract the timeline selection to see trends over time.
+                            </p>
+                            <ul>
+                                <li>Tree Height = income earned</li>
+                                <li>Branch length = % income spend on that category</li>
+                            </ul>
+                            <p>
+                                Refine the data by selecting from the various demographics, and hover over the leaves for more details.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div id="vis-tree">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
         <script type="template" id="standard-dropdown">
         <label for="<%-pickerId%>"><%-pickerName%></label>
@@ -104,7 +128,7 @@
                 <% for (var i=0; i < rowCount; i++) { %>
                 <div class="row">
                     <% for (var j=0; j < colCount; j++) { %>
-                    <div class="col-md-6" id="<%-plotId%>-<%=count%>">
+                    <div class="col-md-4" id="<%-plotId%>-<%=count%>">
                     </div>
                     <% count++; %>
                     <% } %>

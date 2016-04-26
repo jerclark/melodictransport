@@ -30,5 +30,15 @@
 .leaf-label {
     fill: green;
     font-family: FontAwesome;
+    font-size: 15px;
+}
+
+.tree-top-label {
+    fill: green;
+    font-size: 20px;
+}
+
+.tree-top-bulb {
+    fill: green;
     font-size: 20px;
 }
