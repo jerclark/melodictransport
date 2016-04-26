@@ -36,12 +36,47 @@ Radar.prototype.initVis = function() {
     var threshold = Math.min(vis.width, vis.height);
     vis.radius = threshold / 2 - (.2 * threshold);
 
+    //Create legend
+    vis.legend = d3.select(vis.parentElement).append("svg")
+      .attr('width', 150)
+      .attr('height', 40)
+      .append('g')
+      .attr("id", "radar-legend");
+
+    vis.legend.append("path")
+      .datum([[0,20], [20,20]])
+      .attr("class", "plot-0")
+      .attr("d", d3.svg.line());
+
+    vis.legend.append("text")
+      .attr("class", "legend")
+      .attr("id", "legend-0-text")
+      .attr("x", "21")
+      .attr("dy", "25")
+      .text("1984");
+
+    vis.legend.append("path")
+      .datum([[60,20], [80,20]])
+      .attr("class", "plot-1")
+      .attr("d", d3.svg.line());
+
+    vis.legend.append("text")
+      .attr("class", "legend")
+      .attr("id", "legend-1-text")
+      .attr("x", "82")
+      .attr("dy", "25")
+      .text("2014");
+
+
+
     var svg = vis.svg = d3.select(vis.parentElement).append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .attr("class", "center-block")
       .append("g")
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+
 
     var ringGroup = vis.ringGroup = vis.svg.append("g")
       .attr("class", "r axis");
@@ -100,7 +135,10 @@ Radar.prototype.wrangleData = function() {
     var selectedYears = timeline.brush.empty() ? timeline.xContext.domain() : timeline.brush.extent()
     vis.options.years = selectedYears.map(function(v){return v.getFullYear()});
 
-    // console.log(vis.options.years);
+    //Set the legend values
+    d3.select("#legend-0-text").text(vis.options.years[0]);
+    d3.select("#legend-1-text").text(vis.options.years[1]);
+
 
     var allValues = vis.data.map(function(characteristic){
         var valuesForCharacteristic = [];
@@ -242,6 +280,7 @@ Radar.prototype.updateVis = function() {
         spokes.append("circle")
           .attr("class", "marker-circle plot-" + i)
           .attr("cx", function (d) {
+              d.plotYear = plotYear;
               var yearData = _.where(d.values, {year: plotYear})[0];
               var value = yearData ? yearData.adjustedValue : 0;
               return vis.values(value);
@@ -249,7 +288,8 @@ Radar.prototype.updateVis = function() {
           .attr("cy", 0)
           .attr("r", 5)
           .on("mouseenter", function(e){
-              vis.tip.show(e.value);
+              console.log(e);
+              vis.tip.show("Demographic: " + e.dimension + "<br>Spent (today's dollars): $" + Math.round(e.value));
           })
           .on("mouseout", function(e){
               vis.tip.hide();

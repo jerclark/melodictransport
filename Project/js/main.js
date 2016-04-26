@@ -4,8 +4,36 @@ var timeline;
 var radarChart;
 var treePlot;
 
+function updateStories() {
+    var stories = ["#getting-old", "#old-entertainment"];
+    stories.forEach(function(el, idx) {
+        var el = el;
+        var button = $("<button/>")
+            .addClass("btn btn-primary")
+            .text(idx)
+            .click(function(e) {
+                var story = $(el);
+                var demographic = story.data('demographic');
+                var item = story.data('item');
+
+                $("#radar-demo-picker").val(demographic);
+                $("#radar-item-picker").val(item);
+
+                $(".current-story").html($(el).html());
+                radarChart.fetchData();
+            });
+
+        $(".story-picker").append(button);
+    });
+
+    $(".stories").find("button").first().click();
+}
+
 $(function() {
     $('.filtering-nav').scrollToFixed();
+    // Story picker
+    // TODO MOVE
+
 });
 
 (function(cs171) {
@@ -101,17 +129,22 @@ $(function() {
 
     function showRadar() {
         var radarDemoPicker = new DemographicPicker("radar-demo-picker");
-        $("#radar-chart").append(radarDemoPicker.html());
+        $(".stories").append(radarDemoPicker.html());
         var radarItemPicker = new ItemPicker("radar-item-picker");
-        $("#radar-chart").append(radarItemPicker.html());
+        $(".stories").append(radarItemPicker.html());
         radarChart = new Radar("#radar-chart", {
             width: FULL_WIDTH / 2,
             height: 600,
             margin: { top: 10, bottom: 10, left: 10, right: 10 },
-            showLabels: true
+            showLabels: false
         });
         $("#radar-demo-picker").on("change", function() { radarChart.fetchData() });
         $("#radar-item-picker").on("change", function() { radarChart.fetchData() });
+
+        $(function() {
+            updateStories();
+            radarChart.fetchData();
+        })
     }
 
 
@@ -123,6 +156,7 @@ $(function() {
     $(document).on("brushed", function(e, timeline) {
         areachart.x.domain(timeline.brush.empty()
             ? timeline.xContext.domain() : timeline.brush.extent());
+
         areachart.svg.select(".area").attr("d", areachart.area);
         areachart.svg.select(".x-axis").call(areachart.xAxis);
 
@@ -131,6 +165,8 @@ $(function() {
         radarChart.wrangleData();
         treePlot.wrangleData();
     });
+
+
 
 })(window.cs171);
 

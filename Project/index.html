@@ -65,24 +65,9 @@
                         </div>
                     </div>
                     <div class="col-sm-4">
-                        <div class="glyph-intro lil-bigger">
-                            <h3>Who we are</h3>
-                            <p>
-                                During the last 25 years blah blah blah, some mildly interesting copy would go here. Quick brown fox jumped over the lazy dog.
-                            </p>
-                            <p>
-                                Just another paragraph with more things to say about the thing.
-                            </p>
-                            <p>
-                                <ul>
-                                    <li>Fascinating factoid #1</li>
-                                    <li>One weird trick</li>
-                                    <li>You won't believe what this elderly man can do with a rutabaga</li>
-                                </ul>
-                            </p>
-                            <p class="alert alert-info">
-                                <span class="glyphicon glyphicon-info-sign"></span>&nbsp;The Radar plots in this section are designed to quickly show how consumption varies across demographics.
-                            </p>
+                        <div class="stories glyph-intro">
+                        <div class="current-story"></div>
+                        <div class="story-picker"></div>
                         </div>
                     </div>
                 </div>
@@ -103,7 +88,31 @@
                 </div>
             </div>
         </div>
-        <div id="vis-tree">
+        <div class="tree-charts">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="glyph-intro lil-bigger">
+                            <h3>The Money Tree</h3>
+                            <p>
+                                The trees represent the beginning and end of the selected range in the timeline. Slide, expand or contract the timeline selection to see trends over time.
+                            </p>
+                            <ul>
+                                <li>Tree Height = income earned</li>
+                                <li>Branch length = % income spend on that category</li>
+                            </ul>
+                            <p>
+                                Refine the data by selecting from the various demographics, and hover over the leaves for more details.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div id="vis-tree">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
         <script type="template" id="standard-dropdown">
         <label for="<%-pickerId%>"><%-pickerName%></label>
@@ -119,7 +128,7 @@
                 <% for (var i=0; i < rowCount; i++) { %>
                 <div class="row">
                     <% for (var j=0; j < colCount; j++) { %>
-                    <div class="col-md-6" id="<%-plotId%>-<%=count%>">
+                    <div class="col-md-4" id="<%-plotId%>-<%=count%>">
                     </div>
                     <% count++; %>
                     <% } %>
@@ -128,5 +137,17 @@
             </div>
         </script>
 
+        <div class="hidden-story" id="getting-old" data-demographic="LB04" data-item="HOUSING">
+            <h3>Getting old</h3>
+            <p>In 2014, older households (those with a reference person 55 years and older) made up 41.5 percent of the CE sample, compared with 37.5 percent in 2009 and 34.6 percent in 2004, reflecting the aging of the U.S. population.</p>
+            <p>
+                Housing was the greatest expense in dollar terms ($16,219) and as a share of annual expenditures (32.9 percent) for olderhouseholds. Spending was greatest ($18,006) for the 55–64 age group, decreasing to $15,838 for the 65–74 group before declining to $13,375 for the 75-and-older group. The statistically significant decline in dollar expenditure reflects the decline in mortgage debt among households. Among older homeowner households, 59.5 percent were mortgage free. The proportion of homeowners without mortgage debt was 44.2 percent for the 55–64 age group, 61.7 percent for the 65–74 group, and 82.5 percent for the 75-and-older group.
+            </p>
+        </div>
+        <div class="hidden-story" id="old-entertainment" data-demographic="LB04" data-item="ENTRTAIN">
+            <h3>Don't need to spend to have fun (when you're old)</h3>
+            <p>Entertainment spending averaged $2,604 for the group as a whole. The difference between the $2,852 spent by the 55–64 age group and the $2,988 spent by the 65–74 age group was not statistically different. The $1,626 spent by the 75-and older group was statistically different from the amounts spent by the other age groups.7 Existing studies using CE data found that, other factors being equal, entertainment spending declines with age.
+            </p>
+        </div>
     </body>
 </html>
