@@ -108,7 +108,7 @@ $(function() {
             width: FULL_WIDTH / 2,
             height: 600,
             margin: { top: 10, bottom: 10, left: 10, right: 10 },
-            showLabels: true
+            showLabels: false
         });
         $("#radar-demo-picker").on("change", function() { radarChart.fetchData() });
         $("#radar-item-picker").on("change", function() { radarChart.fetchData() });
