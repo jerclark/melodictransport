@@ -37,12 +37,14 @@ Timeline.prototype.initVis = function() {
         .append("g")
         .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
 
+    var yearsExtent = d3.extent(vis.displayData, function(d) {
+        return d.Year;
+    });
+
     // Scales and axes
     vis.x = d3.time.scale()
         .range([0, vis.width])
-        .domain(d3.extent(vis.displayData, function(d) {
-            return d.Year;
-        }));
+        .domain(yearsExtent);
 
     vis.y = d3.scale.linear()
         .range([vis.height, 0])
@@ -65,10 +67,6 @@ Timeline.prototype.initVis = function() {
         .datum(vis.displayData)
         .attr("fill", "transparent")
         .attr("d", vis.area);
-
-    var yearsExtent = d3.extent(vis.displayData, function(d) {
-        return d.Year;
-    });
 
     // Initialize time scale (x-axis)
     var xContext = d3.time.scale()
@@ -129,12 +127,18 @@ Timeline.prototype.initVis = function() {
         .enter()
         .append("g")
         .attr("transform", function(d) {
-            return translate(linex(d), 0);
+            var x = linex(d);
+            if (x < 0) {
+                x = 0;
+            }
+            return translate(x, 0);
         });
 
     eventMarkers
         .append("line")
         .attr("stroke", function(d) {
+            if (linex(d) < 0) return "transparent";
+
             return d.party === "Republican" ? "red" : "blue";
         })
         .attr("stroke-width", 2)

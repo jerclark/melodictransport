@@ -90,7 +90,8 @@ $(function() {
             width: FULL_WIDTH,
             height: 100,
             margin: { top: 0, right: 0, bottom: 30, left: 0 },
-            events: ds._datasets.presidents
+            events: ds._datasets.presidents,
+            yearBuffer: 2
         };
 
         console.log('yeardataset', yearDataset);
