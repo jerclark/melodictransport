@@ -1,6 +1,13 @@
 /*********************/
 /*  RADAR STYLES  */
 /*********************/
+
+.radar-title {
+    fill: black;
+    font: 20px sans-serif;
+}
+
+
 .radar-circle {
     stroke: black;
     stroke-width: 3px;

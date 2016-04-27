@@ -34,11 +34,13 @@ Radar.prototype.initVis = function() {
     var width = vis.width = vis.options.width - margin.left - margin.right;
     var height = vis.height = vis.options.height - margin.top - margin.bottom;
     var threshold = Math.min(vis.width, vis.height);
-    vis.radius = threshold / 2 - (.2 * threshold);
+    vis.radius = threshold / 1.5 - (.2 * threshold);
 
-    //Create legend
+    /************
+    * LEGEND AND CHART TITLE
+    * **********/
     vis.legend = d3.select(vis.parentElement).append("svg")
-      .attr('width', 150)
+      .attr('width', width)
       .attr('height', 40)
       .append('g')
       .attr("id", "radar-legend");
@@ -67,6 +69,31 @@ Radar.prototype.initVis = function() {
       .attr("dy", "25")
       .text("2014");
 
+    vis.legend.append("text")
+      .attr("class", "radar-title")
+      .attr("id", "radar-title-item")
+      .attr("x", (width / 2) - 15)
+      .attr("dy", "25")
+      .attr("text-anchor", "end")
+      .text("Item")
+
+    vis.legend.append("text")
+      .attr("class", "radar-title")
+      .attr("id", "radar-separator")
+      .attr("x", (width / 2))
+      .attr("dy", "25")
+      .attr("text-anchor", "middle")
+      .text("by")
+
+    vis.legend.append("text")
+      .attr("class", "radar-title")
+      .attr("id", "radar-title-demographic")
+      .attr("x", (width / 2) + 15)
+      .attr("dy", "25")
+      .attr("text-anchor", "start")
+      .text("Demographic")
+
+
 
 
     var svg = vis.svg = d3.select(vis.parentElement).append("svg")
@@ -91,6 +118,10 @@ Radar.prototype.initVis = function() {
 
     vis.dimensions = d3.scale.ordinal();
 
+
+    /************
+     * RADIAL LINE GENERATOR
+     * **********/
     vis.line = d3.svg.line.radial()
       .radius(function(d) { return (d[0]); })
       .angle(function(d) {
@@ -112,7 +143,11 @@ Radar.prototype.initVis = function() {
 Radar.prototype.fetchData = function() {
     var vis = this;
     var demographicCode = vis.demographicCode = $("#radar-demo-picker").val();
+    var demographicName = vis.demographicName = $("#radar-demo-picker option[value='" + demographicCode + "']").text();
     var itemCode = vis.itemCode = $("#radar-item-picker").val();
+    var itemName = vis.itemName = $("#radar-item-picker option[value='" + itemCode + "']").text();
+
+
     //Get the data for the selected Demographic and Item
     var _data = ds.queryDemographic({
         demographic: demographicCode,
@@ -134,10 +169,6 @@ Radar.prototype.wrangleData = function() {
     //TODO: Fetch years from the timeline
     var selectedYears = timeline.brush.empty() ? timeline.xContext.domain() : timeline.brush.extent()
     vis.options.years = selectedYears.map(function(v){return v.getFullYear()});
-
-    //Set the legend values
-    d3.select("#legend-0-text").text(vis.options.years[0]);
-    d3.select("#legend-1-text").text(vis.options.years[1]);
 
 
     var allValues = vis.data.map(function(characteristic){
@@ -165,6 +196,14 @@ Radar.prototype.wrangleData = function() {
 Radar.prototype.updateVis = function() {
 
     var vis = this;
+
+    /************
+     * SCALES
+     * **********/
+    d3.select("#legend-0-text").text(vis.options.years[0]);
+    d3.select("#legend-1-text").text(vis.options.years[1]);
+    d3.select("#radar-title-item").text(vis.itemName);
+    d3.select("#radar-title-demographic").text(vis.demographicName);
 
     /************
      * SCALES
@@ -280,16 +319,17 @@ Radar.prototype.updateVis = function() {
         spokes.append("circle")
           .attr("class", "marker-circle plot-" + i)
           .attr("cx", function (d) {
-              d.plotYear = plotYear;
               var yearData = _.where(d.values, {year: plotYear})[0];
               var value = yearData ? yearData.adjustedValue : 0;
+              $.data(this, "value", vis.values(value));
+              $.data(this, "year", plotYear);
               return vis.values(value);
           })
           .attr("cy", 0)
           .attr("r", 5)
-          .on("mouseenter", function(e){
-              console.log(e);
-              vis.tip.show("Demographic: " + e.dimension + "<br>Spent (today's dollars): $" + Math.round(e.value));
+          .on("mouseenter", function(e) {
+              var displayValue = $.data(this, "value") == 0 ? "No Data" : "$" + Math.round($.data(this, "value"));
+              vis.tip.show($.data(this, "year") + "<br>" + radarDimensionName(e.dimension) + "<br>" + displayValue);
           })
           .on("mouseout", function(e){
               vis.tip.hide();
@@ -306,18 +346,25 @@ Radar.prototype.updateVis = function() {
           .attr("x", vis.radius + 10)
           .attr("dy", ".35em")
           .style("text-anchor", function (d) {
-              return vis.dimensions(d.dimension) < 360 && vis.dimensions(d.dimension) > 180 ? "end" : null;
+              return "middle";
+              //return vis.dimensions(d.dimension) < 360 && vis.dimensions(d.dimension) > 180 ? "end" : null;
           })
           .attr("transform", function (d) {
-              return vis.dimensions(d.dimension) < 360 && vis.dimensions(d.dimension) > 180 ? "rotate(180 " + (vis.radius + 10) + ",0)" : null;
+              //return vis.dimensions(d.dimension) < 360 && vis.dimensions(d.dimension) > 180 ? "rotate(180 " + (vis.radius + 10) + ",0)" : null;
+              return "rotate(90 " + (vis.radius + 10) + ",0)";
           })
           .text(function (d) {
-              return d.dimension;
+              return radarDimensionName(d.dimension);
           });
     }
 
 
 
-
-
 }
+
+
+function radarDimensionName(fullDimensionLabel){
+    return fullDimensionLabel.split("-")[2];
+}
+
+
