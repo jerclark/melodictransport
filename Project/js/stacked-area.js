@@ -250,9 +250,9 @@ Stacked.prototype.wrangleData = function() {
                             year: parseDate(d.year.toString()), y: d[key]};
                 })};}))};
 
-    vis.inflateAdjusted = stackDataForKey("adjustedValue");
-    vis.rawData = stackDataForKey("value");
-    vis.percentIncome = stackDataForKey("valuePercentIncome");
+    vis.adjustedValue = stackDataForKey("adjustedValue");
+    vis.value = stackDataForKey("value");
+    vis.valuePercentIncome = stackDataForKey("valuePercentIncome");
 
 
     // Calculating percentages is dependent on the totals from the submitted dataset,
@@ -267,11 +267,11 @@ Stacked.prototype.wrangleData = function() {
                 })};}));
 
    
-    var TYPE = d3.select("#area-chart-type").property("value");
-    var yAxisFormats = {inflateAdjusted : "$,.4s", rawData : "$,.4s",  percent : ",.2p", percentIncome : ",.2p",}; 
+    var TYPE = d3.select("#value-type").property("value");
+    var yAxisFormats = {adjustedValue : "$,.4s", value : "$,.4s",  percent : ",.2p", valuePercentIncome : ",.2p",};
     vis.yAxis.tickFormat(function(d) { return d3.format(yAxisFormats[TYPE])(d);});
 
-    var yAxisTitles = {inflateAdjusted : "Inflation adjusted dollars", rawData : "2014 Dollars",  percent : "% Overtime", percentIncome : "% of Average Income"};
+    var yAxisTitles = {adjustedValue : "Inflation adjusted dollars", value : "2014 Dollars",  percent : "% Overtime", valuePercentIncome : "% of Average Income"};
     vis.svg.select("#y-axis-label").text((yAxisTitles[TYPE]));
 
     console.log(TYPE);

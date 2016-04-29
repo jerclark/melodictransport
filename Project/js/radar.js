@@ -39,40 +39,24 @@ Radar.prototype.initVis = function() {
     /************
     * LEGEND AND CHART TITLE
     * **********/
+    var titleCenterX = (width/2) - 40;
+    var legendStartX = (width/2) - 50;
+    var legendLineLength = 20;
+    var legendTextWidth = 40;
+    var legendSpacer = 10;
+    var legendTextY = 50;
+    var legendLineY = 45;
     vis.legend = d3.select(vis.parentElement).append("svg")
+      .attr("class", "center-block")
       .attr('width', width)
-      .attr('height', 40)
+      .attr('height', 60)
       .append('g')
       .attr("id", "radar-legend");
-
-    vis.legend.append("path")
-      .datum([[0,20], [20,20]])
-      .attr("class", "plot-0")
-      .attr("d", d3.svg.line());
-
-    vis.legend.append("text")
-      .attr("class", "legend")
-      .attr("id", "legend-0-text")
-      .attr("x", "21")
-      .attr("dy", "25")
-      .text("1984");
-
-    vis.legend.append("path")
-      .datum([[60,20], [80,20]])
-      .attr("class", "plot-1")
-      .attr("d", d3.svg.line());
-
-    vis.legend.append("text")
-      .attr("class", "legend")
-      .attr("id", "legend-1-text")
-      .attr("x", "82")
-      .attr("dy", "25")
-      .text("2014");
 
     vis.legend.append("text")
       .attr("class", "radar-title")
       .attr("id", "radar-title-item")
-      .attr("x", (width / 2) - 15)
+      .attr("x", titleCenterX - 15)
       .attr("dy", "25")
       .attr("text-anchor", "end")
       .text("Item")
@@ -80,7 +64,7 @@ Radar.prototype.initVis = function() {
     vis.legend.append("text")
       .attr("class", "radar-title")
       .attr("id", "radar-separator")
-      .attr("x", (width / 2))
+      .attr("x", titleCenterX)
       .attr("dy", "25")
       .attr("text-anchor", "middle")
       .text("by")
@@ -88,14 +72,40 @@ Radar.prototype.initVis = function() {
     vis.legend.append("text")
       .attr("class", "radar-title")
       .attr("id", "radar-title-demographic")
-      .attr("x", (width / 2) + 15)
+      .attr("x", titleCenterX + 15)
       .attr("dy", "25")
       .attr("text-anchor", "start")
       .text("Demographic")
 
+    vis.legend.append("path")
+      .datum([[legendStartX, legendLineY], [legendStartX + legendLineLength, legendLineY]])
+      .attr("class", "plot-0")
+      .attr("d", d3.svg.line());
+
+    vis.legend.append("text")
+      .attr("class", "legend")
+      .attr("id", "legend-0-text")
+      .attr("x", legendStartX + legendLineLength + legendSpacer)
+      .attr("dy", legendTextY)
+      .text("1984");
+
+    vis.legend.append("path")
+      .datum([[legendStartX + legendLineLength + legendTextWidth + (legendSpacer * 2), legendLineY], [legendStartX + legendLineLength + legendTextWidth + (legendSpacer * 2) + legendLineLength,legendLineY]])
+      .attr("class", "plot-1")
+      .attr("d", d3.svg.line());
+
+    vis.legend.append("text")
+      .attr("class", "legend")
+      .attr("id", "legend-1-text")
+      .attr("x", (legendStartX + (legendLineLength * 2) + (legendSpacer * 3) + legendTextWidth))
+      .attr("dy", legendTextY)
+      .text("2014");
 
 
 
+    /************
+     * INITIALIZE MAIN SVG
+     * **********/
     var svg = vis.svg = d3.select(vis.parentElement).append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
@@ -105,6 +115,9 @@ Radar.prototype.initVis = function() {
 
 
 
+    /************
+     * INITIALIZE RING AND SPOKE GROUPS
+     * **********/
     var ringGroup = vis.ringGroup = vis.svg.append("g")
       .attr("class", "r axis");
 
@@ -166,16 +179,19 @@ Radar.prototype.fetchData = function() {
 Radar.prototype.wrangleData = function() {
     var vis = this;
 
-    //TODO: Fetch years from the timeline
+   //Fetch the years from the timeline
     var selectedYears = timeline.brush.empty() ? timeline.xContext.domain() : timeline.brush.extent()
     vis.options.years = selectedYears.map(function(v){return v.getFullYear()});
+
+    //Set the value type (adjusted dollars, raw dollars, etc)
+    vis.valueType = d3.select("#value-type").property("value");
 
 
     var allValues = vis.data.map(function(characteristic){
         var valuesForCharacteristic = [];
         _.each(vis.options.years, function(selectedYear){
             var yearData = _.where(characteristic.values, {year: selectedYear})[0];
-            var value = yearData ? yearData.adjustedValue : 0;
+            var value = yearData ? yearData[vis.valueType] : 0;
             valuesForCharacteristic.push(value);
         })
         return valuesForCharacteristic;
@@ -198,12 +214,13 @@ Radar.prototype.updateVis = function() {
     var vis = this;
 
     /************
-     * SCALES
+     * LEGEND
      * **********/
     d3.select("#legend-0-text").text(vis.options.years[0]);
     d3.select("#legend-1-text").text(vis.options.years[1]);
     d3.select("#radar-title-item").text(vis.itemName);
     d3.select("#radar-title-demographic").text(vis.demographicName);
+
 
     /************
      * SCALES
@@ -216,9 +233,6 @@ Radar.prototype.updateVis = function() {
         return v.dimension;
         }))
       .range(d3.range(0, 360, (360/vis.data.length)));
-
-
-
 
 
     /************
@@ -247,9 +261,15 @@ Radar.prototype.updateVis = function() {
       .attr("y", function(d) { return -vis.values(d) - 4; })
       .attr("transform", "rotate(" + (vis.dimensions.range()[1] / 2) + ")") //ring labels halfway btwn noon and 1
       .style("text-anchor", "middle")
-      .text(function(d) { return d; });
-
-
+      .text(function(d) {
+          var prefix = suffix = "";
+          if (_.contains(['adjustedValue', 'value'], vis.valueType))
+            prefix = "$";
+          if (vis.valueType === "valuePercentIncome")
+              suffix = "%";
+          console.log(d);
+          return prefix + d.toString() + suffix;
+      });
 
 
 
@@ -262,14 +282,14 @@ Radar.prototype.updateVis = function() {
         var vis = this;
         var yearLineData = vis.data.map(function(v,a,i){
             var yearData = _.where(v.values, {year:plotYear})[0];
-            var value = yearData ? yearData.adjustedValue : 0;
+            var value = yearData ? yearData[vis.valueType] : 0;
             return [
                 vis.values(value),
                 vis.dimensions(v.dimension)
             ];
         });
         var yearData = _.where(vis.data[0].values, {year:plotYear})[0];
-        var value = yearData ? yearData.adjustedValue : 0;
+        var value = yearData ? yearData[vis.valueType] : 0;
         yearLineData.push([
             vis.values(value),
             vis.dimensions(vis.data[0].dimension)
@@ -320,8 +340,8 @@ Radar.prototype.updateVis = function() {
           .attr("class", "marker-circle plot-" + i)
           .attr("cx", function (d) {
               var yearData = _.where(d.values, {year: plotYear})[0];
-              var value = yearData ? yearData.adjustedValue : 0;
-              $.data(this, "value", vis.values(value));
+              var value = yearData ? yearData[vis.valueType] : 0;
+              $.data(this, "value", value);
               $.data(this, "year", plotYear);
               return vis.values(value);
           })
@@ -350,8 +370,9 @@ Radar.prototype.updateVis = function() {
               //return vis.dimensions(d.dimension) < 360 && vis.dimensions(d.dimension) > 180 ? "end" : null;
           })
           .attr("transform", function (d) {
-              //return vis.dimensions(d.dimension) < 360 && vis.dimensions(d.dimension) > 180 ? "rotate(180 " + (vis.radius + 10) + ",0)" : null;
-              return "rotate(90 " + (vis.radius + 10) + ",0)";
+              var position = vis.dimensions(d.dimension);
+              var rotation =  position < 270 && position > 90 ?  "-90" : "90";
+              return "rotate(" + rotation + " " + (vis.radius + 10) + ",0)";
           })
           .text(function (d) {
               return radarDimensionName(d.dimension);
@@ -364,7 +385,7 @@ Radar.prototype.updateVis = function() {
 
 
 function radarDimensionName(fullDimensionLabel){
-    return fullDimensionLabel.split("-")[2];
+    return fullDimensionLabel.split("-").splice(2, 99).join("-");
 }
 
 

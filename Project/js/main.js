@@ -4,6 +4,7 @@ var timeline;
 var radarChart;
 var treePlot;
 
+
 function updateStories() {
     var stories = ["#getting-old", "#old-entertainment"];
     stories.forEach(function(el, idx) {
@@ -28,6 +29,15 @@ function updateStories() {
 
     $(".stories").find("button").first().click();
 }
+
+
+function wrangleAll(e){
+    // TODO: recalculate the data here in the controller instead
+    areachart.wrangleData();
+    radarChart.wrangleData();
+    treePlot.wrangleData();
+}
+
 
 $(function() {
     $('.filtering-nav').scrollToFixed();
@@ -160,10 +170,8 @@ $(function() {
         areachart.svg.select(".area").attr("d", areachart.area);
         areachart.svg.select(".x-axis").call(areachart.xAxis);
 
-        // TODO: recalculate the data here in the controller instead
-        areachart.wrangleData();
-        radarChart.wrangleData();
-        treePlot.wrangleData();
+        wrangleAll();
+
     });
 
 

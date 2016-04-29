@@ -41,10 +41,10 @@
                             <label>
                                 Show values as &nbsp;
                             </label>
-                            <select class="form-control" id="area-chart-type" onChange="areachart.wrangleData()">
-                                <option value="inflateAdjusted">Inflation Adjusted Dollars</option>
-                                <option value="rawData">Raw dollars</option>
-                                <option value="percentIncome">Percent of Income</option>
+                            <select class="form-control" id="value-type" onchange="wrangleAll()">
+                                <option value="adjustedValue">Inflation Adjusted Dollars</option>
+                                <option value="value">Raw dollars</option>
+                                <option value="valuePercentIncome">Percent of Income</option>
                                 <option value="percent">Percentage</option>
                             </select>
                         </div>
