@@ -7,32 +7,32 @@
   {
     "demographic": "LB01",
     "characteristic": "02",
-    "name": "Lowest 20 percent income quintile"
+    "name": "Lowest 20 percent"
   },
   {
     "demographic": "LB01",
     "characteristic": "03",
-    "name": "Second 20 percent income quintile"
+    "name": "Second 20 percent"
   },
   {
     "demographic": "LB01",
     "characteristic": "04",
-    "name": "Third 20 percent income quintile"
+    "name": "Third 20 percent"
   },
   {
     "demographic": "LB01",
     "characteristic": "05",
-    "name": "Fourth 20 percent income quintile"
+    "name": "Fourth 20 percent"
   },
   {
     "demographic": "LB01",
     "characteristic": "06",
-    "name": "Highest 20 percent income quintile"
+    "name": "Highest 20 percent"
   },
   {
     "demographic": "LB01",
     "characteristic": "A1",
-    "name": "Total complete income reporters"
+    "name": "Total complete reporters"
   },
   {
     "demographic": "LB01",
@@ -47,87 +47,87 @@
   {
     "demographic": "LB02",
     "characteristic": "02",
-    "name": "Before tax income of less than $5,000"
+    "name": "< $5K"
   },
   {
     "demographic": "LB02",
     "characteristic": "03",
-    "name": "$5,000 to $9,999 before tax income"
+    "name": "$5K-$10K"
   },
   {
     "demographic": "LB02",
     "characteristic": "04",
-    "name": "$10,000 to $14,999 before tax income"
+    "name": "$10K-$15K"
   },
   {
     "demographic": "LB02",
     "characteristic": "05",
-    "name": "$15,000 to $19,999 before tax income"
+    "name": "$15K-$20K"
   },
   {
     "demographic": "LB02",
     "characteristic": "06",
-    "name": "$20,000 to $29,999 before tax income"
+    "name": "$20K-$30K"
   },
   {
     "demographic": "LB02",
     "characteristic": "07",
-    "name": "$30,000 to $39,999 before tax income"
+    "name": "$30K-$40K"
   },
   {
     "demographic": "LB02",
     "characteristic": "08",
-    "name": "$40,000 to $49,999 before tax income"
+    "name": "$40K-$50K"
   },
   {
     "demographic": "LB02",
     "characteristic": "09",
-    "name": "$50,000 to $69,999 before tax income"
+    "name": "$50K-$70K"
   },
   {
     "demographic": "LB02",
     "characteristic": "10",
-    "name": "Before tax income of $70,000 and over"
+    "name": "> $70K  0"
   },
   {
     "demographic": "LB02",
     "characteristic": "11",
-    "name": "Before tax income of less than $70,000(from 2003)"
+    "name": "< $70K(from 2003)"
   },
   {
     "demographic": "LB02",
     "characteristic": "12",
-    "name": "$70,000 to $79,999 before tax income(from 2003)"
+    "name": "$70K-$80K(from 2003)"
   },
   {
     "demographic": "LB02",
     "characteristic": "13",
-    "name": "$80,000 to $99,999 before tax income(from 2003)"
+    "name": "$80K-$100K(from 2003)"
   },
   {
     "demographic": "LB02",
     "characteristic": "14",
-    "name": "Before tax income of $100,000 and over(from 2003)"
+    "name": "> $100K (from 2003)"
   },
   {
     "demographic": "LB02",
     "characteristic": "15",
-    "name": "$100,000 to $119,999 before tax income(from 2003)"
+    "name": "$100K-$120K(from 2003)"
   },
   {
     "demographic": "LB02",
     "characteristic": "16",
-    "name": "$120,000 to $149,999 before tax income(from 2003)"
+    "name": "$120K-$150K(from 2003)"
   },
   {
     "demographic": "LB02",
     "characteristic": "17",
-    "name": "Before tax income of $150,000 and over(from 2003)"
+    "name": "> $150K (from 2003)"
   },
   {
     "demographic": "LB02",
     "characteristic": "A1",
-    "name": "Before tax income of $50,000 and over"
+    "name": "> $50K  0"
   },
   {
     "demographic": "LB02",
@@ -142,42 +142,42 @@
   {
     "demographic": "LB04",
     "characteristic": "02",
-    "name": "Reference person under age 25"
+    "name": "< 25yrs"
   },
   {
     "demographic": "LB04",
     "characteristic": "03",
-    "name": "Reference person between age 25 and 34"
+    "name": "25 to 34yrs"
   },
   {
     "demographic": "LB04",
     "characteristic": "04",
-    "name": "Reference person between age 35 and 44"
+    "name": "35 to 44yrs"
   },
   {
     "demographic": "LB04",
     "characteristic": "05",
-    "name": "Reference person between age 45 and 54"
+    "name": "45 to 54yrs"
   },
   {
     "demographic": "LB04",
     "characteristic": "06",
-    "name": "Reference person between age 55 and 64"
+    "name": "55 to 64yrs"
   },
   {
     "demographic": "LB04",
     "characteristic": "07",
-    "name": "Reference person over age 65"
+    "name": "> 65yrs"
   },
   {
     "demographic": "LB04",
     "characteristic": "08",
-    "name": "Reference person between age 65 and 74"
+    "name": "65 to 74yrs"
   },
   {
     "demographic": "LB04",
     "characteristic": "09",
-    "name": "Reference person over the age of 75"
+    "name": "> 75yrs"
   },
   {
     "demographic": "LB05",
@@ -252,7 +252,7 @@
   {
     "demographic": "LB06",
     "characteristic": "06",
-    "name": "Husband and wife w/ children, oldest child 6 to 17"
+    "name": "Husband and wife w/ children, oldest child 6-17"
   },
   {
     "demographic": "LB06",
@@ -317,42 +317,42 @@
   {
     "demographic": "LB08",
     "characteristic": "02",
-    "name": "Housing tenure: home owner"
+    "name": "Home owner"
   },
   {
     "demographic": "LB08",
     "characteristic": "03",
-    "name": "Housing tenure: homeowner with mortgage(from 2003)"
+    "name": "Homeowner with mortgage(from 2003)"
   },
   {
     "demographic": "LB08",
     "characteristic": "04",
-    "name": "Housing tenure: homeowner w/o mortgage(from 2003)"
+    "name": "Homeowner w/o mortgage(from 2003)"
   },
   {
     "demographic": "LB08",
     "characteristic": "05",
-    "name": "Housing tenure: renter"
+    "name": "Renter"
   },
   {
     "demographic": "LB08",
     "characteristic": "06",
-    "name": "Type of area: urban"
+    "name": "Area: urban"
   },
   {
     "demographic": "LB08",
     "characteristic": "07",
-    "name": "Type of area: urban: central city(from 2003)"
+    "name": "Area: urban: central city(from 2003)"
   },
   {
     "demographic": "LB08",
     "characteristic": "08",
-    "name": "Type of area: urban: other urban(from 2003)"
+    "name": "Area: urban: other urban(from 2003)"
   },
   {
     "demographic": "LB08",
     "characteristic": "09",
-    "name": "Type of area: rural"
+    "name": "Area: rural"
   },
   {
     "demographic": "LB09",
@@ -362,22 +362,22 @@
   {
     "demographic": "LB09",
     "characteristic": "02",
-    "name": "Race of ref. person: White, Asian, and All Others"
+    "name": "Race: White, Asian, and All Others"
   },
   {
     "demographic": "LB09",
     "characteristic": "03",
-    "name": "Race of rf. pers.: White and All Others(from 2003)"
+    "name": "Race: White and All Others(from 2003)"
   },
   {
     "demographic": "LB09",
     "characteristic": "04",
-    "name": "Race of reference person: Asian(from 2003)"
+    "name": "Race: Asian(from 2003)"
   },
   {
     "demographic": "LB09",
     "characteristic": "05",
-    "name": "Race of ref. person: Black or African American"
+    "name": "Race: Black or African American"
   },
   {
     "demographic": "LB10",
@@ -387,22 +387,22 @@
   {
     "demographic": "LB10",
     "characteristic": "02",
-    "name": "Origin of reference person: Hispanic or Latino"
+    "name": "Origin: Hispanic or Latino"
   },
   {
     "demographic": "LB10",
     "characteristic": "03",
-    "name": "Origin of reference person: Not Hispanic or Latino"
+    "name": "Origin: Not Hispanic or Latino"
   },
   {
     "demographic": "LB10",
     "characteristic": "04",
-    "name": "Not Hispanic or Latino: White and All Other Races"
+    "name": "Origin: White and All Other Races"
   },
   {
     "demographic": "LB10",
     "characteristic": "05",
-    "name": "Not Hispanic or Latino: Black or African-American"
+    "name": "Origin: Black or African-American"
   },
   {
     "demographic": "LB11",

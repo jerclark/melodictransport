@@ -2,116 +2,139 @@
   {
     "category": "ADDENDA",
     "subcategory": "CHGASLI",
-    "name": "Net change in total assets and liabilities"
+    "name": "Net change in total assets and liabilities",
+    "treeIcon": ""
   },
   {
     "category": "ADDENDA",
     "subcategory": "TITLEOFI",
-    "name": "Other financial informations:"
+    "name": "Other financial informations:",
+    "treeIcon": ""
   },
   {
     "category": "CUCHARS",
     "subcategory": "CONSUNIT",
-    "name": "Number of consumer units (in thousands)"
+    "name": "Number of consumer units (in thousands)",
+    "treeIcon": ""
   },
   {
     "category": "CUCHARS",
     "subcategory": "TITLECU",
-    "name": "Consumer unit characteristics:"
+    "name": "Consumer unit characteristics:",
+    "treeIcon": ""
   },
   {
     "category": "CUCHARS",
     "subcategory": "TITLEPD",
-    "name": "Percent distribution:"
+    "name": "Percent distribution:",
+    "treeIcon": ""
   },
   {
     "category": "EXPEND",
     "subcategory": "ALCBEVG",
-    "name": "Alcoholic beverages"
+    "name": "Alcoholic beverages",
+    "treeIcon": "f000"
   },
   {
     "category": "EXPEND",
     "subcategory": "APPAREL",
-    "name": "Apparel and services"
+    "name": "Apparel and services",
+    "treeIcon": "f290"
   },
   {
     "category": "EXPEND",
     "subcategory": "CASHCONT",
-    "name": "Cash contributions"
+    "name": "Cash contributions",
+    "treeIcon": "f0d6"
   },
   {
     "category": "EXPEND",
     "subcategory": "EDUCATN",
-    "name": "Education"
+    "name": "Education",
+    "treeIcon": "f19d"
   },
   {
     "category": "EXPEND",
     "subcategory": "ENTRTAIN",
-    "name": "Entertainment"
+    "name": "Entertainment",
+    "treeIcon": "f145"
   },
   {
     "category": "EXPEND",
     "subcategory": "FOODTOTL",
-    "name": "Food"
+    "name": "Food",
+    "treeIcon": "f0f5"
   },
   {
     "category": "EXPEND",
     "subcategory": "HEALTH",
-    "name": "Healthcare"
+    "name": "Healthcare",
+    "treeIcon": "f0fa"
   },
   {
     "category": "EXPEND",
     "subcategory": "HOUSING",
-    "name": "Housing"
+    "name": "Housing",
+    "treeIcon": "f015"
   },
   {
     "category": "EXPEND",
     "subcategory": "INSPENSN",
-    "name": "Personal insurance and pensions"
+    "name": "Personal insurance and pensions",
+    "treeIcon": "f19c"
   },
   {
     "category": "EXPEND",
     "subcategory": "MISC",
-    "name": "Miscellaneous expenditures"
+    "name": "Miscellaneous expenditures",
+    "treeIcon": "f270"
   },
   {
     "category": "EXPEND",
     "subcategory": "PERSCARE",
-    "name": "Personal care products and services"
+    "name": "Personal care products and services",
+    "treeIcon": "f228"
   },
   {
     "category": "EXPEND",
     "subcategory": "READING",
-    "name": "Reading"
+    "name": "Reading",
+    "treeIcon": "f02d"
   },
   {
     "category": "EXPEND",
     "subcategory": "TOBACCO",
-    "name": "Tobacco products and smoking supplies"
+    "name": "Tobacco products and smoking supplies",
+    "treeIcon": "f21e"
   },
   {
     "category": "EXPEND",
     "subcategory": "TOTALEXP",
-    "name": "Total average annual expenditures"
+    "name": "Total average annual expenditures",
+    "treeIcon": "f290"
   },
   {
     "category": "EXPEND",
     "subcategory": "TRANS",
-    "name": "Transportation"
+    "name": "Transportation",
+    "treeIcon": "f1b9"
   },
   {
     "category": "INCOME",
     "subcategory": "INCAFTTX",
-    "name": "Income after taxes"
+    "name": "Income after taxes",
+    "treeIcon": ""
   },
   {
     "category": "INCOME",
     "subcategory": "INCBEFTX",
-    "name": "Money income before taxes"
+    "name": "Money income before taxes",
+    "treeIcon": ""
   },
   {
     "category": "INCOME",
     "subcategory": "PERSTAX",
-    "name": "Personal taxes"
+    "name": "Personal taxes",
+    "treeIcon": ""
   }
 ]
