@@ -4,6 +4,34 @@ var timeline;
 var radarChart;
 var treePlot;
 
+// In SM- mode which we should use everywhere (don't want the layout
+// to ever break vertically eg. become responsive.)
+var COLUMN_WIDTH = 90;
+var COLUMN_WIDTH_4 = COLUMN_WIDTH * 4;
+var COLUMN_WIDTH_HALF = COLUMN_WIDTH * 6;
+var COLUMN_WIDTH_FULL = COLUMN_WIDTH * 12;
+
+/* palette */
+// .bg-steady-grey {
+//     background-color: #E9E9E9;
+// }
+// .bg-vitaminc {
+//     background-color: #FF9900;
+// }
+// .bg-darkest-grey {
+//     background-color: #424242;
+// }
+// .bg-darker-grey {
+//     background-color: #BCBCBC;
+// }
+// .bg-blue, .bg-info {
+//     background-color: #3299BB;
+//     color: #E9E9E9;
+// }
+// .bg-white {
+//     background-color: #F8F8F8;
+// }
+
 
 function updateStories() {
     var stories = ["#getting-old", "#old-entertainment"];
@@ -48,7 +76,7 @@ $(function() {
 
 (function(cs171) {
 
-    var FULL_WIDTH = 1366;
+    var FULL_WIDTH = 1170;
     var ds = window.ds = new cs171.Dataset();
 
     ds.ready(function(ds) {
@@ -157,8 +185,7 @@ $(function() {
         })
     }
 
-
-    function showTrees(){
+    function showTrees() {
         treePlot = new TreePlot("#vis-tree");
     }
 

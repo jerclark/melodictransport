@@ -2,6 +2,14 @@
 /*  TREE STYLES  */
 /*********************/
 
+.tree-charts {
+    margin-bottom: 400px;
+}
+
+.tree-charts h2 {
+
+}
+
 #ground-line {
     fill: none;
     stroke: lightgreen;

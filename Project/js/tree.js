@@ -3,20 +3,20 @@ TreePlot = function(_parentElement, _options) {
   vis.parentElement = _parentElement;
 
   //Create the grid layout with the controls, legend and the trees
-  vis.container = d3.select(vis.parentElement).append("div")
-    .attr("class", "container-fluid");
+  // vis.container = d3.select(vis.parentElement).append("div")
+  //   .attr("class", "row");
 
-  vis.controlDiv = vis.container
-    .append("div")
-    .attr("class", "row")
-    .attr("id", "tree-controls");
+  // vis.controlDiv = vis.container
+  //   .append("div")
+  //   .attr("class", "row")
+  //   .attr("id", "tree-controls");
 
-  vis.gridDiv = vis.container
-    .append("div")
-    .attr("class", "row")
-    .append("div")
-    .attr("class", "col-md-8")
-    .attr("id", "tree-grid");
+  // vis.gridDiv = vis.container
+  //   .append("div")
+  //   .attr("class", "row")
+  //   .append("div")
+  //   .attr("class", "col-md-8")
+  //   .attr("id", "tree-grid");
 
   /************
    * CONTROLS
@@ -24,13 +24,12 @@ TreePlot = function(_parentElement, _options) {
 
   //Demographic picker. Remove some.
   vis.demoPicker = new DemographicPicker("tree-demo-picker");
-  $("#tree-controls").append("<div class='col-md-3'>" + this.demoPicker.html() + "</div>");
+  $(".tree-demo-picker").html(this.demoPicker.html());
   $('#tree-demo-picker option:contains("Income before taxes")').remove();
   $('#tree-demo-picker option:contains("Highest education level of any member")').remove();
 
-
   vis.charPicker = new CharacteristicPicker("tree-char-picker", $("#tree-demo-picker").val());
-  $("#tree-controls").append("<div class='col-md-3'>" + this.charPicker.html() + "</div>");
+  $(".tree-char-picker").html(this.charPicker.html());
 
   //Events
   $("#tree-demo-picker").on("change", function(e){
@@ -101,9 +100,9 @@ TreePlot.prototype.updatePlot = function(){
   $("#tree-grid").append(vis.plot.html());
 
   var chartOptions = {
-    width: 400,
-    height:400,
-    margin:{top: 40, right: 75, bottom: 40, left: 75}
+    width: 600,
+    height: 800,
+    margin: {top: 40, right: 75, bottom: 40, left: 75}
   };
 
   vis.plot.draw(vis.plotData, chartOptions);

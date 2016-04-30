@@ -91,7 +91,7 @@ Timeline.prototype.initVis = function() {
         .call(brush)
         .selectAll("rect")
         .attr("fill", "#424242")
-        .attr("opacity", 0.3)
+        .attr("opacity", 0.8)
         .attr("y", -6)
         .attr("height", vis.height + 7);
 
