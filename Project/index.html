@@ -67,7 +67,7 @@
                     </div>
 
                     <h2>Timeline</h2>
-                    <p>The timeline displayed below will remain fixed as you navigate the visualizations below. Use it to select the range of years you want to examine and it will affect all the visualizations on the page.</p>
+                    <p>The timeline displayed below will remain fixed as you navigate the visualizations below. Use it to select the range of years you want to examine and it will affect all the visualizations on the page. You may also change the unit used to display values to various absolute and relative formats.</p>
                     <p>Overlaid the timeline, markers indicate various major events that have occured since 1984.</p>
                 </div>
                 <div class="col-sm-3">
@@ -98,71 +98,72 @@
             </div>
         </section>
 
-        <div class="container">
-            <a name="radar" class="hidden"></a>
-            <div class="radar-charts">
-                <h2>Radar Chart</h2>
-                <div class="row">
-                    <div class="col-sm-8">
-                        <div id="radar-chart">
+        <div class="vis-container">
+            <div class="container">
+                <a name="radar" class="hidden"></a>
+                <div class="radar-charts">
+                    <h2>Radar Chart</h2>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div id="radar-chart">
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="stories glyph-intro">
-                        <div class="current-story"></div>
-                        <div class="story-picker"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="layer-cake">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <a name="area"></a>
-                        <div class="household">
-                            <h1>American Household Expenditures</h1>
-                            <div class="vis-stacked">
-                                <div id="stacked-area-chart"></div>
+                        <div class="col-sm-4">
+                            <div class="stories glyph-intro">
+                            <div class="current-story"></div>
+                            <div class="story-picker"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="tree-charts">
-                <a name="money-tree"></a>
-                <h2 class="text-center">The Money Tree</h2>
-                <p>
-                    <ul>
-                        <li>Tree Height = income earned</li>
-                        <li>Branch length = % income spend on that category</li>
-                    </ul>
+                <div class="layer-cake">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a name="area"></a>
+                            <div class="household">
+                                <h1>American Household Expenditures</h1>
+                                <div class="vis-stacked">
+                                    <div id="stacked-area-chart"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tree-charts">
+                    <a name="money-tree"></a>
+                    <h2 class="text-center">The Money Tree</h2>
                     <p>
-                        The trees represent the beginning and end of the selected range in the timeline. Slide, expand or contract the timeline selection to see trends over time.
+                        <ul>
+                            <li>Tree Height = income earned</li>
+                            <li>Branch length = % income spend on that category</li>
+                        </ul>
+                        <p>
+                            The trees represent the beginning and end of the selected range in the timeline. Slide, expand or contract the timeline selection to see trends over time.
+                        </p>
+                        <p>
+                            Refine the data by selecting from the various demographics, and hover over the leaves for more details.
+                        </p>
                     </p>
-                    <p>
-                        Refine the data by selecting from the various demographics, and hover over the leaves for more details.
-                    </p>
-                </p>
 
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div id="vis-tree">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="tree-demo-picker"></div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div id="vis-tree">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="tree-demo-picker"></div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="tree-char-picker"></div>
+                                    </div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <div class="tree-char-picker"></div>
+                                <div class="row" id="tree-grid">
                                 </div>
-                            </div>
-                            <div class="row" id="tree-grid">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <script type="template" id="standard-dropdown">
         <label for="<%-pickerId%>"><%-pickerName%></label>
         <select class="form-control" id="<%-pickerId%>">

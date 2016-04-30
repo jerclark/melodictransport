@@ -70,6 +70,14 @@ section.intro {
     padding-top: 40px;
 }
 
+.vis-container {
+    background-image: url(../img/landscape1.png);
+    background-position: bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
 #value-type {
     width: 400px;
 }
