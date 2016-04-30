@@ -272,7 +272,7 @@ Radar.prototype.updateVis = function() {
             prefix = "$";
           if (vis.valueType === "valuePercentIncome")
               suffix = "%";
-          console.log(d);
+          //console.log(d);
           return prefix + d.toString() + suffix;
       });
 

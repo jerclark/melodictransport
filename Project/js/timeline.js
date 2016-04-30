@@ -100,7 +100,7 @@ Timeline.prototype.initVis = function() {
         .attr("transform", "translate(0," + vis.height + ")")
         .call(vis.xAxis);
 
-    console.log('yearsExtent', yearsExtent);
+    //console.log('yearsExtent', yearsExtent);
 
     // Event markers
     var evdata = this.eventsData.filter(function(d) {
@@ -155,7 +155,7 @@ Timeline.prototype.initVis = function() {
             return d.name.trim();
         });
 
-    console.log(evdata);
+  //  console.log(evdata);
 
 
 }

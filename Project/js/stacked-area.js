@@ -28,15 +28,23 @@ Stacked = function(_parentElement, _data, _properties){
 Stacked.prototype.initVis = function() {
     var vis = this;
 
-    vis.margin = vis.properties.margin;
-    vis.width = vis.properties.width - vis.margin.left - vis.margin.right;
-    vis.legendMargin = { top: 0, right: 1, bottom: 20, left: 1 }; 
-    vis.legendArea = 65; 
-    vis.legendHeight = vis.legendArea - vis.legendMargin.top - vis.legendMargin.bottom; 
-    vis.legendWidth = vis.width - vis.legendMargin.right - vis.legendMargin.left; 
-    
-    vis.areaChartHeight = vis.properties.height - vis.margin.top - vis.margin.bottom - vis.legendHeight ; 
+    vis.areachart = {margin: { top: 20, right: 20, bottom: 20, left: 75 }};
+    vis.legend =    {margin: { top: 0, right: 1, bottom: 20, left: 1 }};
 
+    vis.margin = vis.properties.margin;
+
+    vis.width = vis.properties.width - vis.margin.left - vis.margin.right;
+    vis.height = vis.properties.height - vis.margin.top - vis.margin.bottom;
+
+    vis.legend.area = 65; 
+    vis.legend.height = vis.legend.area - vis.legend.margin.top - vis.legend.margin.bottom; 
+    vis.legend.width = vis.width - vis.legend.margin.right - vis.legend.margin.left; 
+    
+
+    vis.areachart.height = vis.height - vis.areachart.margin.top - vis.areachart.margin.bottom - vis.legend.height ; 
+    vis.areachart.width = vis.width - vis.areachart.margin.left - vis.areachart.margin.right; 
+
+    console.log(vis.areachart);
 
     function isSingleton(s){
         var singletons = ["ALCBEVG","CASHCONT","EDUCATN","PERSCARE","READING","TOBACCO", "MISC"];
@@ -113,9 +121,9 @@ Stacked.prototype.initVis = function() {
   // SVG drawing area (Adapted from lab 7)
     vis.svg = d3.select(vis.parentElement).append("svg")
         .attr("width", vis.width + vis.margin.left + vis.margin.right)
-        .attr("height", vis.areaChartHeight + vis.margin.top + vis.margin.bottom + vis.legendArea)
+        .attr("height", vis.areachart.height + vis.margin.top + vis.margin.bottom + vis.legend.area)
       .append("g")
-        .attr("transform", "translate(" + vis.margin.left + "," + vis.margin.top + ")");
+        .attr("transform", "translate(" + vis.areachart.margin.left + "," + vis.areachart.margin.top + ")");
 
     // Scales and axes
     // Currently makes x scale based on first layer min/max
@@ -124,11 +132,11 @@ Stacked.prototype.initVis = function() {
     vis.max_year = parseDate(d3.max(years).toString());
 
     vis.x = d3.time.scale()
-        .range([0, vis.width])
+        .range([0, vis.areachart.width])
         .domain([vis.min_year, vis.max_year]);
 
     vis.y = d3.scale.linear()
-        .range([vis.areaChartHeight , 0]);
+        .range([vis.areachart.height , 0]);
 
     vis.xAxis = d3.svg.axis()
         .scale(vis.x)
@@ -140,7 +148,7 @@ Stacked.prototype.initVis = function() {
 
     vis.svg.append("g")
         .attr("class", "x-axis axis")
-        .attr("transform", "translate(0," + vis.areaChartHeight + ")");
+        .attr("transform", "translate(0," + vis.areachart.height + ")");
 
     vis.svg.append("g")
             .attr("class", "y-axis axis");
@@ -163,15 +171,15 @@ Stacked.prototype.initVis = function() {
    vis.svg.append("defs").append("clipPath")
         .attr("id", "clip")
         .append("rect")
-        .attr("width", vis.width)
-        .attr("height", vis.areaChartHeight);
+        .attr("width", vis.areachart.width)
+        .attr("height", vis.areachart.height);
     
     // Y axis label
     vis.svg.append("text")
         .attr("id", "y-axis-label")
         .attr("transform", "rotate(-90)")
-        .attr("y", (0 - vis.margin.left ))
-        .attr("x",0 - (vis.areaChartHeight / 2))
+        .attr("y", (0 - vis.areachart.margin.left ))
+        .attr("x",0 - (vis.areachart.height / 2))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
         .text("Value");
@@ -186,15 +194,15 @@ Stacked.prototype.initVis = function() {
     // Append legend background
     vis.legend_entry_height = 10; 
     vis.legend_x = 0 
-    vis.legend_y = vis.properties.height - vis.legendHeight;  
+    vis.legend_y = vis.properties.height - vis.legend.height;  
  
 
     vis.svg.append("rect")
         .attr("id", "legendBackground")
         .attr("x", vis.legend_x)
         .attr("y", vis.legend_y)
-        .attr("width", vis.legendWidth )
-        .attr("height", vis.legendHeight -25 )
+        .attr("width", vis.legend.width )
+        .attr("height", vis.legend.height -25 )
         .style("stroke", "black")
         .style("fill","#fff")
         .style("opacity", .75);
@@ -287,7 +295,7 @@ Stacked.prototype.wrangleData = function() {
 
 
 /*
- *  The drawing function (Heavly adabted from Lab  7)
+ *  The drawing function 
  */
 
 Stacked.prototype.updateVis = function() {
@@ -372,7 +380,7 @@ Stacked.prototype.updateVis = function() {
 
     // SubCatagory Legend 
 
-    var spacer = (vis.legendWidth - 5) / (vis.subcategories.length );
+    var spacer = (vis.legend.width - 5) / (vis.subcategories.length );
 
     var legend = vis.svg.selectAll('g.legendEntry')
         .data(vis.subcategories)
