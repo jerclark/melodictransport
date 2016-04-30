@@ -1,0 +1,1598 @@
+[
+  {
+    "item": "AA0",
+    "name": "All items - old base"
+  },
+  {
+    "item": "AA0R",
+    "name": "Purchasing power of the consumer dollar - old base"
+  },
+  {
+    "item": "SA0",
+    "name": "All items"
+  },
+  {
+    "item": "SA0E",
+    "name": "Energy"
+  },
+  {
+    "item": "SA0L1",
+    "name": "All items less food"
+  },
+  {
+    "item": "SA0L12",
+    "name": "All items less food and shelter"
+  },
+  {
+    "item": "SA0L12E",
+    "name": "All items less food, shelter, and energy"
+  },
+  {
+    "item": "SA0L12E4",
+    "name": "All items less food, shelter, energy, and used cars and trucks"
+  },
+  {
+    "item": "SA0L1E",
+    "name": "All items less food and energy"
+  },
+  {
+    "item": "SA0L2",
+    "name": "All items less shelter"
+  },
+  {
+    "item": "SA0L5",
+    "name": "All items  less medical care"
+  },
+  {
+    "item": "SA0LE",
+    "name": "All items less energy"
+  },
+  {
+    "item": "SA0R",
+    "name": "Purchasing power of the consumer dollar"
+  },
+  {
+    "item": "SA311",
+    "name": "Apparel less footwear"
+  },
+  {
+    "item": "SAA",
+    "name": "Apparel"
+  },
+  {
+    "item": "SAA1",
+    "name": "Men's and boys' apparel"
+  },
+  {
+    "item": "SAA2",
+    "name": "Women's and girls' apparel"
+  },
+  {
+    "item": "SAC",
+    "name": "Commodities"
+  },
+  {
+    "item": "SACE",
+    "name": "Energy commodities"
+  },
+  {
+    "item": "SACL1",
+    "name": "Commodities less food"
+  },
+  {
+    "item": "SACL11",
+    "name": "Commodities less food and beverages"
+  },
+  {
+    "item": "SACL1E",
+    "name": "Commodities less food and energy commodities"
+  },
+  {
+    "item": "SACL1E4",
+    "name": "Commodities less food, energy, and used cars and trucks"
+  },
+  {
+    "item": "SAD",
+    "name": "Durables"
+  },
+  {
+    "item": "SAE",
+    "name": "Education and communication"
+  },
+  {
+    "item": "SAE1",
+    "name": "Education"
+  },
+  {
+    "item": "SAE2",
+    "name": "Communication"
+  },
+  {
+    "item": "SAE21",
+    "name": "Information and information processing"
+  },
+  {
+    "item": "SAEC",
+    "name": "Education and communication commodities"
+  },
+  {
+    "item": "SAES",
+    "name": "Education and communication services"
+  },
+  {
+    "item": "SAF",
+    "name": "Food and beverages"
+  },
+  {
+    "item": "SAF1",
+    "name": "Food"
+  },
+  {
+    "item": "SAF11",
+    "name": "Food at home"
+  },
+  {
+    "item": "SAF111",
+    "name": "Cereals and bakery products"
+  },
+  {
+    "item": "SAF112",
+    "name": "Meats, poultry, fish, and eggs"
+  },
+  {
+    "item": "SAF1121",
+    "name": "Meats, poultry, and fish"
+  },
+  {
+    "item": "SAF11211",
+    "name": "Meats"
+  },
+  {
+    "item": "SAF113",
+    "name": "Fruits and vegetables"
+  },
+  {
+    "item": "SAF1131",
+    "name": "Fresh fruits and vegetables"
+  },
+  {
+    "item": "SAF114",
+    "name": "Nonalcoholic beverages and beverage materials"
+  },
+  {
+    "item": "SAF115",
+    "name": "Other food at home"
+  },
+  {
+    "item": "SAF116",
+    "name": "Alcoholic beverages"
+  },
+  {
+    "item": "SAG",
+    "name": "Other goods and services"
+  },
+  {
+    "item": "SAG1",
+    "name": "Personal care"
+  },
+  {
+    "item": "SAGC",
+    "name": "Other goods"
+  },
+  {
+    "item": "SAGS",
+    "name": "Other personal services"
+  },
+  {
+    "item": "SAH",
+    "name": "Housing"
+  },
+  {
+    "item": "SAH1",
+    "name": "Shelter"
+  },
+  {
+    "item": "SAH2",
+    "name": "Fuels and utilities"
+  },
+  {
+    "item": "SAH21",
+    "name": "Household energy"
+  },
+  {
+    "item": "SAH3",
+    "name": "Household furnishings and operations"
+  },
+  {
+    "item": "SAH31",
+    "name": "Household furnishings and supplies"
+  },
+  {
+    "item": "SAM",
+    "name": "Medical care"
+  },
+  {
+    "item": "SAM1",
+    "name": "Medical care commodities"
+  },
+  {
+    "item": "SAM2",
+    "name": "Medical care services"
+  },
+  {
+    "item": "SAN",
+    "name": "Nondurables"
+  },
+  {
+    "item": "SAN1D",
+    "name": "Domestically produced farm food"
+  },
+  {
+    "item": "SANL1",
+    "name": "Nondurables less food"
+  },
+  {
+    "item": "SANL11",
+    "name": "Nondurables less food and beverages"
+  },
+  {
+    "item": "SANL113",
+    "name": "Nondurables less food, beverages, and apparel"
+  },
+  {
+    "item": "SANL13",
+    "name": "Nondurables less food and apparel"
+  },
+  {
+    "item": "SAR",
+    "name": "Recreation"
+  },
+  {
+    "item": "SARC",
+    "name": "Recreation commodities"
+  },
+  {
+    "item": "SARS",
+    "name": "Recreation services"
+  },
+  {
+    "item": "SAS",
+    "name": "Services"
+  },
+  {
+    "item": "SAS24",
+    "name": "Utilities and public transportation"
+  },
+  {
+    "item": "SAS2RS",
+    "name": "Rent of shelter"
+  },
+  {
+    "item": "SAS367",
+    "name": "Other services"
+  },
+  {
+    "item": "SAS4",
+    "name": "Transportation services"
+  },
+  {
+    "item": "SASL2RS",
+    "name": "Services less rent of shelter"
+  },
+  {
+    "item": "SASL5",
+    "name": "Services less medical care services"
+  },
+  {
+    "item": "SASLE",
+    "name": "Services less energy services"
+  },
+  {
+    "item": "SAT",
+    "name": "Transportation"
+  },
+  {
+    "item": "SAT1",
+    "name": "Private transportation"
+  },
+  {
+    "item": "SATCLTB",
+    "name": "Transportation commodities less motor fuel"
+  },
+  {
+    "item": "SEAA",
+    "name": "Men's apparel"
+  },
+  {
+    "item": "SEAA01",
+    "name": "Men's suits, sport coats, and outerwear"
+  },
+  {
+    "item": "SEAA02",
+    "name": "Men's furnishings"
+  },
+  {
+    "item": "SEAA03",
+    "name": "Men's shirts and sweaters"
+  },
+  {
+    "item": "SEAA04",
+    "name": "Men's pants and shorts"
+  },
+  {
+    "item": "SEAB",
+    "name": "Boys' apparel"
+  },
+  {
+    "item": "SEAC",
+    "name": "Women's apparel"
+  },
+  {
+    "item": "SEAC01",
+    "name": "Women's outerwear"
+  },
+  {
+    "item": "SEAC02",
+    "name": "Women's dresses"
+  },
+  {
+    "item": "SEAC03",
+    "name": "Women's suits and separates"
+  },
+  {
+    "item": "SEAC04",
+    "name": "Women's underwear, nightwear, sportswear and accessories"
+  },
+  {
+    "item": "SEAD",
+    "name": "Girls' apparel"
+  },
+  {
+    "item": "SEAE",
+    "name": "Footwear"
+  },
+  {
+    "item": "SEAE01",
+    "name": "Men's footwear"
+  },
+  {
+    "item": "SEAE02",
+    "name": "Boys' and girls' footwear"
+  },
+  {
+    "item": "SEAE03",
+    "name": "Women's footwear"
+  },
+  {
+    "item": "SEAF",
+    "name": "Infants' and toddlers' apparel"
+  },
+  {
+    "item": "SEAG",
+    "name": "Jewelry and watches"
+  },
+  {
+    "item": "SEAG01",
+    "name": "Watches"
+  },
+  {
+    "item": "SEAG02",
+    "name": "Jewelry"
+  },
+  {
+    "item": "SEEA",
+    "name": "Educational books and supplies"
+  },
+  {
+    "item": "SEEB",
+    "name": "Tuition, other school fees, and childcare"
+  },
+  {
+    "item": "SEEB01",
+    "name": "College tuition and fees"
+  },
+  {
+    "item": "SEEB02",
+    "name": "Elementary and high school tuition and fees"
+  },
+  {
+    "item": "SEEB03",
+    "name": "Child care and nursery school"
+  },
+  {
+    "item": "SEEB04",
+    "name": "Technical and business school tuition and fees"
+  },
+  {
+    "item": "SEEC",
+    "name": "Postage and delivery services"
+  },
+  {
+    "item": "SEEC01",
+    "name": "Postage"
+  },
+  {
+    "item": "SEEC02",
+    "name": "Delivery services"
+  },
+  {
+    "item": "SEED",
+    "name": "Telephone services"
+  },
+  {
+    "item": "SEED03",
+    "name": "Wireless telephone services"
+  },
+  {
+    "item": "SEED04",
+    "name": "Land-line telephone services"
+  },
+  {
+    "item": "SEEE",
+    "name": "Information technology, hardware and services"
+  },
+  {
+    "item": "SEEE01",
+    "name": "Personal computers and peripheral equipment"
+  },
+  {
+    "item": "SEEE02",
+    "name": "Computer software and accessories"
+  },
+  {
+    "item": "SEEE03",
+    "name": "Internet services and electronic information providers"
+  },
+  {
+    "item": "SEEE04",
+    "name": "Telephone hardware, calculators, and other consumer information items"
+  },
+  {
+    "item": "SEEEC",
+    "name": "Information technology commodities"
+  },
+  {
+    "item": "SEFA",
+    "name": "Cereals and cereal products"
+  },
+  {
+    "item": "SEFA01",
+    "name": "Flour and prepared flour mixes"
+  },
+  {
+    "item": "SEFA02",
+    "name": "Breakfast cereal"
+  },
+  {
+    "item": "SEFA03",
+    "name": "Rice, pasta, cornmeal"
+  },
+  {
+    "item": "SEFB",
+    "name": "Bakery products"
+  },
+  {
+    "item": "SEFB01",
+    "name": "Bread"
+  },
+  {
+    "item": "SEFB02",
+    "name": "Fresh biscuits, rolls, muffins"
+  },
+  {
+    "item": "SEFB03",
+    "name": "Cakes, cupcakes, and cookies"
+  },
+  {
+    "item": "SEFB04",
+    "name": "Other bakery products"
+  },
+  {
+    "item": "SEFC",
+    "name": "Beef and veal"
+  },
+  {
+    "item": "SEFC01",
+    "name": "Uncooked ground beef"
+  },
+  {
+    "item": "SEFC02",
+    "name": "Uncooked beef roasts"
+  },
+  {
+    "item": "SEFC03",
+    "name": "Uncooked beef steaks"
+  },
+  {
+    "item": "SEFC04",
+    "name": "Uncooked other beef and veal"
+  },
+  {
+    "item": "SEFD",
+    "name": "Pork"
+  },
+  {
+    "item": "SEFD01",
+    "name": "Bacon, breakfast sausage, and related products"
+  },
+  {
+    "item": "SEFD02",
+    "name": "Ham"
+  },
+  {
+    "item": "SEFD03",
+    "name": "Pork chops"
+  },
+  {
+    "item": "SEFD04",
+    "name": "Other pork including roasts and picnics"
+  },
+  {
+    "item": "SEFE",
+    "name": "Other meats"
+  },
+  {
+    "item": "SEFF",
+    "name": "Poultry"
+  },
+  {
+    "item": "SEFF01",
+    "name": "Chicken"
+  },
+  {
+    "item": "SEFF02",
+    "name": "Other poultry including turkey"
+  },
+  {
+    "item": "SEFG",
+    "name": "Fish and seafood"
+  },
+  {
+    "item": "SEFG01",
+    "name": "Fresh fish and seafood"
+  },
+  {
+    "item": "SEFG02",
+    "name": "Processed fish and seafood"
+  },
+  {
+    "item": "SEFH",
+    "name": "Eggs"
+  },
+  {
+    "item": "SEFJ",
+    "name": "Dairy and related products"
+  },
+  {
+    "item": "SEFJ01",
+    "name": "Milk"
+  },
+  {
+    "item": "SEFJ02",
+    "name": "Cheese and related products"
+  },
+  {
+    "item": "SEFJ03",
+    "name": "Ice cream and related products"
+  },
+  {
+    "item": "SEFJ04",
+    "name": "Other dairy and related products"
+  },
+  {
+    "item": "SEFK",
+    "name": "Fresh fruits"
+  },
+  {
+    "item": "SEFK01",
+    "name": "Apples"
+  },
+  {
+    "item": "SEFK02",
+    "name": "Bananas"
+  },
+  {
+    "item": "SEFK03",
+    "name": "Citrus fruits"
+  },
+  {
+    "item": "SEFK04",
+    "name": "Other fresh fruits"
+  },
+  {
+    "item": "SEFL",
+    "name": "Fresh vegetables"
+  },
+  {
+    "item": "SEFL01",
+    "name": "Potatoes"
+  },
+  {
+    "item": "SEFL02",
+    "name": "Lettuce"
+  },
+  {
+    "item": "SEFL03",
+    "name": "Tomatoes"
+  },
+  {
+    "item": "SEFL04",
+    "name": "Other fresh vegetables"
+  },
+  {
+    "item": "SEFM",
+    "name": "Processed fruits and vegetables"
+  },
+  {
+    "item": "SEFM01",
+    "name": "Canned fruits and vegetables"
+  },
+  {
+    "item": "SEFM02",
+    "name": "Frozen fruits and vegetables"
+  },
+  {
+    "item": "SEFM03",
+    "name": "Other processed fruits and vegetables including dried"
+  },
+  {
+    "item": "SEFN",
+    "name": "Juices and nonalcoholic drinks"
+  },
+  {
+    "item": "SEFN01",
+    "name": "Carbonated drinks"
+  },
+  {
+    "item": "SEFN02",
+    "name": "Frozen noncarbonated juices and drinks"
+  },
+  {
+    "item": "SEFN03",
+    "name": "Nonfrozen noncarbonated juices and drinks"
+  },
+  {
+    "item": "SEFP",
+    "name": "Beverage materials including coffee and tea"
+  },
+  {
+    "item": "SEFP01",
+    "name": "Coffee"
+  },
+  {
+    "item": "SEFP02",
+    "name": "Other beverage materials including tea"
+  },
+  {
+    "item": "SEFR",
+    "name": "Sugar and sweets"
+  },
+  {
+    "item": "SEFR01",
+    "name": "Sugar and artificial sweeteners"
+  },
+  {
+    "item": "SEFR02",
+    "name": "Candy and chewing gum"
+  },
+  {
+    "item": "SEFR03",
+    "name": "Other sweets"
+  },
+  {
+    "item": "SEFS",
+    "name": "Fats and oils"
+  },
+  {
+    "item": "SEFS01",
+    "name": "Butter and margarine"
+  },
+  {
+    "item": "SEFS02",
+    "name": "Salad dressing"
+  },
+  {
+    "item": "SEFS03",
+    "name": "Other fats and oils including peanut butter"
+  },
+  {
+    "item": "SEFT",
+    "name": "Other foods"
+  },
+  {
+    "item": "SEFT01",
+    "name": "Soups"
+  },
+  {
+    "item": "SEFT02",
+    "name": "Frozen and freeze dried prepared foods"
+  },
+  {
+    "item": "SEFT03",
+    "name": "Snacks"
+  },
+  {
+    "item": "SEFT04",
+    "name": "Spices, seasonings, condiments, sauces"
+  },
+  {
+    "item": "SEFT05",
+    "name": "Baby food"
+  },
+  {
+    "item": "SEFT06",
+    "name": "Other miscellaneous foods"
+  },
+  {
+    "item": "SEFV",
+    "name": "Food away from home"
+  },
+  {
+    "item": "SEFV01",
+    "name": "Full service meals and snacks"
+  },
+  {
+    "item": "SEFV02",
+    "name": "Limited service meals and snacks"
+  },
+  {
+    "item": "SEFV03",
+    "name": "Food at employee sites and schools"
+  },
+  {
+    "item": "SEFV04",
+    "name": "Food from vending machines and mobile vendors"
+  },
+  {
+    "item": "SEFV05",
+    "name": "Other food away from home"
+  },
+  {
+    "item": "SEFW",
+    "name": "Alcoholic beverages at home"
+  },
+  {
+    "item": "SEFW01",
+    "name": "Beer, ale, and other malt beverages at home"
+  },
+  {
+    "item": "SEFW02",
+    "name": "Distilled spirits at home"
+  },
+  {
+    "item": "SEFW03",
+    "name": "Wine at home"
+  },
+  {
+    "item": "SEFX",
+    "name": "Alcoholic beverages away from home"
+  },
+  {
+    "item": "SEGA",
+    "name": "Tobacco and smoking products"
+  },
+  {
+    "item": "SEGA01",
+    "name": "Cigarettes"
+  },
+  {
+    "item": "SEGA02",
+    "name": "Tobacco products other than cigarettes"
+  },
+  {
+    "item": "SEGB",
+    "name": "Personal care products"
+  },
+  {
+    "item": "SEGB01",
+    "name": "Hair, dental, shaving, and miscellaneous personal care products"
+  },
+  {
+    "item": "SEGB02",
+    "name": "Cosmetics, perfume, bath, nail preparations and implements"
+  },
+  {
+    "item": "SEGC",
+    "name": "Personal care services"
+  },
+  {
+    "item": "SEGC01",
+    "name": "Haircuts and other personal care services"
+  },
+  {
+    "item": "SEGD",
+    "name": "Miscellaneous personal services"
+  },
+  {
+    "item": "SEGD01",
+    "name": "Legal services"
+  },
+  {
+    "item": "SEGD02",
+    "name": "Funeral expenses"
+  },
+  {
+    "item": "SEGD03",
+    "name": "Laundry and dry cleaning services"
+  },
+  {
+    "item": "SEGD04",
+    "name": "Apparel services other than laundry and dry cleaning"
+  },
+  {
+    "item": "SEGD05",
+    "name": "Financial services"
+  },
+  {
+    "item": "SEGE",
+    "name": "Miscellaneous personal goods"
+  },
+  {
+    "item": "SEHA",
+    "name": "Rent of primary residence"
+  },
+  {
+    "item": "SEHB",
+    "name": "Lodging away from home"
+  },
+  {
+    "item": "SEHB01",
+    "name": "Housing at school, excluding board"
+  },
+  {
+    "item": "SEHB02",
+    "name": "Other lodging away from home including hotels and motels"
+  },
+  {
+    "item": "SEHC",
+    "name": "Owners' equivalent rent of residences"
+  },
+  {
+    "item": "SEHC01",
+    "name": "Owners' equivalent rent of primary residence"
+  },
+  {
+    "item": "SEHD",
+    "name": "Tenants' and household insurance"
+  },
+  {
+    "item": "SEHE",
+    "name": "Fuel oil and other fuels"
+  },
+  {
+    "item": "SEHE01",
+    "name": "Fuel oil"
+  },
+  {
+    "item": "SEHE02",
+    "name": "Propane, kerosene, and firewood"
+  },
+  {
+    "item": "SEHF",
+    "name": "Energy services"
+  },
+  {
+    "item": "SEHF01",
+    "name": "Electricity"
+  },
+  {
+    "item": "SEHF02",
+    "name": "Utility (piped) gas service"
+  },
+  {
+    "item": "SEHG",
+    "name": "Water and sewer and trash collection services"
+  },
+  {
+    "item": "SEHG01",
+    "name": "Water and sewerage maintenance"
+  },
+  {
+    "item": "SEHG02",
+    "name": "Garbage and trash collection"
+  },
+  {
+    "item": "SEHH",
+    "name": "Window and floor coverings and other linens"
+  },
+  {
+    "item": "SEHH01",
+    "name": "Floor coverings"
+  },
+  {
+    "item": "SEHH02",
+    "name": "Window coverings"
+  },
+  {
+    "item": "SEHH03",
+    "name": "Other linens"
+  },
+  {
+    "item": "SEHJ",
+    "name": "Furniture and bedding"
+  },
+  {
+    "item": "SEHJ01",
+    "name": "Bedroom furniture"
+  },
+  {
+    "item": "SEHJ02",
+    "name": "Living room, kitchen, and dining room furniture"
+  },
+  {
+    "item": "SEHJ03",
+    "name": "Other furniture"
+  },
+  {
+    "item": "SEHK",
+    "name": "Appliances"
+  },
+  {
+    "item": "SEHK01",
+    "name": "Major appliances"
+  },
+  {
+    "item": "SEHK02",
+    "name": "Other appliances"
+  },
+  {
+    "item": "SEHL",
+    "name": "Other household equipment and furnishings"
+  },
+  {
+    "item": "SEHL01",
+    "name": "Clocks, lamps, and decorator items"
+  },
+  {
+    "item": "SEHL02",
+    "name": "Indoor plants and flowers"
+  },
+  {
+    "item": "SEHL03",
+    "name": "Dishes and flatware"
+  },
+  {
+    "item": "SEHL04",
+    "name": "Nonelectric cookware and tableware"
+  },
+  {
+    "item": "SEHM",
+    "name": "Tools, hardware, outdoor equipment and supplies"
+  },
+  {
+    "item": "SEHM01",
+    "name": "Tools, hardware and supplies"
+  },
+  {
+    "item": "SEHM02",
+    "name": "Outdoor equipment and supplies"
+  },
+  {
+    "item": "SEHN",
+    "name": "Housekeeping supplies"
+  },
+  {
+    "item": "SEHN01",
+    "name": "Household cleaning products"
+  },
+  {
+    "item": "SEHN02",
+    "name": "Household paper products"
+  },
+  {
+    "item": "SEHN03",
+    "name": "Miscellaneous household products"
+  },
+  {
+    "item": "SEHP",
+    "name": "Household operations"
+  },
+  {
+    "item": "SEHP01",
+    "name": "Domestic services"
+  },
+  {
+    "item": "SEHP02",
+    "name": "Gardening and lawncare services"
+  },
+  {
+    "item": "SEHP03",
+    "name": "Moving, storage, freight expense"
+  },
+  {
+    "item": "SEHP04",
+    "name": "Repair of household items"
+  },
+  {
+    "item": "SEMC",
+    "name": "Professional services"
+  },
+  {
+    "item": "SEMC01",
+    "name": "Physicians' services"
+  },
+  {
+    "item": "SEMC02",
+    "name": "Dental services"
+  },
+  {
+    "item": "SEMC03",
+    "name": "Eyeglasses and eye care"
+  },
+  {
+    "item": "SEMC04",
+    "name": "Services by other medical professionals"
+  },
+  {
+    "item": "SEMD",
+    "name": "Hospital and related services"
+  },
+  {
+    "item": "SEMD01",
+    "name": "Hospital services"
+  },
+  {
+    "item": "SEMD02",
+    "name": "Nursing homes and adult day services"
+  },
+  {
+    "item": "SEMD03",
+    "name": "Care of invalids and elderly at home"
+  },
+  {
+    "item": "SEME",
+    "name": "Health insurance"
+  },
+  {
+    "item": "SEMF",
+    "name": "Medicinal drugs"
+  },
+  {
+    "item": "SEMF01",
+    "name": "Prescription drugs"
+  },
+  {
+    "item": "SEMF02",
+    "name": "Nonprescription drugs"
+  },
+  {
+    "item": "SEMG",
+    "name": "Medical equipment and supplies"
+  },
+  {
+    "item": "SERA",
+    "name": "Video and audio"
+  },
+  {
+    "item": "SERA01",
+    "name": "Televisions"
+  },
+  {
+    "item": "SERA02",
+    "name": "Cable and satellite television and radio service"
+  },
+  {
+    "item": "SERA03",
+    "name": "Other video equipment"
+  },
+  {
+    "item": "SERA04",
+    "name": "Video discs and other media, including rental of video and audio"
+  },
+  {
+    "item": "SERA05",
+    "name": "Audio equipment"
+  },
+  {
+    "item": "SERA06",
+    "name": "Audio discs, tapes and other media"
+  },
+  {
+    "item": "SERAC",
+    "name": "Video and audio products"
+  },
+  {
+    "item": "SERAS",
+    "name": "Video and audio services"
+  },
+  {
+    "item": "SERB",
+    "name": "Pets, pet products and services"
+  },
+  {
+    "item": "SERB01",
+    "name": "Pets and pet products"
+  },
+  {
+    "item": "SERB02",
+    "name": "Pet services including veterinary"
+  },
+  {
+    "item": "SERC",
+    "name": "Sporting goods"
+  },
+  {
+    "item": "SERC01",
+    "name": "Sports vehicles including bicycles"
+  },
+  {
+    "item": "SERC02",
+    "name": "Sports equipment"
+  },
+  {
+    "item": "SERD",
+    "name": "Photography"
+  },
+  {
+    "item": "SERD01",
+    "name": "Photographic equipment and supplies"
+  },
+  {
+    "item": "SERD02",
+    "name": "Photographers and film processing"
+  },
+  {
+    "item": "SERE",
+    "name": "Other recreational goods"
+  },
+  {
+    "item": "SERE01",
+    "name": "Toys"
+  },
+  {
+    "item": "SERE02",
+    "name": "Sewing machines, fabric and supplies"
+  },
+  {
+    "item": "SERE03",
+    "name": "Music instruments and accessories"
+  },
+  {
+    "item": "SERF",
+    "name": "Other recreation services"
+  },
+  {
+    "item": "SERF01",
+    "name": "Club dues and fees for participant sports and group exercises"
+  },
+  {
+    "item": "SERF02",
+    "name": "Admissions"
+  },
+  {
+    "item": "SERF03",
+    "name": "Fees for lessons or instructions"
+  },
+  {
+    "item": "SERG",
+    "name": "Recreational reading materials"
+  },
+  {
+    "item": "SERG01",
+    "name": "Newspapers and magazines"
+  },
+  {
+    "item": "SERG02",
+    "name": "Recreational books"
+  },
+  {
+    "item": "SETA",
+    "name": "New and used motor vehicles"
+  },
+  {
+    "item": "SETA01",
+    "name": "New vehicles"
+  },
+  {
+    "item": "SETA02",
+    "name": "Used cars and trucks"
+  },
+  {
+    "item": "SETA03",
+    "name": "Leased cars and trucks"
+  },
+  {
+    "item": "SETA04",
+    "name": "Car and truck rental"
+  },
+  {
+    "item": "SETB",
+    "name": "Motor fuel"
+  },
+  {
+    "item": "SETB01",
+    "name": "Gasoline (all types)"
+  },
+  {
+    "item": "SETB02",
+    "name": "Other motor fuels"
+  },
+  {
+    "item": "SETC",
+    "name": "Motor vehicle parts and equipment"
+  },
+  {
+    "item": "SETC01",
+    "name": "Tires"
+  },
+  {
+    "item": "SETC02",
+    "name": "Vehicle accessories other than tires"
+  },
+  {
+    "item": "SETD",
+    "name": "Motor vehicle maintenance and repair"
+  },
+  {
+    "item": "SETD01",
+    "name": "Motor vehicle body work"
+  },
+  {
+    "item": "SETD02",
+    "name": "Motor vehicle maintenance and servicing"
+  },
+  {
+    "item": "SETD03",
+    "name": "Motor vehicle repair"
+  },
+  {
+    "item": "SETE",
+    "name": "Motor vehicle insurance"
+  },
+  {
+    "item": "SETF",
+    "name": "Motor vehicle fees"
+  },
+  {
+    "item": "SETF01",
+    "name": "State motor vehicle registration and license fees"
+  },
+  {
+    "item": "SETF03",
+    "name": "Parking and other fees"
+  },
+  {
+    "item": "SETG",
+    "name": "Public transportation"
+  },
+  {
+    "item": "SETG01",
+    "name": "Airline fare"
+  },
+  {
+    "item": "SETG02",
+    "name": "Other intercity transportation"
+  },
+  {
+    "item": "SETG03",
+    "name": "Intracity transportation"
+  },
+  {
+    "item": "SS01031",
+    "name": "Rice"
+  },
+  {
+    "item": "SS02011",
+    "name": "White bread"
+  },
+  {
+    "item": "SS02021",
+    "name": "Bread other than white"
+  },
+  {
+    "item": "SS02041",
+    "name": "Fresh cakes and cupcakes"
+  },
+  {
+    "item": "SS02042",
+    "name": "Cookies"
+  },
+  {
+    "item": "SS02063",
+    "name": "Fresh sweetrolls, coffeecakes, doughnuts"
+  },
+  {
+    "item": "SS0206A",
+    "name": "Crackers, bread, and cracker products"
+  },
+  {
+    "item": "SS0206B",
+    "name": "Frozen and refrigerated bakery products, pies, tarts, turnovers"
+  },
+  {
+    "item": "SS04011",
+    "name": "Bacon and related products"
+  },
+  {
+    "item": "SS04012",
+    "name": "Breakfast sausage and related products"
+  },
+  {
+    "item": "SS04031",
+    "name": "Ham, excluding canned"
+  },
+  {
+    "item": "SS05011",
+    "name": "Frankfurters"
+  },
+  {
+    "item": "SS05014",
+    "name": "Lamb and organ meats"
+  },
+  {
+    "item": "SS05015",
+    "name": "Lamb and mutton"
+  },
+  {
+    "item": "SS0501A",
+    "name": "Lunchmeats"
+  },
+  {
+    "item": "SS06011",
+    "name": "Fresh whole chicken"
+  },
+  {
+    "item": "SS06021",
+    "name": "Fresh and frozen chicken parts"
+  },
+  {
+    "item": "SS07011",
+    "name": "Shelf stable fish and seafood"
+  },
+  {
+    "item": "SS07021",
+    "name": "Frozen fish and seafood"
+  },
+  {
+    "item": "SS09011",
+    "name": "Fresh whole milk"
+  },
+  {
+    "item": "SS09021",
+    "name": "Fresh milk other than whole"
+  },
+  {
+    "item": "SS10011",
+    "name": "Butter"
+  },
+  {
+    "item": "SS11031",
+    "name": "Oranges, including tangerines"
+  },
+  {
+    "item": "SS13031",
+    "name": "Canned fruits"
+  },
+  {
+    "item": "SS14011",
+    "name": "Frozen vegetables"
+  },
+  {
+    "item": "SS14021",
+    "name": "Canned vegetables"
+  },
+  {
+    "item": "SS14022",
+    "name": "Dried beans, peas, and lentils"
+  },
+  {
+    "item": "SS16011",
+    "name": "Margarine"
+  },
+  {
+    "item": "SS16014",
+    "name": "Peanut butter"
+  },
+  {
+    "item": "SS17031",
+    "name": "Roasted coffee"
+  },
+  {
+    "item": "SS17032",
+    "name": "Instant and freeze dried coffee"
+  },
+  {
+    "item": "SS18041",
+    "name": "Salt and other seasonings and spices"
+  },
+  {
+    "item": "SS18042",
+    "name": "Olives, pickles, relishes"
+  },
+  {
+    "item": "SS18043",
+    "name": "Sauces and gravies"
+  },
+  {
+    "item": "SS1804B",
+    "name": "Other condiments"
+  },
+  {
+    "item": "SS18064",
+    "name": "Prepared salads"
+  },
+  {
+    "item": "SS20021",
+    "name": "Whiskey at home"
+  },
+  {
+    "item": "SS20022",
+    "name": "Distilled spirits, excluding whiskey, at home"
+  },
+  {
+    "item": "SS20051",
+    "name": "Beer, ale, and other malt beverages away from home"
+  },
+  {
+    "item": "SS20052",
+    "name": "Wine away from home"
+  },
+  {
+    "item": "SS20053",
+    "name": "Distilled spirits away from home"
+  },
+  {
+    "item": "SS27051",
+    "name": "Land-line interstate toll calls"
+  },
+  {
+    "item": "SS27061",
+    "name": "Land-line intrastate toll calls"
+  },
+  {
+    "item": "SS30021",
+    "name": "Laundry equipment"
+  },
+  {
+    "item": "SS31022",
+    "name": "Video discs and other media"
+  },
+  {
+    "item": "SS31023",
+    "name": "Video game hardware, software and accessories"
+  },
+  {
+    "item": "SS33032",
+    "name": "Stationery, stationery supplies, gift wrap"
+  },
+  {
+    "item": "SS45011",
+    "name": "New cars"
+  },
+  {
+    "item": "SS4501A",
+    "name": "New cars and trucks"
+  },
+  {
+    "item": "SS45021",
+    "name": "New trucks"
+  },
+  {
+    "item": "SS45031",
+    "name": "New motorcycles"
+  },
+  {
+    "item": "SS47014",
+    "name": "Gasoline, unleaded regular"
+  },
+  {
+    "item": "SS47015",
+    "name": "Gasoline, unleaded midgrade"
+  },
+  {
+    "item": "SS47016",
+    "name": "Gasoline, unleaded premium"
+  },
+  {
+    "item": "SS47021",
+    "name": "Motor oil, coolant, and fluids"
+  },
+  {
+    "item": "SS48021",
+    "name": "Vehicle parts and equipment other than tires"
+  },
+  {
+    "item": "SS52051",
+    "name": "Parking fees and tolls"
+  },
+  {
+    "item": "SS53021",
+    "name": "Intercity bus fare"
+  },
+  {
+    "item": "SS53022",
+    "name": "Intercity train fare"
+  },
+  {
+    "item": "SS53023",
+    "name": "Ship fare"
+  },
+  {
+    "item": "SS53031",
+    "name": "Intracity mass transit"
+  },
+  {
+    "item": "SS5702",
+    "name": "Inpatient hospital services"
+  },
+  {
+    "item": "SS5703",
+    "name": "Outpatient hospital services"
+  },
+  {
+    "item": "SS61011",
+    "name": "Toys, games, hobbies and playground equipment"
+  },
+  {
+    "item": "SS61021",
+    "name": "Film and photographic supplies"
+  },
+  {
+    "item": "SS61023",
+    "name": "Photographic equipment"
+  },
+  {
+    "item": "SS61031",
+    "name": "Pet food"
+  },
+  {
+    "item": "SS61032",
+    "name": "Purchase of pets, pet supplies, accessories"
+  },
+  {
+    "item": "SS62011",
+    "name": "Automobile service clubs"
+  },
+  {
+    "item": "SS62031",
+    "name": "Admission to movies, theaters, and concerts"
+  },
+  {
+    "item": "SS62032",
+    "name": "Admission to sporting events"
+  },
+  {
+    "item": "SS62051",
+    "name": "Photographer fees"
+  },
+  {
+    "item": "SS62052",
+    "name": "Film processing"
+  },
+  {
+    "item": "SS62053",
+    "name": "Pet services"
+  },
+  {
+    "item": "SS62054",
+    "name": "Veterinarian services"
+  },
+  {
+    "item": "SS62055",
+    "name": "Rental of video or audio discs and other media"
+  },
+  {
+    "item": "SS68021",
+    "name": "Checking account and other bank services"
+  },
+  {
+    "item": "SS68023",
+    "name": "Tax return preparation and other accounting fees"
+  },
+  {
+    "item": "SSEA011",
+    "name": "College textbooks"
+  },
+  {
+    "item": "SSFV031A",
+    "name": "Food at elementary and secondary schools"
+  },
+  {
+    "item": "SSGE013",
+    "name": "Infants' equipment"
+  },
+  {
+    "item": "SSHJ031",
+    "name": "Infants' furniture"
+  }
+]

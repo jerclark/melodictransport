@@ -107,6 +107,8 @@
         return this.subcategory(subcategory).name;
     };
 
+
+
     // Merges two or more datasets together. The "name" of the resulting
     // dataset is "dataset 1 name-dataset 2 name": all the names with
     // dashes between them. The values are added indiscriminately
@@ -196,10 +198,12 @@
     // it will default to all consumer units.
     Dataset.prototype.includeRelativeValues = function(d, criteria) {
         var income = this.incomeForYear(d.year, criteria);
+        var cpi = this.cpiForYear(d.year, criteria);
         return Object.assign({}, d, {
             income: income,
             valuePercentIncome: ((d.value * 100) / income),
-            adjustedValue: $adjusted(d.year, d.value)
+            adjustedValue: $adjusted(d.year, d.value),
+            cpi: cpi
         });
     };
 
@@ -226,6 +230,7 @@
             subcategoryText: this.subcategoryText(item.subcategory),
             item: criteria.item,
             itemText: this.itemText(criteria.item),
+            itemCpi: item.cpi,
             demographic: criteria.demographic,
             demographicText: this.demographicText(criteria.demographic),
             characteristic: criteria.characteristic,
@@ -325,6 +330,7 @@
         return k;
     };
 
+
     var hashCriteria = function(year, criteria) {
         criteria = Object.assign({}, criteria, INCOME_BEFORE_TAXES);
         criteria = _defaultCriteria(criteria);
@@ -353,6 +359,49 @@
     }, function(criteria) {
         return hashCriteria(null, criteria);
     });
+
+
+  /**************
+   * CPI RELATED QUERIES BELOW
+   **************/
+
+
+      // Returns all the cpi's for the criteria given
+    Dataset.prototype.cpiForYear = function(year, criteria) {
+        var cpiForCriteria = this.cpi(criteria);
+        var cpiForYear = _.findWhere(cpiForCriteria, {
+            year: year
+        });
+        return cpiForYear ? cpiForYear.value : 100;
+    }
+
+
+    // Returns all the cpi's for the criteria given
+    Dataset.prototype.cpi = function(criteria) {
+        //Make sure to populate criteria
+        criteria = _defaultCriteria(criteria);
+
+        //get the cpi for the given item across all years
+        var cpiCode = this.item(criteria.item).cpiCode;
+        if (cpiCode) {
+            return _.where(this._datasets.cpiValues, {
+                id: "CU0000" + cpiCode
+            }).map(YV);
+        }
+    }
+
+
+    Dataset.prototype.cpiValues = function(cpiItemCode) {
+        if (cpiItemCode) {
+            return _.where(this.cpiValues(), {
+                id: cpiItemCode
+            });
+        }
+        else {
+            return this._datasets.cpiValues;
+        }
+    };
+
 
 
 })(window.cs171 || (window.cs171 = {}));

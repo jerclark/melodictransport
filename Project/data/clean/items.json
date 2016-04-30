@@ -3,924 +3,1078 @@
     "item": "ALCBEVG",
     "name": "Alcoholic beverages",
     "subcategory": "ALCBEVG",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": "SAF116"
   },
   {
     "item": "APPAREL",
     "name": "Apparel and services",
     "subcategory": "APPAREL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": "SAA"
   },
   {
     "item": "BOYS",
     "name": "Apparel, Boys, 2 to 15",
     "subcategory": "APPAREL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "FOOTWEAR",
     "name": "Footwear",
     "subcategory": "APPAREL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "GIRLS",
     "name": "Apparel, Girls, 2 to 15",
     "subcategory": "APPAREL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "INFANT",
     "name": "Apparel, Children under 2",
     "subcategory": "APPAREL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "MENBOYS",
     "name": "Apparel, Men and boys",
     "subcategory": "APPAREL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "MENS",
     "name": "Apparel, Men, 16 and over",
     "subcategory": "APPAREL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "OTHAPPRL",
     "name": "Other apparel products and services",
     "subcategory": "APPAREL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "WMNSGRLS",
     "name": "Apparel, Women and girls",
     "subcategory": "APPAREL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "WOMENS",
     "name": "Apparel, Women, 16 and over",
     "subcategory": "APPAREL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "CASHCONT",
     "name": "Cash contributions",
     "subcategory": "CASHCONT",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "CHGASLI",
     "name": "Net change in total assets and liabilities",
     "subcategory": "CHGASLI",
-    "category": "ADDENDA"
+    "category": "ADDENDA",
+    "cpiCode": ""
   },
   {
     "item": "CHGASSET",
     "name": "Net change in total assets",
     "subcategory": "CHGASLI",
-    "category": "ADDENDA"
+    "category": "ADDENDA",
+    "cpiCode": ""
   },
   {
     "item": "CHGLIAB",
     "name": "Net change in total liabilities",
     "subcategory": "CHGASLI",
-    "category": "ADDENDA"
+    "category": "ADDENDA",
+    "cpiCode": ""
   },
   {
     "item": "CONSUNIT",
     "name": "Number of consumer units (in thousands)",
     "subcategory": "CONSUNIT",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "EDUCATN",
     "name": "Education",
     "subcategory": "EDUCATN",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "ENTEROTH",
     "name": "Entertainment: other supplies, equip., & services",
     "subcategory": "ENTRTAIN",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "ENTRTAIN",
     "name": "Entertainment",
     "subcategory": "ENTRTAIN",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "FEESADM",
     "name": "Entertainment: fees and admissions",
     "subcategory": "ENTRTAIN",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "PETS",
     "name": "Pets",
     "subcategory": "ENTRTAIN",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "PETSPLAY",
     "name": "Pets, toys, and playground equipment",
     "subcategory": "ENTRTAIN",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "TOYS",
     "name": "Toys, hobbies, and playground equipment",
     "subcategory": "ENTRTAIN",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "TVAUDIO",
     "name": "Audio and visual equipment and services",
     "subcategory": "ENTRTAIN",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "080110",
     "name": "Eggs",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "190904",
     "name": "Food prep. by consumer unit, out-of-town trips",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "ANIMAL",
     "name": "Meats, poultry, fish, and eggs",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "BAKERY",
     "name": "Bakery products",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "BEEF",
     "name": "Beef",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "CERBAKRY",
     "name": "Cereals and bakery products",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "CEREAL",
     "name": "Cereals and cereal products",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "DAIRY",
     "name": "Dairy products",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "FATSOILS",
     "name": "Fats and oils",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "FISHSEA",
     "name": "Fish and seafood",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "FOODAWAY",
     "name": "Food away from home",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "FOODHOME",
     "name": "Food at home",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "FOODTOTL",
     "name": "Food",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": "SAF"
   },
   {
     "item": "FRESHVEG",
     "name": "Fresh vegetables",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "FRSHFRUT",
     "name": "Fresh fruits",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "FRUITVEG",
     "name": "Fruits and vegetables",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "MILKCRM",
     "name": "Fresh milk and cream",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "MISCFOOD",
     "name": "Miscellaneous foods",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "NALCBEVG",
     "name": "Nonalcoholic beverages",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "OTHDAIRY",
     "name": "Other dairy products",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "OTHRFOOD",
     "name": "Other food at home",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "OTHRMEAT",
     "name": "Other meats",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "PORK",
     "name": "Pork",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "POULTRY",
     "name": "Poultry",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "PROCFRUT",
     "name": "Processed fruits",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "PROCVEG",
     "name": "Processed vegetables",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "SWEETS",
     "name": "Sugar and other sweets",
     "subcategory": "FOODTOTL",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "DRUGS",
     "name": "Drugs: Prescription and nonprescription",
     "subcategory": "HEALTH",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "HEALTH",
     "name": "Healthcare",
     "subcategory": "HEALTH",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "HLTHINSR",
     "name": "Health insurance",
     "subcategory": "HEALTH",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "MEDSERVS",
     "name": "Medical services",
     "subcategory": "HEALTH",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "MEDSUPPL",
     "name": "Medical supplies",
     "subcategory": "HEALTH",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "220211",
     "name": "Property taxes",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "270102",
     "name": "Cellular phone service",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "ELECTRIC",
     "name": "Electricity",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "FLOORCOV",
     "name": "Floor coverings",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "FURNITUR",
     "name": "Furniture",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "HHFURNSH",
     "name": "Household furnishings and equipment",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "HHOPER",
     "name": "Household operations",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "HHOTHXPN",
     "name": "Other household expenses",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "HHPERSRV",
     "name": "Personal services",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "HHTXTILE",
     "name": "Household textiles",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "HKPGOTHR",
     "name": "Other household products",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "HKPGSUPP",
     "name": "Housekeeping supplies",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "HOUSING",
     "name": "Housing",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": "SAH"
   },
   {
     "item": "LAUNDRY",
     "name": "Laundry and cleaning supplies",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "MAJAPPL",
     "name": "Major appliances",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "MISCHHEQ",
     "name": "Miscellaneous household equipment",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "NATRLGAS",
     "name": "Natural gas",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "OTHLODGE",
     "name": "Other lodging",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "OTHRFUEL",
     "name": "Fuel oil and other fuels",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "OWNDWELL",
     "name": "Owned dwellings",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "OWNEXPEN",
     "name": "Maintenance, rep., ins., oth. exp., owned dwelling",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "OWNMORTG",
     "name": "Mortgage interest and charges",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "PHONE",
     "name": "Telephone services",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "POSTAGE",
     "name": "Postage and stationery",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "RESPHONE",
     "name": "Residential phone service, VOIP, and phone cards",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "RNTDWELL",
     "name": "Rented dwellings",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "SHELTER",
     "name": "Shelter",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "SMAPPHWR",
     "name": "Small appliances, misc. housewares",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "UTILS",
     "name": "Utilities, fuels, and public services",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "WATER",
     "name": "Water and other public services",
     "subcategory": "HOUSING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "INCAFTTX",
     "name": "Income after taxes",
     "subcategory": "INCAFTTX",
-    "category": "INCOME"
+    "category": "INCOME",
+    "cpiCode": ""
   },
   {
     "item": "900000",
     "name": "Wages and salaries",
     "subcategory": "INCBEFTX",
-    "category": "INCOME"
+    "category": "INCOME",
+    "cpiCode": ""
   },
   {
     "item": "INCBEFTX",
     "name": "Money income before taxes",
     "subcategory": "INCBEFTX",
-    "category": "INCOME"
+    "category": "INCOME",
+    "cpiCode": ""
   },
   {
     "item": "INDIVRNT",
     "name": "Interest, dividends, rent income, property income",
     "subcategory": "INCBEFTX",
-    "category": "INCOME"
+    "category": "INCOME",
+    "cpiCode": ""
   },
   {
     "item": "OTHBNFTS",
     "name": "Unemp. & workers' compen., veterans benefits",
     "subcategory": "INCBEFTX",
-    "category": "INCOME"
+    "category": "INCOME",
+    "cpiCode": ""
   },
   {
     "item": "OTHREGIN",
     "name": "Unemp and workrs' comp, vet bnfits, reg contrib",
     "subcategory": "INCBEFTX",
-    "category": "INCOME"
+    "category": "INCOME",
+    "cpiCode": ""
   },
   {
     "item": "OTHRINC",
     "name": "Other income",
     "subcategory": "INCBEFTX",
-    "category": "INCOME"
+    "category": "INCOME",
+    "cpiCode": ""
   },
   {
     "item": "REGCONT",
     "name": "Regular contributions for support",
     "subcategory": "INCBEFTX",
-    "category": "INCOME"
+    "category": "INCOME",
+    "cpiCode": ""
   },
   {
     "item": "RETIRINC",
     "name": "Social Security, private & government retirement",
     "subcategory": "INCBEFTX",
-    "category": "INCOME"
+    "category": "INCOME",
+    "cpiCode": ""
   },
   {
     "item": "SFEMPINC",
     "name": "Self-employment income",
     "subcategory": "INCBEFTX",
-    "category": "INCOME"
+    "category": "INCOME",
+    "cpiCode": ""
   },
   {
     "item": "WELFARE",
     "name": "Public assist., spplmntl. secrty. inc., foodstamps",
     "subcategory": "INCBEFTX",
-    "category": "INCOME"
+    "category": "INCOME",
+    "cpiCode": ""
   },
   {
     "item": "INSPENSN",
     "name": "Personal insurance and pensions",
     "subcategory": "INSPENSN",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "LIFEINSR",
     "name": "Life and other personal insurance",
     "subcategory": "INSPENSN",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "PENSIONS",
     "name": "Pensions and Social Security",
     "subcategory": "INSPENSN",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "MISC",
     "name": "Miscellaneous expenditures",
     "subcategory": "MISC",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "PERSCARE",
     "name": "Personal care products and services",
     "subcategory": "PERSCARE",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "FEDTAXES",
     "name": "Federal income taxes",
     "subcategory": "PERSTAX",
-    "category": "INCOME"
+    "category": "INCOME",
+    "cpiCode": ""
   },
   {
     "item": "OTHRTAX",
     "name": "Other taxes",
     "subcategory": "PERSTAX",
-    "category": "INCOME"
+    "category": "INCOME",
+    "cpiCode": ""
   },
   {
     "item": "PERSTAX",
     "name": "Personal taxes",
     "subcategory": "PERSTAX",
-    "category": "INCOME"
+    "category": "INCOME",
+    "cpiCode": ""
   },
   {
     "item": "STATETAX",
     "name": "State and local income taxes",
     "subcategory": "PERSTAX",
-    "category": "INCOME"
+    "category": "INCOME",
+    "cpiCode": ""
   },
   {
     "item": "READING",
     "name": "Reading",
     "subcategory": "READING",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "980010",
     "name": "Number of People in CU",
     "subcategory": "TITLECU",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "980020",
     "name": "Age of reference person",
     "subcategory": "TITLECU",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "980030",
     "name": "Number of Earners",
     "subcategory": "TITLECU",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "980050",
     "name": "Number of Children under 18",
     "subcategory": "TITLECU",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "980060",
     "name": "Adults 65 and older",
     "subcategory": "TITLECU",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "INCAFTAX",
     "name": "Income after taxes",
     "subcategory": "TITLECU",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "INCBFTAX",
     "name": "Income before taxes",
     "subcategory": "TITLECU",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "TITLEACU",
     "name": "Average number in consumer unit:",
     "subcategory": "TITLECU",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "VEHICLES",
     "name": "Number of Vehicles",
     "subcategory": "TITLECU",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "800721",
     "name": "Estimated market value of owned home",
     "subcategory": "TITLEOFI",
-    "category": "ADDENDA"
+    "category": "ADDENDA",
+    "cpiCode": ""
   },
   {
     "item": "910050",
     "name": "Est. monthly rental value of owned home",
     "subcategory": "TITLEOFI",
-    "category": "ADDENDA"
+    "category": "ADDENDA",
+    "cpiCode": ""
   },
   {
     "item": "MRTPRINP",
     "name": "Mortgage principal paid, owned property",
     "subcategory": "TITLEOFI",
-    "category": "ADDENDA"
+    "category": "ADDENDA",
+    "cpiCode": ""
   },
   {
     "item": "OTHRMONY",
     "name": "Other money receipts",
     "subcategory": "TITLEOFI",
-    "category": "ADDENDA"
+    "category": "ADDENDA",
+    "cpiCode": ""
   },
   {
     "item": "980210",
     "name": "Percent Men reference persons",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "980220",
     "name": "Percent Women reference persons",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "980230",
     "name": "Percent Homeowner with mortgage",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "980240",
     "name": "Percent Homeowner without mortgage",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "980260",
     "name": "Percent Renter",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "980270",
     "name": "Percent Black or African American",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "980285",
     "name": "Percent Hispanic or Latino",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "980286",
     "name": "Percent Not Hispanic or Latino",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "980290",
     "name": "Percent Elementary (1-8)",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "980300",
     "name": "Percent High school (9-12)",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "980310",
     "name": "Percent College",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "980320",
     "name": "Percent Never attended school and other",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "980350",
     "name": "At least one vehicle owned or leased",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "HOMEOWN",
     "name": "Percent Homeowner",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "TITLEEDU",
     "name": "Education of reference person:",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "TITLEHOP",
     "name": "Hispanic or Latino origin of reference person:",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "TITLEHT",
     "name": "Housing tenure:",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "TITLERRP",
     "name": "Race of reference person:",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "TITLESRP",
     "name": "Reference person:",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "WHTNDOTH",
     "name": "Percent White, Asian, and All Other Races",
     "subcategory": "TITLEPD",
-    "category": "CUCHARS"
+    "category": "CUCHARS",
+    "cpiCode": ""
   },
   {
     "item": "TOBACCO",
     "name": "Tobacco products and smoking supplies",
     "subcategory": "TOBACCO",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "TOTALEXP",
     "name": "Total average annual expenditures",
     "subcategory": "TOTALEXP",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "500110",
     "name": "Vehicle insurance",
     "subcategory": "TRANS",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "CAREPAIR",
     "name": "Vehicle maintenance and repairs",
     "subcategory": "TRANS",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "GASOIL",
     "name": "Gasoline and motor oil",
     "subcategory": "TRANS",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "NEWCARS",
     "name": "Vehicle purchases: Cars and trucks, new",
     "subcategory": "TRANS",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "OTHVEHCL",
     "name": "Other vehicle purchases",
     "subcategory": "TRANS",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "PUBTRANS",
     "name": "Public transportation",
     "subcategory": "TRANS",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "TRANS",
     "name": "Transportation",
     "subcategory": "TRANS",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": "SAT"
   },
   {
     "item": "USEDCARS",
     "name": "Vehicle purchases: Cars and trucks, used",
     "subcategory": "TRANS",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "VEHFINCH",
     "name": "Vehicle finance charges",
     "subcategory": "TRANS",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "VEHOTHXP",
     "name": "Other vehicle expenses",
     "subcategory": "TRANS",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "VEHPURCH",
     "name": "Vehicle purchases (net outlay)",
     "subcategory": "TRANS",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   },
   {
     "item": "VEHRNTLC",
     "name": "Vehicle. rent., leas., licen., oth. charges",
     "subcategory": "TRANS",
-    "category": "EXPEND"
+    "category": "EXPEND",
+    "cpiCode": ""
   }
 ]
