@@ -6,8 +6,10 @@ DemographicPicker = function(pickerId) {
 
   //Get the demographic elements
   var pickerChoices = window.ds.demographics().map(function(v){
-    return {name: v.name, value: v.demographic};
+      return {name: v.name, value: v.demographic};
   });
+
+  pickerChoices = _.reject(pickerChoices, {value: "LB14"});
 
   var pickerOptions = {
     pickerClass:"demographic-picker",

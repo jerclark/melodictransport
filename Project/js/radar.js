@@ -39,48 +39,47 @@ Radar.prototype.initVis = function() {
     /************
     * LEGEND AND CHART TITLE
     * **********/
-    var titleCenterX = (width/2) - 40;
-    var legendStartX = (width/2) - 50;
+    var titleCenterX = (width/2);
+    var legendStartX = (width/2) - 75;
     var legendLineLength = 20;
     var legendTextWidth = 40;
     var legendSpacer = 10;
-    var legendTextY = 50;
-    var legendLineY = 45;
+    var legendTextY = 55;
+    var legendLineY = 50;
     vis.legend = d3.select(vis.parentElement).append("svg")
       .attr("class", "center-block")
       .attr('width', width)
-      .attr('height', 60)
+      .attr('height', 65)
       .append('g')
       .attr("id", "radar-legend");
 
     vis.legend.append("text")
       .attr("class", "radar-title")
       .attr("id", "radar-title-item")
-      .attr("x", titleCenterX - 15)
-      .attr("dy", "25")
-      .attr("text-anchor", "end")
-      .text("Item")
-
-    vis.legend.append("text")
-      .attr("class", "radar-title")
-      .attr("id", "radar-separator")
       .attr("x", titleCenterX)
-      .attr("dy", "25")
+      .attr("dy", "15")
       .attr("text-anchor", "middle")
-      .text("by")
+      .text("Item by")
 
     vis.legend.append("text")
       .attr("class", "radar-title")
       .attr("id", "radar-title-demographic")
-      .attr("x", titleCenterX + 15)
-      .attr("dy", "25")
-      .attr("text-anchor", "start")
+      .attr("x", titleCenterX)
+      .attr("dy", "37")
+      .attr("text-anchor", "middle")
       .text("Demographic")
 
     vis.legend.append("path")
       .datum([[legendStartX, legendLineY], [legendStartX + legendLineLength, legendLineY]])
       .attr("class", "plot-0")
       .attr("d", d3.svg.line());
+
+    vis.legend.append("circle")
+      .attr("class", "plot-0")
+      .attr("cx", legendStartX)
+      .attr("cy", legendLineY)
+      .attr("r", 3);
+
 
     vis.legend.append("text")
       .attr("class", "legend")
@@ -93,6 +92,12 @@ Radar.prototype.initVis = function() {
       .datum([[legendStartX + legendLineLength + legendTextWidth + (legendSpacer * 2), legendLineY], [legendStartX + legendLineLength + legendTextWidth + (legendSpacer * 2) + legendLineLength,legendLineY]])
       .attr("class", "plot-1")
       .attr("d", d3.svg.line());
+
+    vis.legend.append("circle")
+      .attr("class", "plot-1")
+      .attr("cx", legendStartX + legendLineLength + legendTextWidth + (legendSpacer * 2))
+      .attr("cy", legendLineY)
+      .attr("r", 3);
 
     vis.legend.append("text")
       .attr("class", "legend")
@@ -218,7 +223,7 @@ Radar.prototype.updateVis = function() {
      * **********/
     d3.select("#legend-0-text").text(vis.options.years[0]);
     d3.select("#legend-1-text").text(vis.options.years[1]);
-    d3.select("#radar-title-item").text(vis.itemName);
+    d3.select("#radar-title-item").text(vis.itemName + " by");
     d3.select("#radar-title-demographic").text(vis.demographicName);
 
 
