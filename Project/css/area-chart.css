@@ -11,11 +11,15 @@
   text-anchor: end;
 }
 
-.area {
+.area{
   opacity: 0.8;
   clip-path: url(#clip);
 }
-.area:hover {
+
+.rightLegend{
+  opacity: 0.8;
+}
+.area:hover, .rightLegend:hover {
   stroke: #FFFF00;
   stroke-width: 1; 
   opacity: 1;
