@@ -73,10 +73,13 @@ Stacked.prototype.initVis = function() {
             vis.data[name].values.map(function(v){
                 if (y == v.year){found_y = true;}
                 })
+
             if (found_y == false){
                 // console.log(name + " missing value for" + y );
                 vis.data[name].values.push({year:parseInt(y), value: 0, income: 0, valuePercentIncome: 0, adjustedValue: 0});
             }
+
+
             })
         vis.data[name].values = vis.data[name].values.sort(function(a,b){return a.year - b.year});
     });
@@ -127,8 +130,11 @@ Stacked.prototype.initVis = function() {
     // Scales and axes
     // Currently makes x scale based on first layer min/max
 
-    vis.min_year = parseDate(d3.min(years).toString());
-    vis.max_year = parseDate(d3.max(years).toString());
+    //vis.min_year = parseDate(d3.min(years).toString());
+    //vis.max_year = parseDate(d3.max(years).toString());
+
+    vis.min_year = parseDate("1984");
+    vis.max_year = parseDate("2016");
 
     vis.x = d3.time.scale()
         .range([0, vis.areachart.width])
@@ -152,6 +158,7 @@ Stacked.prototype.initVis = function() {
     vis.svg.append("g")
             .attr("class", "y-axis axis");
 
+    
     vis.area = d3.svg.area()
         .interpolate("cardinal")
         .x(function(d) { return vis.x(d.year); })
@@ -257,8 +264,44 @@ Stacked.prototype.wrangleData = function() {
                             year: parseDate(d.year.toString()), y: d[key]};
                 })};}))};
 
+    var last_year = 2014; 
+
+    valueTotals = {};
+    dataItems.map(function(name) {
+        var finalValues = vis.filteredData[name].values.slice(-1).pop(); 
+        Object.keys(finalValues).filter(function(k){return k!='year';}).map(function(k){
+            valueTotals[k] = (valueTotals[k] !== undefined ? valueTotals[k] : 0) + finalValues[k]; 
+        })});
+
+        var dataAverages = {};
+        Object.keys(valueTotals).map(function(k){ dataAverages[k] =  valueTotals[k]/dataItems.length});
+        dataAverages.year = (last_year + 1);
+        dataAveragesTwo = _.clone(dataAverages);
+        dataAveragesTwo.year = (last_year + 2);
+
+        console.log(dataAverages);
+
+    function legendDataForKey(key){
+        return stack(
+                dataItems.map(function(name) {
+
+                    var finalValues = [vis.filteredData[name].values.slice(-1).pop()];
+                    //var finalValues = vis.filteredData[name].values;
+                    finalValues.push(dataAverages);
+                    finalValues.push(dataAveragesTwo);
+
+                    //console.log(finalValue);
+                    return {
+                        name: name,
+                        subcategory: vis.filteredData[name].subcategory,
+                        values: finalValues.map(function(d) {
+                        return {
+                            year: parseDate(d.year.toString()), y: d[key]};
+                })};}))};
+
     vis.adjustedValue = stackDataForKey("adjustedValue");
     vis.value = stackDataForKey("value");
+    console.log(vis.value);
     vis.valuePercentIncome = stackDataForKey("valuePercentIncome");
 
 
