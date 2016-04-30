@@ -28,8 +28,8 @@ Stacked = function(_parentElement, _data, _properties){
 Stacked.prototype.initVis = function() {
     var vis = this;
 
-    vis.areachart = {margin: { top: 20, right: 20, bottom: 20, left: 75 }};
-    vis.legend =    {margin: { top: 0, right: 1, bottom: 20, left: 1 }};
+    vis.areachart = {margin: { top: 20, right: 250, bottom: 20, left: 75 }};
+    vis.legend =    {margin: { top: 0, right: 250, bottom: 20, left: 75 }};
 
     vis.margin = vis.properties.margin;
 
@@ -40,7 +40,6 @@ Stacked.prototype.initVis = function() {
     vis.legend.height = vis.legend.area - vis.legend.margin.top - vis.legend.margin.bottom; 
     vis.legend.width = vis.width - vis.legend.margin.right - vis.legend.margin.left; 
     
-
     vis.areachart.height = vis.height - vis.areachart.margin.top - vis.areachart.margin.bottom - vis.legend.height ; 
     vis.areachart.width = vis.width - vis.areachart.margin.left - vis.areachart.margin.right; 
 
@@ -153,7 +152,6 @@ Stacked.prototype.initVis = function() {
     vis.svg.append("g")
             .attr("class", "y-axis axis");
 
-    
     vis.area = d3.svg.area()
         .interpolate("cardinal")
         .x(function(d) { return vis.x(d.year); })
@@ -194,7 +192,7 @@ Stacked.prototype.initVis = function() {
     // Append legend background
     vis.legend_entry_height = 10; 
     vis.legend_x = 0 
-    vis.legend_y = vis.properties.height - vis.legend.height;  
+    vis.legend_y = vis.height - vis.legend.height;  
  
 
     vis.svg.append("rect")
@@ -223,6 +221,7 @@ Stacked.prototype.wrangleData = function() {
     vis.filteredData = vis.data;
 
     filteredData = {};
+
 
     if (vis.subcategory != 'all'){
          vis.alldataItems.map(function(name){
@@ -365,7 +364,7 @@ Stacked.prototype.updateVis = function() {
                     vis.svg.select("#"+d.subcategory).style("fill", "none");
                 } 
                 else {
-                    vis.subcategory = d.subcategory
+                    vis.subcategory = d.subcategory;
                     vis.svg.select("#"+d.subcategory).style("fill", highlight_color);
 
                 }
