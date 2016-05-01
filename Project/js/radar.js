@@ -186,7 +186,7 @@ Radar.prototype.fetchData = function() {
 }
 
 // To avoid triggering the fetch data a bunch of time when we set many filters at once, we can throttle the function
-Radar.prototype.fetchData = _.throttle(Radar.prototype.fetchData, 500);
+// Radar.prototype.fetchData = _.throttle(Radar.prototype.fetchData, 500);
 
 
 /*

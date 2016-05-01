@@ -114,6 +114,9 @@ Timeline.prototype.drawMarkers = function(yearFrom, yearTo, eventType) {
             return translate(x, 0);
         });
 
+    var heights = [20, 45, 70, 95];
+
+
     eventMarkers
         .append("line")
         .attr("stroke", function(d) {
@@ -130,7 +133,9 @@ Timeline.prototype.drawMarkers = function(yearFrom, yearTo, eventType) {
 
     eventMarkers
         .append("text")
-        .attr("transform", translate(10, 20))
+        .attr("transform", function(d, idx) {
+            return translate(10, heights[idx % 4]);
+        })
         .text(function(d) {
             return d.label.trim();
         });
@@ -194,11 +199,19 @@ Timeline.prototype.initVis = function() {
     vis.xContext = xContext;
 
     // Initialize brush component
+    // var brush = d3.svg.brush()
+    //     .x(xContext)
+    //     .on("brush", _.debounce(function() {
+    //         $(this.parentElement).trigger('brushed', [this, this.selectedBegin(), this.selectedEnd()]);
+    //     }.bind(this), this.debounceDelay));
+
+
     var brush = d3.svg.brush()
         .x(xContext)
-        .on("brush", _.debounce(function() {
+        .on("brush", function() {
             $(this.parentElement).trigger('brushed', [this, this.selectedBegin(), this.selectedEnd()]);
-        }.bind(this), this.debounceDelay));
+        }.bind(this));
+
 
     vis.brush = brush;
 
