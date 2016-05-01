@@ -44,19 +44,19 @@ function updateStories() {
 }
 
 
-var wrangleAll = _.throttle(function wrangleAll(e){
-    console.time("wrangle Area");
-    areachart.wrangleData();
-    console.timeEnd("wrangle Area");
-
+var wrangleAll = function wrangleAll(e){
     console.time("wrangle radar");
     radarChart.wrangleData();
     console.timeEnd("wrangle radar");
 
+    console.time("wrangle Area");
+    areachart.wrangleData();
+    console.timeEnd("wrangle Area");
+
     console.time("wrangle tree");
     treePlot.wrangleData();
     console.timeEnd("wrangle tree");
-}, 500);
+};
 
 
 $(function() {
@@ -118,7 +118,7 @@ $(function() {
 
         timeline = new Timeline("#timeline", years, {
             width: FULL_WIDTH,
-            height: 100,
+            height: 160,
             margin: { top: 0, right: 0, bottom: 30, left: 0 },
             events: ds._datasets.events,
         });
