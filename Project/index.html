@@ -28,15 +28,15 @@
     </head>
     <body class="index">
         <div class="jumbotron">
-            <div class="container">
+            <div class="container shopgirl-bg">
             <h1>The American<br>Consumer</h1>
             <h2>30 Years Of Spending Trends</h2>
 
             <div class="row">
-                <div class="col-sm-9">
-                    <p class="intro">Every year the <a href="http://www.bls.gov/">Bureau of Labor Statistics</a> produces <a href="http://www.bls.gov/cex/">The Consumer Expenditure Survey</a>, a study that provides information on the buying habits of American consumers, including data on their expenditures, income, and consumer unit (families and single consumers) characteristics. Here are a few stories as told by the data, and a playground to find more.</p>
+                <div class="col-sm-8">
+                    <p class="intro">Every year the <a href="http://www.bls.gov/">Bureau of Labor Statistics</a> produces <a href="http://www.bls.gov/cex/">The Consumer Expenditure Survey</a>, a study that provides information on the buying habits of American consumers, including data on their expenditures, income, and consumer unit (families and single consumers) characteristics. <em>Here are a few stories as told by the data, and a playground to find more.</em></p>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
 
                 </div>
             </div>
@@ -44,10 +44,14 @@
         </div>
 
         <div class="container">
+            <div class="row">
+                <div class="col-sm-8">
+                <h2>Walkthrough</h2>
+                <p>Each visualization has been picked to facilitate the exploration of a different aspect of the dataset. For each visualization, we provide preset configurations that tell a story. Click the story links to read the text and associated data filters.</p>
+                </div>
+            </div>
             <section class="intro row">
-                <div class="col-sm-9">
-                    <h2>Walkthrough</h2>
-                    <p>Each visualization has been picked to facilitate the exploration of a different aspect of the dataset. For each visualization, we provide preset configurations that tell a story. Click the links identified with a <span class="label label-primary">label</span> to display the associated story.</p>
+                <div class="col-sm-12">
                     <div class="row">
                         <div class="col-sm-4">
                             <h3>Who</h3>
@@ -69,8 +73,6 @@
                     <h2>Timeline</h2>
                     <p>The timeline displayed below will remain fixed as you navigate the visualizations below. Use it to select the range of years you want to examine and it will affect all the visualizations on the page. You may also change the unit used to display values to various absolute and relative formats.</p>
                     <p>Overlaid the timeline, markers indicate various major events that have occured since 1984.</p>
-                </div>
-                <div class="col-sm-3">
                 </div>
             </section>
         </div>
@@ -102,7 +104,6 @@
             <div class="container">
                 <a name="radar" class="hidden"></a>
                 <div class="radar-charts">
-                    <h2>Radar Chart</h2>
                     <div class="row">
                         <div class="col-sm-8">
                             <div id="radar-chart">
@@ -187,14 +188,12 @@
             </div>
         </script>
 
-        <div class="hidden-story" id="getting-old" data-demographic="LB04" data-item="HOUSING" data-value-type="adjustedValue">
-            <h3>Getting old</h3>
-            <p>In 2014, older households (those with a reference person 55 years and older) made up 41.5 percent of the CE sample, compared with 37.5 percent in 2009 and 34.6 percent in 2004, reflecting the aging of the U.S. population.</p>
-            <p>
-                Housing was the greatest expense in dollar terms ($16,219) and as a share of annual expenditures (32.9 percent) for olderhouseholds. Spending was greatest ($18,006) for the 55–64 age group, decreasing to $15,838 for the 65–74 group before declining to $13,375 for the 75-and-older group. The statistically significant decline in dollar expenditure reflects the decline in mortgage debt among households. Among older homeowner households, 59.5 percent were mortgage free. The proportion of homeowners without mortgage debt was 44.2 percent for the 55–64 age group, 61.7 percent for the 65–74 group, and 82.5 percent for the 75-and-older group.
-            </p>
+        <div class="hidden story" id="getting-old" data-demographic="LB04" data-item="HOUSING" data-value-type="adjustedValue" data-year-from="2004" data-year-to="2014">
+            <h3>This Old House</h3>
+            <p>In 2014, older households (those with a reference person 55 years and older) made up 41.5 percent of the <abbr title="Consumer Expenditure">CE</abbr> sample, compared with 37.5 percent in 2009 and 34.6 percent in 2004, reflecting the aging of the U.S. population.</p>
+            <p>Housing was the greatest expense in dollar terms ($16,219) and as a share of annual expenditures (32.9 percent) for older households. The statistically significant decline in dollar expenditure reflects the decline in mortgage debt among (aging) households.</p>
         </div>
-        <div class="hidden-story" id="old-entertainment" data-demographic="LB04" data-item="ENTRTAIN">
+        <div class="hidden story" id="old-entertainment" data-demographic="LB04" data-item="ENTRTAIN">
             <h3>Don't need to spend to have fun (when you're old)</h3>
             <p>Entertainment spending averaged $2,604 for the group as a whole. The difference between the $2,852 spent by the 55–64 age group and the $2,988 spent by the 65–74 age group was not statistically different. The $1,626 spent by the 75-and older group was statistically different from the amounts spent by the other age groups.7 Existing studies using CE data found that, other factors being equal, entertainment spending declines with age.
             </p>

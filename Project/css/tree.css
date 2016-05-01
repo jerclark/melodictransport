@@ -39,6 +39,7 @@
     fill: green;
     font-family: FontAwesome;
     font-size: 15px;
+    cursor: pointer;
 }
 
 .tree-top-label {

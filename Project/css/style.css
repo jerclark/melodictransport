@@ -46,6 +46,13 @@ html, body {
     line-height: 1.5;
 }
 
+.shopgirl-bg {
+    background-size: contain;
+    background-position: top right;
+    background-repeat: no-repeat;
+    background-image: url("../img/girl-40200-small.png");
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-family: Lato, sans-serif;
 }
@@ -54,6 +61,7 @@ section.intro {
     margin-top: 22.25px;
     margin-bottom: 40px;
 }
+
 
 // .container-fluid {
 //     width: 1366px;
@@ -77,14 +85,17 @@ section.intro {
     background-repeat: no-repeat;
 }
 
+// Allow svg element to "pop out" of their containers
+
+.vis-container svg:not(:root) {
+    overflow: visible;
+}
 
 #value-type {
-    width: 400px;
+    width: auto;
 }
 
 .jumbotron {
-    // background-image: url(../img/gursky4.jpg);
-    background-size: cover;
     height: auto;
     margin-bottom: 0px;
     padding: 20px;

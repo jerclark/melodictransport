@@ -44,9 +44,12 @@ function updateStories() {
                 var story = $(el);
                 var demographic = story.data('demographic');
                 var item = story.data('item');
+                var from = story.data('year-from') || '2009';
+                var to = story.data('year-to') || '2014';
 
                 $("#radar-demo-picker").val(demographic);
                 $("#radar-item-picker").val(item);
+                timeline.setYearRange(from, to);
 
                 $(".current-story").html($(el).html());
                 radarChart.fetchData();
@@ -83,6 +86,16 @@ $(function() {
         showArea();
         showRadar();
         showTrees();
+        updateStories();
+
+        // Handle brush events
+        $(document).on("brushed", function(e, timeline, from, to) {
+            areachart.x.domain([from, to]);
+            areachart.svg.select(".area").attr("d", areachart.area);
+            areachart.svg.select(".x-axis").call(areachart.xAxis);
+
+            wrangleAll();
+        });
     });
 
     function showArea() {
@@ -180,7 +193,6 @@ $(function() {
         $("#radar-item-picker").on("change", function() { radarChart.fetchData() });
 
         $(function() {
-            updateStories();
             radarChart.fetchData();
         })
     }
@@ -189,19 +201,5 @@ $(function() {
         treePlot = new TreePlot("#vis-tree");
     }
 
-    // Handle brush events
-    $(document).on("brushed", function(e, timeline) {
-        areachart.x.domain(timeline.brush.empty()
-            ? timeline.xContext.domain() : timeline.brush.extent());
-
-        areachart.svg.select(".area").attr("d", areachart.area);
-        areachart.svg.select(".x-axis").call(areachart.xAxis);
-
-        wrangleAll();
-
-    });
-
-
 
 })(window.cs171);
-
