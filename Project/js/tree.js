@@ -160,6 +160,7 @@ Tree.prototype.initVis = function() {
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .attr("class", "center-block")
+    .attr("style", "overflow: visible")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
