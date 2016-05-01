@@ -31,7 +31,7 @@ Stacked.prototype.initVis = function() {
     vis.areachart = {margin: { top: 20, right: 400, bottom: 20, left: 75 }};
     vis.legend =    {margin: { top: 0, right: 250, bottom: 20, left: 75 }};
     vis.rightLegend = {
-                    width: 200,
+                    width: 300,
                     margin: { top: 0, right: 250, bottom: 20, left: 75 }};
 
     vis.margin = vis.properties.margin;
@@ -45,8 +45,6 @@ Stacked.prototype.initVis = function() {
     
     vis.areachart.height = vis.height - vis.areachart.margin.top - vis.areachart.margin.bottom - vis.legend.height ; 
     vis.areachart.width = vis.width - vis.areachart.margin.left - vis.areachart.margin.right; 
-
-    console.log(vis.areachart);
 
     function isSingleton(s){
         var singletons = ["ALCBEVG","CASHCONT","EDUCATN","PERSCARE","READING","TOBACCO", "MISC"];
@@ -138,13 +136,16 @@ Stacked.prototype.initVis = function() {
     vis.min_year = parseDate(d3.min(years).toString());
     vis.max_year = parseDate(d3.max(years).toString());
 
+    vis.finalYear = 2014;
+    vis.legendYears = 7; 
+
     vis.x = d3.time.scale()
         .range([0, vis.areachart.width])
         .domain([vis.min_year, vis.max_year]);
 
     vis.rightLegend.x = d3.time.scale()
         .range([0, vis.rightLegend.width])
-        .domain([parseDate("2014"), parseDate("2016")]);
+        .domain([parseDate(vis.finalYear.toString()), parseDate((vis.finalYear + vis.legendYears).toString())]);
 
     vis.y = d3.scale.linear()
         .range([vis.areachart.height , 0]);
@@ -175,8 +176,8 @@ Stacked.prototype.initVis = function() {
     vis.rightLegend.area = d3.svg.area()
         .interpolate("cardinal")
         .x(function(d) { return vis.rightLegend.x(d.year)  + 900; })
-        .y0(function(d) { return vis.y(d.y0); })
-        .y1(function(d) { return vis.y(d.y0 + d.y); });
+        .y0(function(d) { return vis.y(d.y0);  })
+        .y1(function(d) { return vis.y(d.y0 + d.y  ); });
 
     
     vis.area = d3.svg.area()
@@ -284,7 +285,6 @@ Stacked.prototype.wrangleData = function() {
                             year: parseDate(d.year.toString()), y: d[key]};
                 })};}))};
 
-    var last_year = 2014; 
 
     valueTotals = {};
     dataItems.map(function(name) {
@@ -295,20 +295,22 @@ Stacked.prototype.wrangleData = function() {
 
         var dataAverages = {};
         Object.keys(valueTotals).map(function(k){ dataAverages[k] =  valueTotals[k]/dataItems.length});
-        dataAverages.year = (last_year + 1);
-        dataAveragesTwo = _.clone(dataAverages);
-        dataAveragesTwo.year = (last_year + 2);
 
-        console.log(dataAverages);
+        extraYears = []; 
+        for (i = 1; i < vis.legendYears; i++) {
+            dataAverages.year = (vis.finalYear + i);
+            extraYears.push(_.clone(dataAverages));
+        }
+
 
     function legendDataForKey(key){
         return stack(
                 dataItems.map(function(name) {
 
                     var finalValues = [vis.filteredData[name].values.slice(-1).pop()];
-                    //var finalValues = vis.filteredData[name].values;
-                    finalValues.push(dataAverages);
-                    finalValues.push(dataAveragesTwo);
+                    finalValues = finalValues.concat(extraYears); 
+
+
 
                     //console.log(finalValue);
                     return {
@@ -319,12 +321,16 @@ Stacked.prototype.wrangleData = function() {
                             year: parseDate(d.year.toString()), y: d[key]};
                 })};}))};
 
+
     vis.adjustedValue = stackDataForKey("adjustedValue");
     vis.adjustedValueLegend = legendDataForKey("adjustedValue");
 
     vis.value = stackDataForKey("value");
-    console.log(vis.value);
+    vis.valueLegend = legendDataForKey("value");
+
     vis.valuePercentIncome = stackDataForKey("valuePercentIncome");
+    vis.valuePercentIncomeLegend = legendDataForKey("valuePercentIncome");
+
 
 
     // Calculating percentages is dependent on the totals from the submitted dataset,
@@ -346,7 +352,7 @@ Stacked.prototype.wrangleData = function() {
     var yAxisTitles = {adjustedValue : "Inflation adjusted dollars", value : "2014 Dollars",  percent : "% Overtime", valuePercentIncome : "% of Average Income"};
     vis.svg.select("#y-axis-label").text((yAxisTitles[TYPE]));
 
-    console.log(TYPE);
+    //console.log(TYPE);
 
     // Update the visualization
  
@@ -435,7 +441,44 @@ Stacked.prototype.updateVis = function() {
             else {return vis.subColorScale(vis.subsubcategoryColorscale(d.subcategory))(d.name);}
         })
         .transition().duration(duration).delay(delay)
-        .attr("d", function(d) {return vis.rightLegend.area(d.values);});
+        .attr("d", function(d) {return vis.rightLegend.area(d.values);}); 
+
+    vis.svg.selectAll(".chartDataLabel").remove();
+
+    var DataLabels = vis.svg.selectAll(".chartDataLabel")
+        .data(vis.legendData);
+
+    DataLabels
+        .enter().append('text')
+        .attr("class", "chartDataLabel")
+        .attr("y", function(d) { return vis.y(d.values[3].y0 + d.values[3].y/2); })
+        .attr("x", function(d) { return vis.rightLegend.x(d.values[3].year)  + 900; })
+        .attr("dy", "0.5em")
+        .style("fill", "black")
+        .text(function (d){
+            console.log(d.name);
+            return d.name});
+
+
+    
+  // // Data labels 
+  //   Legendlayers.selectAll(".chartDataLabel")
+  //       .data(function(d) {
+  //           //console.log(d);
+  //           return d;})
+  //       .append('text')
+  //       .attr("class", "chartDataLabel")
+  //       .attr("y", function(d) { return vis.y(d.values[3].y0 + d.values[3].y/2); })
+  //       .attr("x", function(d) { return vis.rightLegend.x(d.values[3].year)  + 900; })
+  //       .attr("dy", "0.5em")
+  //       .style("fill", "black")
+  //       .text(function (d){
+  //           console.log(d.name);
+  //           return d.name});
+
+
+
+
 
 
     Legendlayers.exit()
@@ -443,7 +486,10 @@ Stacked.prototype.updateVis = function() {
         .attr("d", function(d) {return vis.areaExit(d.values);})
         .remove();
 
-    
+
+
+
+
     // highlight optiones
     vis.svg.selectAll(".area, .rightLegend")
         .on("mouseover", function(d)
