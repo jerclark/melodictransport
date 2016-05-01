@@ -159,9 +159,9 @@ Radar.prototype.initVis = function() {
     vis.tip = d3.tip().attr('class', 'd3-tip').html(function(d) {
         return d;
     });
+    console.timeEnd("radar initvis");
 
     vis.fetchData();
-    console.timeEnd("radar initvis");
 }
 
 

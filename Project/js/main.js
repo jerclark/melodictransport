@@ -36,7 +36,11 @@ function updateStories() {
         $(".story-picker").append(link);
     });
 
-    $(".stories").find(".story-link").first().click();
+    _.defer(function() {
+
+        $(".stories").find(".story-link").first().click();
+
+    });
 }
 
 
@@ -201,9 +205,9 @@ $(function() {
         $("#radar-demo-picker").on("change", function() { radarChart.fetchData() });
         $("#radar-item-picker").on("change", function() { radarChart.fetchData() });
 
-        $(function() {
+        _.defer(function() {
             radarChart.fetchData();
-        })
+        });
     }
 
     function showTrees() {
