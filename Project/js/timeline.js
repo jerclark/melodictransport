@@ -22,9 +22,16 @@ Timeline.prototype.updateVis = function() {
     return this;
 };
 
-// Return a two item array with the from / to years
+// Return a two item array with the from / to years (as dates)
 Timeline.prototype.selectedRange = function() {
-    return this.brush.empty() ? this.xContext.domain() : this.brush.extent()
+    return this.brush.empty() ? this.xContext.domain() : this.brush.extent();
+};
+
+// Return a two item array with the from / to years (as full year)
+Timeline.prototype.selectedYears = function() {
+    return this.selectedRange().map(function(d) {
+        return d.getFullYear();
+    });
 };
 
 // Returns the beginning of the selected range (year)

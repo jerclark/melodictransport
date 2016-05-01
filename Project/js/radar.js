@@ -11,7 +11,7 @@ Radar = function(_parentElement, options) {
             left: 40
         },
         showLabels: true,
-        years: [1984,  1985]
+        years: [2000, 2014]
     });
 
     this.initVis();
@@ -23,6 +23,7 @@ Radar = function(_parentElement, options) {
  */
 
 Radar.prototype.initVis = function() {
+    console.time("radar initvis");
     var vis = this;
 
     /************
@@ -160,11 +161,13 @@ Radar.prototype.initVis = function() {
     });
 
     vis.fetchData();
+    console.timeEnd("radar initvis");
 }
 
 
 
 Radar.prototype.fetchData = function() {
+    console.time("radar fetchdata");
     var vis = this;
     var demographicCode = vis.demographicCode = $("#radar-demo-picker").val();
     var demographicName = vis.demographicName = $("#radar-demo-picker option[value='" + demographicCode + "']").text();
@@ -179,6 +182,7 @@ Radar.prototype.fetchData = function() {
     });
     vis.data = ds.toDimensions(_data);
     vis.wrangleData();
+    console.timeEnd("radar fetchdata");
 }
 
 // To avoid triggering the fetch data a bunch of time when we set many filters at once, we can throttle the function
@@ -193,14 +197,10 @@ Radar.prototype.wrangleData = function() {
     var vis = this;
 
     //Fetch the years from the timeline
-    var selectedYears = timeline.brush.empty() ? timeline.xContext.domain() : timeline.brush.extent()
-    vis.options.years = selectedYears.map(function(v) {
-        return v.getFullYear()
-    });
+    vis.options.years = timeline.selectedYears();
 
     //Set the value type (adjusted dollars, raw dollars, etc)
     vis.valueType = d3.select("#value-type").property("value");
-
 
     var allValues = vis.data.map(function(characteristic) {
         var valuesForCharacteristic = [];
@@ -218,7 +218,6 @@ Radar.prototype.wrangleData = function() {
 
     // Update the visualization
     vis.updateVis();
-
 }
 
 

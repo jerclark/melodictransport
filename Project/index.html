@@ -81,17 +81,7 @@
                 <div class="container">
                     <span class="navbar-brand">The American Consumer</span>
                     <form class="navbar-form navbar-right">
-                        <div class="form-group">
-                            <label>
-                                Show values as &nbsp;
-                            </label>
-                            <select class="form-control" id="value-type" onchange="wrangleAll()">
-                                <option value="adjustedValue">Inflation Adjusted Dollars</option>
-                                <option value="value">Raw dollars</option>
-                                <option value="valuePercentIncome">Percent of Income</option>
-                                <option value="percent">Percentage</option>
-                            </select>
-                        </div>
+
                     </form>
                 </div>
             </nav>
@@ -110,9 +100,22 @@
                             </div>
                         </div>
                         <div class="col-sm-4">
-                            <div class="stories glyph-intro">
-                            <div class="current-story"></div>
-                            <div class="story-picker"></div>
+                            <div class="radar-filter">
+                                <label>Show values as</label>
+                                <select class="form-control" id="value-type" onchange="wrangleAll()">
+                                    <option value="adjustedValue">Inflation Adjusted Dollars</option>
+                                    <option value="value">Raw dollars</option>
+                                    <option value="valuePercentIncome">Percent of Income</option>
+                                    <option value="percent">Percentage</option>
+                                </select>
+                            </div>
+                            <hr class="style17">
+                            <div class="stories">
+                                <div class="current-story"></div>
+                                <div class="story-picker">
+                                    <hr class="style17">
+                                    <h4>Choose a story</h4>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -133,17 +136,15 @@
                 <div class="tree-charts">
                     <a name="money-tree"></a>
                     <h2 class="text-center">The Money Tree</h2>
+                    <ul>
+                        <li>Tree Height = income earned</li>
+                        <li>Branch length = % income spend on that category</li>
+                    </ul>
                     <p>
-                        <ul>
-                            <li>Tree Height = income earned</li>
-                            <li>Branch length = % income spend on that category</li>
-                        </ul>
-                        <p>
-                            The trees represent the beginning and end of the selected range in the timeline. Slide, expand or contract the timeline selection to see trends over time.
-                        </p>
-                        <p>
-                            Refine the data by selecting from the various demographics, and hover over the leaves for more details.
-                        </p>
+                        The trees represent the beginning and end of the selected range in the timeline. Slide, expand or contract the timeline selection to see trends over time.
+                    </p>
+                    <p>
+                        Refine the data by selecting from the various demographics, and hover over the leaves for more details.
                     </p>
 
                     <div class="row">
@@ -193,10 +194,9 @@
             <p>In 2014, older households (those with a reference person 55 years and older) made up 41.5 percent of the <abbr title="Consumer Expenditure">CE</abbr> sample, compared with 37.5 percent in 2009 and 34.6 percent in 2004, reflecting the aging of the U.S. population.</p>
             <p>Housing was the greatest expense in dollar terms ($16,219) and as a share of annual expenditures (32.9 percent) for older households. The statistically significant decline in dollar expenditure reflects the decline in mortgage debt among (aging) households.</p>
         </div>
-        <div class="hidden story" id="old-entertainment" data-demographic="LB04" data-item="ENTRTAIN">
-            <h3>Don't need to spend to have fun (when you're old)</h3>
-            <p>Entertainment spending averaged $2,604 for the group as a whole. The difference between the $2,852 spent by the 55–64 age group and the $2,988 spent by the 65–74 age group was not statistically different. The $1,626 spent by the 75-and older group was statistically different from the amounts spent by the other age groups.7 Existing studies using CE data found that, other factors being equal, entertainment spending declines with age.
-            </p>
+        <div class="hidden story" id="meat" data-demographic="LB08" data-item="BEEF" data-value-type="adjustedValue" data-year-from="2004" data-year-to="2014">
+            <h3>Where's The Beef? (and Pork)</h3>
+            <p>Looking at the data for the last ten years, there is a marked decrease in the amount of money spent on <a class="filter-link selected">beef</a> and <a class="filter-link">pork</a>, and generally on meats. What could it mean? The consumer price index does not suggest that meat got more affordable; are we making healthier choices?</p>
         </div>
     </body>
 </html>
