@@ -200,7 +200,7 @@ Stacked.prototype.initVis = function() {
         .y0(function(d) { return vis.y(0); })
         .y1(function(d) { return vis.y(0); });
 
-   vis.svg.append("defs").append("clipPath")
+   vis.clippath = vis.svg.append("defs").append("clipPath")
         .attr("id", "clip")
         .append("rect")
         .attr("width", vis.areachart.width)
@@ -258,9 +258,11 @@ Stacked.prototype.wrangleData = function() {
 
     if (inFilteredView()){
         vis.x.range([0, vis.areachart.width - vis.rightLegend.width - 25]);
+        vis.clippath.attr("width", vis.areachart.width - vis.rightLegend.width - 25);
 
     } else {
          vis.x.range([0, vis.areachart.width]);
+         vis.clippath.attr("width", vis.areachart.width);
     }
 
     vis.filteredData = vis.data;
