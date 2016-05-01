@@ -393,7 +393,6 @@ Stacked.prototype.wrangleData = function() {
     var yAxisTitles = {adjustedValue : "Inflation adjusted dollars", value : "2014 Dollars",  percent : "% Overtime", valuePercentIncome : "% of Average Income"};
     vis.svg.select("#y-axis-label").text((yAxisTitles[TYPE]));
 
-    //console.log(TYPE);
 
     // Update the visualization
  
