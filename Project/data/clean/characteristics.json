@@ -232,42 +232,42 @@
   {
     "demographic": "LB06",
     "characteristic": "02",
-    "name": "Total husband and wife consumer units"
+    "name": "All husband and wife"
   },
   {
     "demographic": "LB06",
     "characteristic": "03",
-    "name": "Husband and wife only consumer units"
+    "name": "Husband and wife only"
   },
   {
     "demographic": "LB06",
     "characteristic": "04",
-    "name": "Total husband and wife with children cons. units"
+    "name": "All husband and wife with children"
   },
   {
     "demographic": "LB06",
     "characteristic": "05",
-    "name": "Husband and wife w/ children, oldest child under 6"
+    "name": "Husband and wife oldest child < 6"
   },
   {
     "demographic": "LB06",
     "characteristic": "06",
-    "name": "Husband and wife w/ children, oldest child 6-17"
+    "name": "Husband and wife oldest child 6-17"
   },
   {
     "demographic": "LB06",
     "characteristic": "07",
-    "name": "Husband & wife w/ children, old. child 18 or over"
+    "name": "Husband & wife oldest child > 18"
   },
   {
     "demographic": "LB06",
     "characteristic": "08",
-    "name": "Other husband and wife consumer units"
+    "name": "Other husband and wife units"
   },
   {
     "demographic": "LB06",
     "characteristic": "09",
-    "name": "One parent, at least one child under 18"
+    "name": "One parent, at least one child < 18"
   },
   {
     "demographic": "LB06",
@@ -447,27 +447,27 @@
   {
     "demographic": "LB12",
     "characteristic": "04",
-    "name": "Wage & salary earners: managers and professionals"
+    "name": "Managers and professionals"
   },
   {
     "demographic": "LB12",
     "characteristic": "05",
-    "name": "Wage & salary: tech., sales, and clerical workers"
+    "name": "Tech., sales, and clerical workers"
   },
   {
     "demographic": "LB12",
     "characteristic": "06",
-    "name": "Wage & salary earners: service workers"
+    "name": "Service workers"
   },
   {
     "demographic": "LB12",
     "characteristic": "07",
-    "name": "Wage & salary: construction workers & mechanics"
+    "name": "Construction workers & mechanics"
   },
   {
     "demographic": "LB12",
     "characteristic": "08",
-    "name": "Wage & salary: Operators, fabricators & laborers"
+    "name": "Operators, fabricators & laborers"
   },
   {
     "demographic": "LB12",
@@ -537,22 +537,22 @@
   {
     "demographic": "LB14",
     "characteristic": "03",
-    "name": "Less than college graduate: Less than high school graduate"
+    "name": "Less than high school graduate"
   },
   {
     "demographic": "LB14",
     "characteristic": "04",
-    "name": "Less than college graduate: High school graduate"
+    "name": "graduate: High school graduate"
   },
   {
     "demographic": "LB14",
     "characteristic": "05",
-    "name": "Less than college graduate: High schoo graduate with some college"
+    "name": "graduate: High school graduate with some college"
   },
   {
     "demographic": "LB14",
     "characteristic": "06",
-    "name": "Less than college graduate: Associate's degree"
+    "name": "graduate: Associate's degree"
   },
   {
     "demographic": "LB14",
@@ -562,11 +562,11 @@
   {
     "demographic": "LB14",
     "characteristic": "08",
-    "name": "College graduate: Bachelor's degree"
+    "name": "Bachelor's degree"
   },
   {
     "demographic": "LB14",
     "characteristic": "09",
-    "name": "College graduate: Master's, professional, doctoral degree"
+    "name": "Master's, professional, doctoral degree"
   }
 ]

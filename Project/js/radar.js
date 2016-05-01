@@ -156,7 +156,7 @@ Radar.prototype.initVis = function() {
     /************
      * TOOLTIPS
      * **********/
-    vis.tip = d3.tip().attr('class', 'd3-tip').html(function(d) {
+    vis.tip = d3.tip().attr('class', 'd3-tip radar').html(function(d) {
         return d;
     });
     console.timeEnd("radar initvis");
@@ -280,13 +280,7 @@ Radar.prototype.updateVis = function() {
         .attr("transform", "rotate(" + (vis.dimensions.range()[1] / 2) + ")") //ring labels halfway btwn noon and 1
         .style("text-anchor", "middle")
         .text(function(d) {
-            var prefix = suffix = "";
-            if (_.contains(['adjustedValue', 'value'], vis.valueType))
-                prefix = "$";
-            if (vis.valueType === "valuePercentIncome")
-                suffix = "%";
-            console.log(d);
-            return prefix + d.toString() + suffix;
+            return vis.formatValue(d);
         });
 
 
@@ -312,10 +306,12 @@ Radar.prototype.updateVis = function() {
             year: plotYear
         })[0];
         var value = yearData ? yearData[vis.valueType] : 0;
-        yearLineData.push([
-            vis.values(value),
-            vis.dimensions(vis.data[0].dimension)
-        ]);
+        if (value !== 0) {
+            yearLineData.push([
+                vis.values(value),
+                vis.dimensions(vis.data[0].dimension)
+            ]);
+        }
 
         vis.svg.append("g")
             .attr("class", "radar-plot-line")
@@ -356,6 +352,7 @@ Radar.prototype.updateVis = function() {
 
     //Value Point - added here because can't attach event handlers to svg 'path markers'
     spokes.selectAll("circle").remove();
+    vis.svg.selectAll(".d3-tip .radar").remove();
     for (var i = 0; i < vis.options.years.length; i++) {
         var plotYear = vis.options.years[i];
         spokes.append("circle")
@@ -372,7 +369,8 @@ Radar.prototype.updateVis = function() {
             .attr("cy", 0)
             .attr("r", 5)
             .on("mouseenter", function(e) {
-                var displayValue = $.data(this, "value") == 0 ? "No Data" : "$" + Math.round($.data(this, "value"));
+                var unitSymbol = (vis.valueType == "percen")
+                var displayValue = $.data(this, "value") == 0 ? "No Data" : vis.formatValue(Math.round($.data(this, "value")));
                 vis.tip.show($.data(this, "year") + "<br>" + radarDimensionName(e.dimension) + "<br>" + displayValue);
             })
             .on("mouseout", function(e) {
@@ -405,6 +403,16 @@ Radar.prototype.updateVis = function() {
 
 
 
+}
+
+Radar.prototype.formatValue = function(value){
+    var vis = this;
+    var prefix = suffix = "";
+    if (_.contains(['adjustedValue', 'value'], vis.valueType))
+        prefix = "$";
+    if (vis.valueType === "valuePercentIncome")
+        suffix = "%";
+    return prefix + value.toString() + suffix;
 }
 
 
