@@ -28,8 +28,8 @@ Stacked = function(_parentElement, _data, _properties){
 Stacked.prototype.initVis = function() {
     var vis = this;
 
-    vis.areachart = {margin: { top: 20, right: 150, bottom: 20, left: 75 }};
-    vis.legend =    {margin: { top: 0, right: 250, bottom: 20, left: 75 }};
+    vis.areachart = {margin: { top: 20, right: 20, bottom: 20, left: 75 }};
+    vis.legend =    {margin: { top: 0, right: 20, bottom: 10, left: 75 }};
     vis.rightLegend = {
                     width: 350,
                     margin: { top: 0, right: 250, bottom: 20, left: 75 }};
@@ -182,9 +182,9 @@ Stacked.prototype.initVis = function() {
     // Used for transitions in and out 
     vis.legendAreaExit = d3.svg.area()
         .interpolate("cardinal")
-        .x(function(d) { return vis.x(d.year); })
-        .y0(function(d) { return vis.y(0); })
-        .y1(function(d) { return vis.y(0); });
+        .x(function(d) { return vis.x(d.year ); })
+        .y0(function(d) { return vis.y(d.y0); })
+        .y1(function(d) { return vis.y(d.y0 + d.y); });
 
     
     vis.area = d3.svg.area()
@@ -193,7 +193,6 @@ Stacked.prototype.initVis = function() {
         .y0(function(d) { return vis.y(d.y0); })
         .y1(function(d) { return vis.y(d.y0 + d.y); });
 
-    
     // Used for transitions in and out 
     vis.areaExit = d3.svg.area()
         .interpolate("cardinal")
@@ -227,7 +226,7 @@ Stacked.prototype.initVis = function() {
     // Append legend background
     vis.legend_entry_height = 10; 
     vis.legend_x = 0 
-    vis.legend_y = vis.height - vis.legend.height;  
+    vis.legend_y = vis.height - vis.legend.height - 10;  
  
 
     vis.svg.append("rect")
@@ -235,7 +234,7 @@ Stacked.prototype.initVis = function() {
         .attr("x", vis.legend_x)
         .attr("y", vis.legend_y)
         .attr("width", vis.legend.width )
-        .attr("height", vis.legend.height -25 )
+        .attr("height", vis.legend.height - 25)
         .style("stroke", "black")
         .style("fill","#fff")
         .style("opacity", .75);
@@ -258,7 +257,8 @@ Stacked.prototype.wrangleData = function() {
     }
 
     if (inFilteredView()){
-        vis.x.range([0, vis.areachart.width - 300]);
+        vis.x.range([0, vis.areachart.width - vis.rightLegend.width - 25]);
+
     } else {
          vis.x.range([0, vis.areachart.width]);
     }
@@ -597,6 +597,6 @@ Stacked.prototype.updateVis = function() {
 
 
     // Call axis functions with the new domain
-    vis.svg.select(".x-axis").call(vis.xAxis);
+    vis.svg.select(".x-axis").transition().duration(duration).delay(delay).call(vis.xAxis);
     vis.svg.select(".y-axis").transition().duration(duration).delay(delay).call(vis.yAxis);
 }
