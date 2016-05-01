@@ -74,8 +74,8 @@ section.intro {
 }
 
 // Allow svg elements inside the vis container to "pop out" of their containing elements
-.vis-container svg:not(:root), .filtering-nav svg:not(:root) {
-    overflow: visible;
+.vis-container svg:not(:root), .container svg:not(:root), #timeline svg {
+    overflow: visible !important;
 }
 
 #value-type {
