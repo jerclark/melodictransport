@@ -317,7 +317,7 @@ Tree.prototype.updateVis = function(){
       var branchMidX = d.branchMidX = branchTrunkX - ((branchTrunkX - branchTipX) / 2);
       var branchMidY = d.branchMidY =((-healthyBranchSlope) * Math.abs(branchTipX - branchTrunkX)) + branchTrunkY;
       d.flowerX = (d.branchTipX + (branchDirection(i) * 15));
-      d.flowerY = (d.branchTipY - 12);
+      d.flowerY = (d.branchTipY - 20);
       var lineData = [[branchTrunkX, branchTrunkY], [branchMidX, branchMidY], [branchTipX, branchTipY]];
       return d3.svg.line().interpolate("basis")(lineData);
     });
