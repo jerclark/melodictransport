@@ -29,7 +29,7 @@
     color: #E9E9E9;
 }
 .bg-white {
-    background-color: #F8F8F8;
+    background-color: #FFF;
 }
 
 nav.navbar.navbar-inverse {
@@ -39,7 +39,7 @@ nav.navbar.navbar-inverse {
 /* Index page */
 
 html, body {
-    background-color: #E9E9E9;
+    background-color: #FFF;
     color: #424242;
     font-family: Lora, serif;
     font-size: 16px;
@@ -62,18 +62,6 @@ section.intro {
     margin-bottom: 40px;
 }
 
-
-// .container-fluid {
-//     width: 1366px;
-// }
-
-/* floating nav */
-
-.filtering-nav {
-    height: 180px;
-    border-bottom: 1px solid #e7e7e7;
-}
-
 .radar-charts {
     padding-top: 40px;
 }
@@ -85,10 +73,9 @@ section.intro {
     background-repeat: no-repeat;
 }
 
-// Allow svg element to "pop out" of their containers
-
-.vis-container svg:not(:root) {
-    overflow: visible;
+// Allow svg elements inside the vis container to "pop out" of their containing elements
+.vis-container svg:not(:root), .container svg:not(:root), #timeline svg {
+    overflow: visible !important;
 }
 
 #value-type {

@@ -1,308 +1,308 @@
 [
   {
-    "name": " George Washington ",
+    "name": "George Washington",
     "party": "None, Federalist",
     "termBegin": 1789,
     "termEnd": 1797,
     "vp": "John Adams"
   },
   {
-    "name": " John Adams ",
+    "name": "John Adams",
     "party": "Federalist",
     "termBegin": 1797,
     "termEnd": 1801,
     "vp": "Thomas Jefferson"
   },
   {
-    "name": " Thomas Jefferson ",
+    "name": "Thomas Jefferson",
     "party": "Democratic-Republican",
     "termBegin": 1801,
     "termEnd": 1809,
     "vp": "Aaron Burr, George Clinton"
   },
   {
-    "name": " James Madison ",
+    "name": "James Madison",
     "party": "Democratic-Republican",
     "termBegin": 1809,
     "termEnd": 1817,
     "vp": "George Clinton, Elbridge Gerry"
   },
   {
-    "name": " James Monroe ",
+    "name": "James Monroe",
     "party": "Democratic-Republican",
     "termBegin": 1817,
     "termEnd": 1825,
     "vp": "Daniel Tompkins"
   },
   {
-    "name": " John Quincy Adams ",
+    "name": "John Quincy Adams",
     "party": "Democratic-Republican",
     "termBegin": 1825,
     "termEnd": 1829,
     "vp": "John Calhoun"
   },
   {
-    "name": " Andrew Jackson ",
+    "name": "Andrew Jackson",
     "party": "Democrat",
     "termBegin": 1829,
     "termEnd": 1837,
     "vp": "John Calhoun, Martin van Buren"
   },
   {
-    "name": " Martin van Buren ",
+    "name": "Martin van Buren",
     "party": "Democrat",
     "termBegin": 1837,
     "termEnd": 1841,
     "vp": "Richard Johnson"
   },
   {
-    "name": " William H Harrison ",
+    "name": "William H Harrison",
     "party": "Whig",
     "termBegin": 1841,
     "termEnd": 1841,
     "vp": "John Tyler"
   },
   {
-    "name": " John Tyler ",
+    "name": "John Tyler",
     "party": "Whig",
     "termBegin": 1841,
     "termEnd": 1845,
     "vp": "."
   },
   {
-    "name": " James K Polk ",
+    "name": "James K Polk",
     "party": "Democrat",
     "termBegin": 1845,
     "termEnd": 1849,
     "vp": "George Dallas"
   },
   {
-    "name": " Zachary Taylor ",
+    "name": "Zachary Taylor",
     "party": "Whig",
     "termBegin": 1849,
     "termEnd": 1850,
     "vp": "Millard Fillmore"
   },
   {
-    "name": " Millard Fillmore ",
+    "name": "Millard Fillmore",
     "party": "Whig",
     "termBegin": 1850,
     "termEnd": 1853,
     "vp": "."
   },
   {
-    "name": " Franklin Pierce ",
+    "name": "Franklin Pierce",
     "party": "Democrat",
     "termBegin": 1853,
     "termEnd": 1857,
     "vp": "William King"
   },
   {
-    "name": " James Buchanan ",
+    "name": "James Buchanan",
     "party": "Democrat",
     "termBegin": 1857,
     "termEnd": 1861,
     "vp": "John Breckinridge"
   },
   {
-    "name": " Abraham Lincoln ",
+    "name": "Abraham Lincoln",
     "party": "Republican",
     "termBegin": 1861,
     "termEnd": 1865,
     "vp": "Hannibal Hamlin, Andrew Johnson"
   },
   {
-    "name": " Andrew Johnson ",
+    "name": "Andrew Johnson",
     "party": "National Union",
     "termBegin": 1865,
     "termEnd": 1869,
     "vp": "."
   },
   {
-    "name": " Ulysses S Grant ",
+    "name": "Ulysses S Grant",
     "party": "Republican",
     "termBegin": 1869,
     "termEnd": 1877,
     "vp": "Schuyler Colfax"
   },
   {
-    "name": " Rutherford Hayes ",
+    "name": "Rutherford Hayes",
     "party": "Republican",
     "termBegin": 1877,
     "termEnd": 1881,
     "vp": "William Wheeler"
   },
   {
-    "name": " James Garfield ",
+    "name": "James Garfield",
     "party": "Republican",
     "termBegin": 1881,
     "termEnd": 1881,
     "vp": "Chester Arthur"
   },
   {
-    "name": " Chester Arthur ",
+    "name": "Chester Arthur",
     "party": "Republican",
     "termBegin": 1881,
     "termEnd": 1885,
     "vp": "."
   },
   {
-    "name": " Grover Cleveland ",
+    "name": "Grover Cleveland",
     "party": "Democrat",
     "termBegin": 1885,
     "termEnd": 1889,
     "vp": "Thomas Hendriks"
   },
   {
-    "name": " Benjamin Harrison ",
+    "name": "Benjamin Harrison",
     "party": "Republican",
     "termBegin": 1889,
     "termEnd": 1893,
     "vp": "Levi Morton"
   },
   {
-    "name": " Grover Cleveland ",
+    "name": "Grover Cleveland",
     "party": "Democrat",
     "termBegin": 1893,
     "termEnd": 1897,
     "vp": "Adlai Stevenson"
   },
   {
-    "name": " William McKinley ",
+    "name": "William McKinley",
     "party": "Republican",
     "termBegin": 1897,
     "termEnd": 1901,
     "vp": "Garret Hobart, Theodore Roosevelt"
   },
   {
-    "name": " Theodore Roosevelt ",
+    "name": "Theodore Roosevelt",
     "party": "Republican",
     "termBegin": 1901,
     "termEnd": 1909,
     "vp": "Charles Fairbanks"
   },
   {
-    "name": " William Taft ",
+    "name": "William Taft",
     "party": "Republican",
     "termBegin": 1909,
     "termEnd": 1913,
     "vp": "James Sherman"
   },
   {
-    "name": " Woodrow Wilson ",
+    "name": "Woodrow Wilson",
     "party": "Democrat",
     "termBegin": 1913,
     "termEnd": 1921,
     "vp": "Thomas Marshall"
   },
   {
-    "name": " Warren Harding ",
+    "name": "Warren Harding",
     "party": "Republican",
     "termBegin": 1921,
     "termEnd": 1923,
     "vp": "Calvin Coolidge"
   },
   {
-    "name": " Calvin Coolidge ",
+    "name": "Calvin Coolidge",
     "party": "Republican",
     "termBegin": 1923,
     "termEnd": 1929,
     "vp": "Charles Dawes"
   },
   {
-    "name": " Herbert C Hoover ",
+    "name": "Herbert C Hoover",
     "party": "Republican",
     "termBegin": 1929,
     "termEnd": 1933,
     "vp": "Charles Curtis"
   },
   {
-    "name": " Franklin Delano Roosevelt ",
+    "name": "Franklin Delano Roosevelt",
     "party": "Democrat",
     "termBegin": 1933,
     "termEnd": 1945,
     "vp": "John Garner, Henry Wallace, Harry S. Truman"
   },
   {
-    "name": " Harry S Truman ",
+    "name": "Harry S Truman",
     "party": "Democrat",
     "termBegin": 1945,
     "termEnd": 1953,
     "vp": "Alben Barkley"
   },
   {
-    "name": " Dwight David Eisenhower ",
+    "name": "Dwight David Eisenhower",
     "party": "Republican",
     "termBegin": 1953,
     "termEnd": 1961,
     "vp": "Richard Milhous Nixon"
   },
   {
-    "name": " John Fitzgerald Kennedy ",
+    "name": "John Fitzgerald Kennedy",
     "party": "Democrat",
     "termBegin": 1961,
     "termEnd": 1963,
     "vp": "Lyndon Johnson"
   },
   {
-    "name": " Lyndon Baines Johnson ",
+    "name": "Lyndon Baines Johnson",
     "party": "Democrat",
     "termBegin": 1963,
     "termEnd": 1969,
     "vp": "Hubert Humphrey"
   },
   {
-    "name": "  Richard Milhous Nixon ",
+    "name": "Richard Milhous Nixon",
     "party": "Republican",
     "termBegin": 1969,
     "termEnd": 1974,
     "vp": "Spiro Agnew, Gerald R. Ford"
   },
   {
-    "name": " Gerald R Ford  ",
+    "name": "Gerald R Ford",
     "party": "Republican",
     "termBegin": 1974,
     "termEnd": 1977,
     "vp": "Nelson Rockefeller"
   },
   {
-    "name": " James Jimmy Earl Carter Jr  ",
+    "name": "James Jimmy Earl Carter Jr",
     "party": "Democrat",
     "termBegin": 1977,
     "termEnd": 1981,
     "vp": "Walter Mondale"
   },
   {
-    "name": " Ronald Wilson Reagan  ",
+    "name": "Ronald Wilson Reagan",
     "party": "Republican",
     "termBegin": 1981,
     "termEnd": 1989,
     "vp": "George H. W. Bush"
   },
   {
-    "name": " George H W Bush  ",
+    "name": "George H W Bush",
     "party": "Republican",
     "termBegin": 1989,
     "termEnd": 1993,
     "vp": "James Danforth (Dan) Quayle"
   },
   {
-    "name": " William Bill Jefferson Clinton  ",
+    "name": "William Bill Jefferson Clinton",
     "party": "Democrat",
     "termBegin": 1993,
     "termEnd": 2001,
     "vp": "Al Gore"
   },
   {
-    "name": " George W Bush  ",
+    "name": "George W Bush",
     "party": "Republican",
     "termBegin": 2001,
     "termEnd": 2009,
     "vp": "Richard Cheney"
   },
   {
-    "name": " Barack Obama  ",
-    "party": " Democrat ",
+    "name": "Barack Obama",
+    "party": "Democrat",
     "termBegin": 2009,
     "termEnd": 2017,
     "vp": "Joseph Biden"
