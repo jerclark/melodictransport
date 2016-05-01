@@ -47,7 +47,7 @@
             <div class="row">
                 <div class="col-sm-8">
                 <h2>Walkthrough</h2>
-                <p>Each visualization has been picked to facilitate the exploration of a different aspect of the dataset. For each visualization, we provide preset configurations that tell a story. Click the story links to read the text and associated data filters.</p>
+                <p>Each visualization has been picked to facilitate the exploration of a different aspect of the dataset. For each visualization, we provide preset configurations that tell a story. Click the story links and the corresponding filters will be selected.</p>
                 </div>
             </div>
             <section class="intro row">
@@ -55,8 +55,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <h3>Who</h3>
-                            <p>
-                                The <a href="#radar">Radar Chart</a> is useful for exploring <em>who</em> is consuming what. Who's spending more on entertainment? Elderly or young? Northeasterners or Westerners? Low income earners or High-income earners? Who eats the most eggs? Buys the most personal care items?</li>
+                            <p>The <a href="#radar">Radar Chart</a> is useful for exploring <em>who</em> is consuming what. Who's spending more on entertainment? Elderly or young? Northeasterners or Westerners? Low income earners or High-income earners? Who eats the most eggs? Buys the most personal care items?</li>
                             </p>
                         </div>
                         <div class="col-sm-4">
@@ -71,18 +70,23 @@
                     </div>
 
                     <h2>Timeline</h2>
-                    <p>The timeline displayed below will remain fixed as you navigate the visualizations below. Use it to select the range of years you want to examine and it will affect all the visualizations on the page. You may also change the unit used to display values to various absolute and relative formats.</p>
-                    <p>Overlaid the timeline, markers indicate various major events that have occured since 1984.</p>
+                    <p>The timeline below will remain fixed as you navigate the visualizations. Use it to select the range of years you want to examine and it will affect all the visualizations on the page.</p>
+                    <p>Overlaid on the timeline, markers indicate major events that have occured since 1984. Use the links above to change the category of events being displayed.</p>
                 </div>
             </section>
         </div>
         <section class="filtering-nav bg-white">
             <nav class="navbar navbar-default">
                 <div class="container">
-                    <span class="navbar-brand">The American Consumer</span>
-                    <form class="navbar-form navbar-right">
-
-                    </form>
+                    <span class="navbar-brand">Event Timeline</span>
+                    <ul class="nav navbar-nav timeline-events">
+                        <li class="active"><a href="#">Financial</a></li>
+                        <li><a href="#">Natural Disasters</a></li>
+                        <li><a href="#">Political</a></li>
+                        <li><a href="#">Military</a></li>
+                    </ul>
+                    <p class="navbar-text navbar-right timeline-range"></p>
+                    <p class="navbar-text navbar-right"><em>Selected:</em></p>
                 </div>
             </nav>
             <div class="container">
@@ -138,7 +142,12 @@
                     <h2 class="text-center">The Money Tree</h2>
                     <ul>
                         <li>Tree Height = income earned</li>
-                        <li>Branch length = % income spend on that category</li>
+                        <li>Branch length = % income spent category represented by leaf</li>
+                        <li>Leaf Health = Tracks increase in category cost against inflation</li>
+                        <ul>
+                            <li>Size of pink flower represents difference at which item cost has grown SLOWER than inflation (good)</li>
+                            <li>Browness of leaf represents difference at which item cost has grown FASTER than inflation (bad)</li>
+                        </ul>
                     </ul>
                     <p>
                         The trees represent the beginning and end of the selected range in the timeline. Slide, expand or contract the timeline selection to see trends over time.

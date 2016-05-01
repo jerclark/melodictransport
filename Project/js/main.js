@@ -120,7 +120,20 @@ $(function() {
             width: FULL_WIDTH,
             height: 100,
             margin: { top: 0, right: 0, bottom: 30, left: 0 },
-            events: ds._datasets.presidents,
+            events: ds._datasets.events,
+        });
+
+        // When the range changes, update the timeline header
+        $('#timeline').on('brushed', function(e, timeline, from, to) {
+            $('.timeline-range').text(from.getFullYear() + "-" + to.getFullYear());
+        });
+
+        // Handle switching of timeline events displayed
+        $("body").on("click", ".timeline-events", function(e) {
+            e.preventDefault();
+            $(this).children().removeClass("active");
+            $(e.target).closest("li").addClass("active");
+            timeline.updateVis($(e.target).text());
         });
     }
 

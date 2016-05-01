@@ -1,0 +1,10 @@
+[{
+    "label": "Northridge Earthquake (L.A.)",
+    "fromYear": 1994
+}, {
+    "label": "Hurricane Katrina (New Orleans)",
+    "fromYear": 2005
+}, {
+    "label": "Hurricane Sandy",
+    "fromYear": 2012
+}]

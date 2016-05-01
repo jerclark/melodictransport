@@ -15,7 +15,7 @@ CHGASLI	CHGASLI	Net change in total assets and liabilities	0	T	13800
 CHGASLI	CHGASSET	Net change in total assets	1	T	13900	
 CHGASLI	CHGLIAB	Net change in total liabilities	1	T	14000	
 CONSUNIT	CONSUNIT	Number of consumer units (in thousands)	0	T	14500	
-EDUCATN	EDUCATN	Education	0	T	11600   SAE
+EDUCATN	EDUCATN	Education	0	T	11600	SAE
 ENTRTAIN	ENTEROTH	Entertainment: other supplies, equip., & services	1	T	11300	
 ENTRTAIN	ENTRTAIN	Entertainment	0	T	10900	
 ENTRTAIN	FEESADM	Entertainment: fees and admissions	1	T	11000	
@@ -100,12 +100,12 @@ INSPENSN	INSPENSN	Personal insurance and pensions	0	T	12000
 INSPENSN	LIFEINSR	Life and other personal insurance	1	T	12100	
 INSPENSN	PENSIONS	Pensions and Social Security	1	T	12200	
 MISC	MISC	Miscellaneous expenditures	0	T	11800	
-PERSCARE	PERSCARE	Personal care products and services	0	T	11400   SAG1
+PERSCARE	PERSCARE	Personal care products and services	0	T	11400	SAG1
 PERSTAX	FEDTAXES	Federal income taxes	1	T	13400	
 PERSTAX	OTHRTAX	Other taxes	1	T	13600	
 PERSTAX	PERSTAX	Personal taxes	0	T	13300	
 PERSTAX	STATETAX	State and local income taxes	1	T	13500	
-READING	READING	Reading	0	T	11500   SERG
+READING	READING	Reading	0	T	11500	SERG
 TITLECU	980010	Number of People in CU	1	T	15000	
 TITLECU	980020	Age of reference person	0	T	14800	
 TITLECU	980030	Number of Earners	1	T	15300	
@@ -139,7 +139,7 @@ TITLEPD	TITLEHT	Housing tenure:	0	F	15800
 TITLEPD	TITLERRP	Race of reference person:	0	F	16300	
 TITLEPD	TITLESRP	Reference person:	0	F	15500	
 TITLEPD	WHTNDOTH	Percent White, Asian, and All Other Races	1	T	16500	
-TOBACCO	TOBACCO	Tobacco products and smoking supplies	0	T	11700   SEGA
+TOBACCO	TOBACCO	Tobacco products and smoking supplies	0	T	11700	SEGA
 TOTALEXP	TOTALEXP	Total average annual expenditures	0	T	1000	
 TRANS	500110	Vehicle insurance	2	T	10100	
 TRANS	CAREPAIR	Vehicle maintenance and repairs	2	T	10000	

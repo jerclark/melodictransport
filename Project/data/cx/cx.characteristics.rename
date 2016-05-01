@@ -45,14 +45,14 @@ LB05	07	Five or more people in consumer unit	1	T	5070
 LB05	A1	Five people in consumer unit	1	T	5080
 LB05	A2	Six or more people in consumer unit	1	T	5090
 LB06	01	All Consumer Units	0	T	6100
-LB06	02	Total husband and wife consumer units	0	T	6010
-LB06	03	Husband and wife only consumer units	1	T	6020
-LB06	04	Total husband and wife with children cons. units	1	T	6030
-LB06	05	Husband and wife w/ children, oldest child under 6	2	T	6040
-LB06	06	Husband and wife w/ children, oldest child 6-17	2	T	6050
-LB06	07	Husband & wife w/ children, old. child 18 or over	2	T	6060
-LB06	08	Other husband and wife consumer units	1	T	6070
-LB06	09	One parent, at least one child under 18	0	T	6080
+LB06	02	All husband and wife	0	T	6010
+LB06	03	Husband and wife only	1	T	6020
+LB06	04	All husband and wife with children	1	T	6030
+LB06	05	Husband and wife oldest child < 6	2	T	6040
+LB06	06	Husband and wife oldest child 6-17	2	T	6050
+LB06	07	Husband & wife oldest child > 18	2	T	6060
+LB06	08	Other husband and wife units	1	T	6070
+LB06	09	One parent, at least one child < 18	0	T	6080
 LB06	10	Single person and other consumer units	0	T	6090
 LB07	01	All Consumer Units	0	T	7010
 LB07	02	Single Consumers, no earner	0	T	7020
@@ -88,11 +88,11 @@ LB11	05	Region of residence: west	0	T	11050
 LB12	01	All Consumer Units	0	T	6100
 LB12	02	Self-employed workers	0	T	12010
 LB12	03	Total wage and salary earners	0	T	12020
-LB12	04	Wage & salary earners: managers and professionals	1	T	12030
-LB12	05	Wage & salary: tech., sales, and clerical workers	1	T	12040
-LB12	06	Wage & salary earners: service workers	1	T	12050
-LB12	07	Wage & salary: construction workers & mechanics	1	T	12060
-LB12	08	Wage & salary: Operators, fabricators & laborers	1	T	12070
+LB12	04	Managers and professionals	1	T	12030
+LB12	05	Tech., sales, and clerical workers	1	T	12040
+LB12	06	Service workers	1	T	12050
+LB12	07	Construction workers & mechanics	1	T	12060
+LB12	08	Operators, fabricators & laborers	1	T	12070
 LB12	09	Retired	0	T	12080
 LB12	10	Occupation: all other, including not reporting	0	T	12090
 LB13	01	All Consumer Units	0	T	13010
@@ -106,10 +106,10 @@ LB13	08	Bachelor's degree	1	T	13080
 LB13	09	Master's, professional, doctorate	1	T	13090
 LB14	01	All Consumer Units	0	T	14010
 LB14	02	Less than college graduate: Total	1	T	14020
-LB14	03	Less than college graduate: Less than high school graduate	1	T	14030
-LB14	04	Less than college graduate: High school graduate	1	T	14040
-LB14	05	Less than college graduate: High schoo graduate with some college	1	T	14050
-LB14	06	Less than college graduate: Associate's degree	1	T	14060
+LB14	03	Less than high school graduate	1	T	14030
+LB14	04	graduate: High school graduate	1	T	14040
+LB14	05	graduate: High school graduate with some college	1	T	14050
+LB14	06	graduate: Associate's degree	1	T	14060
 LB14	07	College graduate: Total	1	T	14070
-LB14	08	College graduate: Bachelor's degree	1	T	14080
-LB14	09	College graduate: Master's, professional, doctoral degree	1	T	14090
+LB14	08	Bachelor's degree	1	T	14080
+LB14	09	Master's, professional, doctoral degree	1	T	14090

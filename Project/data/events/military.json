@@ -1,0 +1,54 @@
+[{
+    "label": "Libya (Gulf Of Sidra Incidents)",
+    "fromYear": 1986,
+    "toYear": 1986,
+    "description": "On March 26, 1986, President Reagan reported on March 24 and 25, U.S. forces, while engaged in freedom of navigation exercises around the Gulf of Sidra, had been attacked by Libyan missiles and the United States had responded with missiles."
+}, {
+    "label": "Military Actions in the Persian Gulf",
+    "fromYear": 1987,
+    "toYear": 1988,
+    "description": ""
+}, {
+    "label": "Invasion of Panama",
+    "fromYear": 1989,
+    "toYear": 1990
+}, {
+    "label": "Fall of the Berlin Wall",
+    "fromYear": 1989
+}, {
+    "label": "Operation Desert Shield (Saudi Arabia)",
+    "fromYear": 1990,
+    "toYear": 1990
+}, {
+    "label": "Gulf War",
+    "fromYear": 1991,
+    "toYear": 1991
+}, {
+    "label": "Kuwait",
+    "fromYear": 1992,
+    "toYear": 1992
+}, {
+    "label": "Operation Desert Strike (Kuwait)",
+    "fromYear": 1996,
+    "toYear": 1996
+}, {
+    "label": "Operation Desert Fox (Iraq)",
+    "fromYear": 1998,
+    "toYear": 1998
+}, {
+    "label": "9/11",
+    "fromYear": 2001,
+    "toYear": 2001
+}, {
+    "label": "Operation Enduring Freedom (War On Terror)",
+    "fromYear": 2001,
+    "toYear": 2014
+}, {
+    "label": "Operation Iraqi Freedom (War in Iraq)",
+    "fromYear": 2003,
+    "toYear": 2011
+}, {
+    "label": "Osama Bin Laden killed",
+    "fromYear": 2011,
+    "toYear": 2011
+}]

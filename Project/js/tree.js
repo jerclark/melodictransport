@@ -68,7 +68,7 @@ TreePlot.prototype.wrangleData = function(){
   var allItemCPIData = ds.cpiValues("CU0000SA0");
   var expenditureList = ds.expenditures();
   var expenditureData = ds.query(expenditureCriteria);
-  var itemsToOmit = ["TOTALEXP", "CASHCONT", "INSPENSN"];
+  var itemsToOmit = ["TOTALEXP", "CASHCONT", "INSPENSN", "READING"];
   var plotData = vis.plotData = [];
   _.each(vis.years, function(_year){
     var yearData = {chartTitle: _year, chartData: []};
@@ -98,7 +98,9 @@ TreePlot.prototype.wrangleData = function(){
 TreePlot.prototype.updatePlot = function(){
   var vis = this;
 
+  //Clear out tree plots and tree tooltips
   $("#tree-plot").remove();
+  $(".d3-tip.tree-tip").remove();
 
   vis.plot = new MultiplePlot(
     Tree.prototype.constructor,
@@ -158,6 +160,7 @@ Tree.prototype.initVis = function() {
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .attr("class", "center-block")
+    .attr("style", "overflow: visible")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -176,10 +179,18 @@ Tree.prototype.initVis = function() {
    * Ground
    * **********/
   vis.ground = (height);
-  vis.svg.append("path")
-    .datum([[0, vis.ground], [width, vis.ground]])
-    .attr("id", "ground-line")
-    .attr("d", d3.svg.line());
+  //vis.svg.append("path")
+  //  .datum([[0, vis.ground], [width, vis.ground]])
+  //  .attr("id", "ground-line")
+  //  .attr("d", d3.svg.line());
+
+  vis.svg.append("ellipse")
+    .attr("id", "ground")
+    .attr("cx", width/2)
+    .attr("cy", height)
+    .attr("rx", width/2)
+    .attr("ry", 25);
+
 
 
 
@@ -195,15 +206,15 @@ Tree.prototype.initVis = function() {
 
   vis.branchLength = d3.scale.linear();
 
-  vis.berries = d3.scale.ordinal();
+  vis.flower = d3.scale.log().domain([1,20]).range([3,15]);
 
-  vis.leaves = d3.scale.linear();
+  vis.chlorophyll = d3.scale.log().domain([-1,-20]).range([0,1]);
 
 
   /************
    * TOOTIP
    * **********/
-  vis.tip = d3.tip().attr('class', 'd3-tip').html(function(d) {
+  vis.tip = d3.tip().attr('class', 'd3-tip tree-tip').html(function(d) {
     return d;
   });
 
@@ -255,7 +266,7 @@ Tree.prototype.updateVis = function(){
     .attr("class", "tree-top-bulb")
     .attr("cx", vis.trunkX) //function(d, i){return (d.branchTipX);}) // + (branchDirection(i) * (vis.leafRadius + 10)));})
     .attr("cy", trunkTop) //function(d){return (d.branchTipY + 7.5);})
-    .attr("r", 5);
+    .attr("r", 10);
 
   vis.trunk
     .append("text")
@@ -306,22 +317,21 @@ Tree.prototype.updateVis = function(){
       var branchTipY = d.branchTipY = ((-healthyBranchSlope) * Math.abs(branchTipX - branchTrunkX)) + branchTrunkY;
       var branchMidX = d.branchMidX = branchTrunkX - ((branchTrunkX - branchTipX) / 2);
       var branchMidY = d.branchMidY =((-healthyBranchSlope) * Math.abs(branchTipX - branchTrunkX)) + branchTrunkY;
+      d.flowerX = (d.branchTipX + (branchDirection(i) * 15));
+      d.flowerY = (d.branchTipY - 20);
       var lineData = [[branchTrunkX, branchTrunkY], [branchMidX, branchMidY], [branchTipX, branchTipY]];
       return d3.svg.line().interpolate("basis")(lineData);
     });
 
+
+  //Add Leaves (green font awesome icons)
   branches
     .append("text")
     .attr("class", "leaf-label")
-    //.attr("x", function(d, i){return (d.branchTipX);}) // + (branchDirection(i) * (vis.leafRadius + 10)));})
-    //.attr("dy", function(d){return (d.branchTipY + 7.5);})
+    .attr("x", function(d, i){return (d.branchTipX);}) // + (branchDirection(i) * (vis.leafRadius + 10)));})
+    .attr("dy", function(d){return (d.branchTipY + 7.5);})
     .attr("text-anchor", function(d,i){
       return (i % 2 == 0) ? "end" : "start";
-    })
-    .attr("transform", function(d) {
-      var cpiScaleFactor = 1 - ((-(d.cpi - d.allItemCPIValue)) / 100);
-      var transformStr = "translate(" + d.branchTipX + " " + (d.branchTipY + 7.5) + ") scale(" + cpiScaleFactor + ")";
-      return transformStr;
     })
     .text(function(d){
       var charCode =  (d.treeIcon) ? ('0x' + d.treeIcon) : '0xf042';
@@ -334,6 +344,62 @@ Tree.prototype.updateVis = function(){
       vis.tip.hide();
     })
     .call(vis.tip);
+
+
+  //Add chlorophyll blocker (brown font awesome icons)
+  branches
+    .append("text")
+    .attr("class", "dead-leaf-label")
+    .attr("x", function(d, i){return (d.branchTipX);}) // + (branchDirection(i) * (vis.leafRadius + 10)));})
+    .attr("dy", function(d){return (d.branchTipY + 7.5);})
+    .attr("text-anchor", function(d,i){
+      return (i % 2 == 0) ? "end" : "start";
+    })
+    .text(function(d){
+      var charCode =  (d.treeIcon) ? ('0x' + d.treeIcon) : '0xf042';
+      return String.fromCharCode(charCode);
+    })
+    .style("opacity", function(d) {
+      var cpiDelta = (d.allItemCPIValue - d.cpi) < 0 ? (d.allItemCPIValue - d.cpi) : 0;
+      return vis.chlorophyll(cpiDelta);
+    })
+    .on("mouseenter", function(e){
+      var itemText = e.itemText;
+      var percentOfIncomeSpent = "Spent " + Math.round(e.valuePercentIncome) + "% of income";
+      var _cpiPace = ((e.allItemCPIValue - e.cpi) < 0) ? "FASTER" : "SLOWER";
+      var _cpiDelta = ((Math.abs(e.allItemCPIValue - e.cpi) / e.allItemCPIValue) * 100).toFixed(1);
+      var cpiTracking = "Cost increasing " + _cpiPace + " than inflation by " + _cpiDelta + "%";
+      vis.tip.show(e.itemText + "<br>" + percentOfIncomeSpent + "<br>" + cpiTracking);
+    })
+    .on("mouseout", function(e){
+      vis.tip.hide();
+    })
+    .call(vis.tip);
+
+
+  //Add Flowers (pink font awesome icons)
+  branches
+    .append("text")
+    .attr("class", "flower-label")
+    .attr("x", function(d, i){return d.flowerX;})
+    .attr("dy", function(d){return d.flowerY;})
+    .attr("text-anchor", "middle")
+    .style("font-size", function(d) {
+      var cpiDelta = (d.allItemCPIValue - d.cpi) > 0 ? (d.allItemCPIValue - d.cpi) : 0;
+      return vis.flower(cpiDelta) + "px";
+    })
+    .text(function(d){
+      var charCode =  (d.treeIcon) ? ('0x' + d.treeIcon) : '0xf042';
+      return String.fromCharCode(charCode);
+    })
+    .on("mouseenter", function(e){
+
+    })
+    .on("mouseout", function(e){
+      vis.tip.hide();
+    })
+    .call(vis.tip);
+
 
   //berries and leaf
   branches
