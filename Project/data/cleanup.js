@@ -161,6 +161,16 @@ function json(filename, cb) {
             };
         });
 
+        presidents = presidents.map(function(d) {
+            return {
+                name: d.name.trim(),
+                party: d.party.trim(),
+                termBegin: d.termBegin,
+                termEnd: d.termEnd,
+                vp: d.vp.trim()
+            };
+        });
+
 
         var cpiValues = _.union(cpiSummaryValues, cpiFoodBevValues,cpiRecreationValues, cpiOtherValues, cpiAllItemsValues);
         output.cpiValues = cpiValues

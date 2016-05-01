@@ -4,23 +4,42 @@
  * @param _data                     -- the
  */
 var parseDate = d3.time.format("%Y").parse;
+var uniqueEvent = function k(d) {
+            return d.type + d.label;
+        };
 
 Timeline = function(parentElement, data, properties) {
     this.parentElement = parentElement;
     this.data = data;
     this.displayData = this.data;
     this.eventsData = properties.events;
+    this.debounceDelay = properties.debounceDelay || 300;
     this.properties = properties;
+
     this.initVis();
 }
 
-// Updates the timeline by redrawing the brush
-Timeline.prototype.updateVis = function() {
+// Updates the timeline by redrawing the brush and event markers
+Timeline.prototype.updateVis = function(eventType) {
     var selection = this.svg.select(".x.brush");
     selection.call(this.brush);
+
+    var selectedYears = this.selectedYears();
+    this.drawMarkers(selectedYears[0], selectedYears[1], eventType);
+
     this.brush.event(selection);
     return this;
 };
+
+Timeline.prototype.filterEvents = function(yearFrom, yearTo, eventType) {
+    eventType = eventType || "Financial";
+    yearFrom = yearFrom || 2000;
+    yearTo = yearTo || 2014;
+    return this.eventsData.filter(function(d) {
+        return ((yearFrom >= 1984 && yearFrom <= 2014) ||
+            (yearTo <= 2014 && yearTo >= 1984)) && d.type === eventType;
+    });
+}
 
 // Return a two item array with the from / to years (as dates)
 Timeline.prototype.selectedRange = function() {
@@ -48,6 +67,73 @@ Timeline.prototype.selectedEnd = function() {
 Timeline.prototype.setYearRange = function(from, to) {
     this.brush.extent([parseDate('' + from), parseDate('' + to)]);
     return this.updateVis();
+};
+
+
+Timeline.prototype.drawMarkers = function(yearFrom, yearTo, eventType) {
+    var vis = this;
+    var xContext = vis.xContext;
+
+    vis.svg.selectAll("line.event-marker").remove();
+    vis.svg.selectAll(".event-markers").remove();
+
+    // Event markers
+    var evdata = this.filterEvents(yearFrom, yearTo, eventType);
+
+    var linex = function(d) {
+        return xContext(parseDate('' + d.fromYear));
+    };
+
+    function translate(x, y) {
+        return "translate(" + x + ", " + y + ")";
+    }
+
+    var markerColors = {
+        "Political": "#333",
+        "Military": "pink",
+        "Natural Disasters": "lightBlue",
+        "Financial": "lightGreen"
+    };
+
+    var eventMarkers = vis.eventMarkers = vis.svg
+        .append("g")
+        .attr("class", "event-markers")
+        .selectAll("line.event-marker")
+        .data(evdata, uniqueEvent);
+
+    eventMarkers.exit().remove();
+
+    eventMarkers
+        .enter()
+        .append("g")
+        .attr("transform", function(d) {
+            var x = linex(d);
+            if (x < 0) {
+                x = 0;
+            }
+            return translate(x, 0);
+        });
+
+    eventMarkers
+        .append("line")
+        .attr("stroke", function(d) {
+            if (linex(d) < 0) return "transparent";
+            return markerColors[d.type];
+        })
+        .attr("stroke-dasharray", 1)
+        .attr("stroke-width", 2)
+        .attr("class", "event-marker")
+        .attr("x1", 0)
+        .attr("x2", 0)
+        .attr("y1", 0)
+        .attr("y2", vis.height)
+
+    eventMarkers
+        .append("text")
+        .attr("transform", translate(10, 20))
+        .text(function(d) {
+            return d.label.trim();
+        });
 };
 
 /*
@@ -109,9 +195,9 @@ Timeline.prototype.initVis = function() {
     // Initialize brush component
     var brush = d3.svg.brush()
         .x(xContext)
-        .on("brush", function() {
+        .on("brush", _.debounce(function() {
             $(this.parentElement).trigger('brushed', [this, this.selectedBegin(), this.selectedEnd()]);
-        }.bind(this));
+        }.bind(this), this.debounceDelay));
 
     vis.brush = brush;
 
@@ -130,59 +216,5 @@ Timeline.prototype.initVis = function() {
         .attr("transform", "translate(0," + vis.height + ")")
         .call(vis.xAxis);
 
-    // Event markers
-    var evdata = this.eventsData.filter(function(d) {
-        var from = yearsExtent[0].getFullYear();
-        var to = yearsExtent[1].getFullYear();
-
-        return (d.termBegin >= from && d.termBegin <= to) ||
-            (d.termEnd <= to && d.termEnd >= from)
-    });
-
-
-    var linex = function(d) {
-        return xContext(parseDate('' + d.termBegin));
-    };
-
-    function translate(x, y) {
-        return "translate(" + x + ", " + y + ")";
-    }
-
-    var eventMarkers = vis.svg
-        .append("g")
-        .attr("class", "event-markers")
-        .selectAll("line.event-marker")
-        .data(evdata)
-        .enter()
-        .append("g")
-        .attr("transform", function(d) {
-            var x = linex(d);
-            if (x < 0) {
-                x = 0;
-            }
-            return translate(x, 0);
-        });
-
-    eventMarkers
-        .append("line")
-        .attr("stroke", function(d) {
-            if (linex(d) < 0) return "transparent";
-
-            return d.party === "Republican" ? "red" : "blue";
-        })
-        .attr("stroke-width", 2)
-        .attr("class", "event-marker")
-        .attr("x1", 0)
-        .attr("x2", 0)
-        .attr("y1", 0)
-        .attr("y2", vis.height)
-
-    eventMarkers
-        .append("text")
-        .attr("transform", translate(10, 20))
-        .text(function(d) {
-            return d.name.trim();
-        });
-
-    console.log(evdata);
+    this.drawMarkers(yearsExtent[0].getFullYear(), yearsExtent[1].getFullYear(), 'Financial');
 }

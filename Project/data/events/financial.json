@@ -1,0 +1,35 @@
+[{
+    "label": "Black Monday: Stock Market Crash",
+    "fromYear": 1987,
+    "toYear": 1987
+}, {
+    "label": "Early 1990s recession",
+    "fromYear": 1990,
+    "toYear": 1990,
+    "description": "Iraq invaded Kuwait in July 1990, causing oil prices to increase. The Dow dropped 18% in three months, from 2,911.63 on July 3 to 2,381.99 on October 16,1990. This recession lasted approximately 8 months."
+}, {
+    "label": "Dot-com bubble",
+    "fromYear": 2000,
+    "toYear": 2000,
+    "description": "Collapse of a technology bubble"
+}, {
+    "label": "Economic effects from 9/11",
+    "fromYear": 2001,
+    "toYear": 2001,
+    "description": "The September 11 attacks caused global stock markets to drop sharply. The attacks themselves caused approximately $40 billion in insurance losses, making it one of the largest insured events ever."
+}, {
+    "label": "Stock market downturn of 2002",
+    "fromYear": 2002,
+    "toYear": 2002,
+    "description": "Downturn in stock prices during 2002 in stock exchanges across the United States, Canada, Asia, and Europe. After recovering from lows reached following the September 11 attacks, indices slid steadily starting in March 2002, with dramatic declines in July and September leading to lows last reached in 1997 and 1998."
+}, {
+    "label": "US bear market 2007-2009",
+    "fromYear": 2007,
+    "toYear": 2009,
+    "description": "Till June 2009, the Dow Jones Industrial Average, Nasdaq Composite and S&P 500 all experienced declines of greater than 20% from their peaks in late 2007."
+}, {
+    "label": "Financial Crisis 2007-2008 (Housing crash)",
+    "fromYear": 2008,
+    "toYear": 2008,
+    "description": "On September 16, 2008, failures of large financial institutions in the United States, due primarily to exposure of securities of packaged subprime loans and credit default swaps issued to insure these loans and their issuers, rapidly devolved into a global crisis resulting in a number of bank failures in Europe and sharp reductions in the value of equities (stock) and commodities worldwide. The failure of banks in Iceland resulted in a devaluation of the Icelandic króna and threatened the government with bankruptcy. Iceland was able to secure an emergency loan from the IMF in November. Later on, U.S. President George W. Bush signs the Emergency Economic Stabilization Act into law, creating a Troubled Asset Relief Program (TARP) to purchase failing bank assets. Had disastrous affects on the world economy along with world trade."
+}]

@@ -39,22 +39,76 @@
         console.time('loading dataset');
         queue()
             .defer(d3.json, "data/clean/dataset.json")
-            .defer(d3.json, "data/clean/disasters.json")
             .defer(d3.json, "data/clean/presidents.json")
+            .defer(d3.json, "data/events/natural.json")
+            .defer(d3.json, "data/events/military.json")
+            .defer(d3.json, "data/events/financial.json")
 
-        .await(function(errors, fulldata, disasters, presidents) {
+        .await(function(errors, fulldata, presidents, natural, military, financial) {
 
             if (errors) console.log(errors);
 
             this._datasets = fulldata;
-            this._datasets.disasters = disasters;
             this._datasets.presidents = presidents;
 
+            // Aggregate all the events
+            // TODO: move to cleanup
+            this._datasets.events = [];
+
+            presidents.reduce(function(events, d) {
+                if (d.termEnd >= 1984) {
+                    events.push({
+                        label: d.name + " (" + d.party + ")",
+                        fromYear: d.termBegin,
+                        toYear: d.termEnd,
+                        type: "Political"
+                    });
+                }
+                return events;
+            }, this._datasets.events);
+
+            natural.reduce(function(events, d) {
+                events.push({
+                    label: d.label,
+                    fromYear: d.fromYear,
+                    toYear: d.toYear || d.fromYear,
+                    description: d.description || "",
+                    type: "Natural Disasters"
+                });
+                return events;
+            }, this._datasets.events);
+
+            military.reduce(function(events, d) {
+                events.push({
+                    label: d.label,
+                    fromYear: d.fromYear,
+                    toYear: d.toYear || d.fromYear,
+                    description: d.description || "",
+                    type: "Military"
+                });
+                return events;
+            }, this._datasets.events);
+
+            financial.reduce(function(events, d) {
+                events.push({
+                    label: d.label,
+                    fromYear: d.fromYear,
+                    toYear: d.toYear || d.fromYear,
+                    description: d.description || "",
+                    type: "Financial"
+                });
+                return events;
+            }, this._datasets.events);
+
+            console.log('events loaded', this._datasets.events);
+
+            console.time("building index");
             this._datasets.indexed = this._datasets.values.reduce(function(obj, v) {
                 obj[v.id] = obj[v.id] || [];
                 obj[v.id].push({ year: v.year, value: v.value });
                 return obj;
             });
+            console.timeEnd("building index");
 
             this.isLoaded = true;
             console.timeEnd('loading dataset');

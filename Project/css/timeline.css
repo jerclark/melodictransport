@@ -1,3 +1,14 @@
+// Styles for the floating timeline / filtering navigation
+
+.filtering-nav {
+    height: 180px;
+    border-bottom: 1px dotted #e7e7e7;
+}
+
+.filtering-nav .navbar-default {
+    background-color: #fff;
+}
+
 .democrat {
     fill: blue;
 }
@@ -8,4 +19,19 @@
 
 .other {
     fill: grey;
+}
+
+
+.navbar-default .navbar-nav>li>a {
+    cursor: pointer !important;
+    color: #333;
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+    background-color: #E9E9E9;
+}
+
+.navbar-nav a:hover {
+    text-decoration: underline !important;
+    cursor: pointer !important;
 }
