@@ -28,7 +28,7 @@ Stacked = function(_parentElement, _data, _properties){
 Stacked.prototype.initVis = function() {
     var vis = this;
 
-    vis.areachart = {margin: { top: 20, right: 450, bottom: 20, left: 75 }};
+    vis.areachart = {margin: { top: 20, right: 150, bottom: 20, left: 75 }};
     vis.legend =    {margin: { top: 0, right: 250, bottom: 20, left: 75 }};
     vis.rightLegend = {
                     width: 350,
@@ -182,7 +182,7 @@ Stacked.prototype.initVis = function() {
     // Used for transitions in and out 
     vis.legendAreaExit = d3.svg.area()
         .interpolate("cardinal")
-        .x(function(d) { return vis.x(d.year) + 2000; })
+        .x(function(d) { return vis.x(d.year); })
         .y0(function(d) { return vis.y(0); })
         .y1(function(d) { return vis.y(0); });
 
@@ -253,6 +253,16 @@ Stacked.prototype.initVis = function() {
 Stacked.prototype.wrangleData = function() {
     var vis = this;
 
+    function inFilteredView(){
+        return (vis.subcategory != 'all');
+    }
+
+    if (inFilteredView()){
+        vis.x.range([0, vis.areachart.width - 300]);
+    } else {
+         vis.x.range([0, vis.areachart.width]);
+    }
+
     vis.filteredData = vis.data;
 
     vis.startYear = vis.x.domain()[0].getFullYear(); 
@@ -263,7 +273,6 @@ Stacked.prototype.wrangleData = function() {
 
     filteredData = {};
 
-
     if (vis.subcategory != 'all'){
          vis.alldataItems.map(function(name){
             if (vis.data[name].subcategory == vis.subcategory)
@@ -271,7 +280,19 @@ Stacked.prototype.wrangleData = function() {
          vis.filteredData = filteredData;
          };
 
+         // Todo -- see if I can get better filtering work to enable "zoom transitons "
+/*    filteredData = {};
+
     var dataItems = d3.keys(vis.filteredData);
+
+    if (vis.subcategory != 'all'){
+         dataItems.map(function(name) {
+            if (vis.filteredData[name].subcategory != vis.subcategory){
+                delete vis.filteredData[name]; 
+            }
+         })};*/
+
+   dataItems = d3.keys(vis.filteredData);
 
     // Caculates year-by-year total for each year, to be used in percentage
     // caculations below
@@ -332,8 +353,13 @@ Stacked.prototype.wrangleData = function() {
                         name: name,
                         subcategory: vis.filteredData[name].subcategory,
                         values: finalValues.map(function(d) {
-                        return {
+
+                        if(inFilteredView()){
+                            return {
                             year: parseDate(d.year.toString()), y: d[key]};
+
+                        } else { return {year: parseDate(d.year.toString()), y: 0};}
+
                 })};}))};
 
 
@@ -473,7 +499,7 @@ Stacked.prototype.updateVis = function() {
         .attr("dy", "0.5em")
         .style("fill", "black")
         .text(function (d){
-            return d.name});
+            if(inFilteredView()){return d.name}});
 
 
     DataLabels
@@ -482,16 +508,10 @@ Stacked.prototype.updateVis = function() {
         .attr("x", function(d) { return vis.rightLegend.x(d.values[3].year)  + 825; })
         .attr("dy", "0.5em");
   
-
-
-
     Legendlayers.exit()
         .transition().duration(duration).delay(delay)
         .attr("d", function(d) {return vis.areaExit(d.values);})
         .remove();
-
-
-
 
 
     // highlight optiones
