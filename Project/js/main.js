@@ -94,7 +94,6 @@ $(function() {
         console.timeEnd('subcats2');
 
 
-        //console.log(expends);
         // Date parser to convert strings to date objects
         var parseDate = d3.time.format("%Y").parse;
 

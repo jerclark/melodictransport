@@ -28,10 +28,10 @@ Stacked = function(_parentElement, _data, _properties){
 Stacked.prototype.initVis = function() {
     var vis = this;
 
-    vis.areachart = {margin: { top: 20, right: 400, bottom: 20, left: 75 }};
+    vis.areachart = {margin: { top: 20, right: 450, bottom: 20, left: 75 }};
     vis.legend =    {margin: { top: 0, right: 250, bottom: 20, left: 75 }};
     vis.rightLegend = {
-                    width: 300,
+                    width: 350,
                     margin: { top: 0, right: 250, bottom: 20, left: 75 }};
 
     vis.margin = vis.properties.margin;
@@ -136,7 +136,7 @@ Stacked.prototype.initVis = function() {
     vis.min_year = parseDate(d3.min(years).toString());
     vis.max_year = parseDate(d3.max(years).toString());
 
-    vis.finalYear = 2014;
+    vis.endYear = 2014;
     vis.legendYears = 7; 
 
     vis.x = d3.time.scale()
@@ -145,7 +145,7 @@ Stacked.prototype.initVis = function() {
 
     vis.rightLegend.x = d3.time.scale()
         .range([0, vis.rightLegend.width])
-        .domain([parseDate(vis.finalYear.toString()), parseDate((vis.finalYear + vis.legendYears).toString())]);
+        .domain([parseDate(vis.endYear.toString()), parseDate((vis.endYear + vis.legendYears).toString())]);
 
     vis.y = d3.scale.linear()
         .range([vis.areachart.height , 0]);
@@ -178,6 +178,13 @@ Stacked.prototype.initVis = function() {
         .x(function(d) { return vis.rightLegend.x(d.year)  + 900; })
         .y0(function(d) { return vis.y(d.y0);  })
         .y1(function(d) { return vis.y(d.y0 + d.y  ); });
+
+    // Used for transitions in and out 
+    vis.legendAreaExit = d3.svg.area()
+        .interpolate("cardinal")
+        .x(function(d) { return vis.x(d.year) + 2000; })
+        .y0(function(d) { return vis.y(0); })
+        .y1(function(d) { return vis.y(0); });
 
     
     vis.area = d3.svg.area()
@@ -248,6 +255,12 @@ Stacked.prototype.wrangleData = function() {
 
     vis.filteredData = vis.data;
 
+    vis.startYear = vis.x.domain()[0].getFullYear(); 
+    vis.endYear = vis.x.domain()[1].getFullYear();
+
+    vis.rightLegend.x
+        .domain([parseDate(vis.endYear.toString()), parseDate((vis.endYear + vis.legendYears).toString())]);
+
     filteredData = {};
 
 
@@ -286,9 +299,12 @@ Stacked.prototype.wrangleData = function() {
                 })};}))};
 
 
+
     valueTotals = {};
     dataItems.map(function(name) {
-        var finalValues = vis.filteredData[name].values.slice(-1).pop(); 
+ 
+        var finalValues = vis.filteredData[name].values.filter(function(v){return v.year == vis.endYear;})[0];
+
         Object.keys(finalValues).filter(function(k){return k!='year';}).map(function(k){
             valueTotals[k] = (valueTotals[k] !== undefined ? valueTotals[k] : 0) + finalValues[k]; 
         })});
@@ -296,9 +312,10 @@ Stacked.prototype.wrangleData = function() {
         var dataAverages = {};
         Object.keys(valueTotals).map(function(k){ dataAverages[k] =  valueTotals[k]/dataItems.length});
 
+
         extraYears = []; 
         for (i = 1; i < vis.legendYears; i++) {
-            dataAverages.year = (vis.finalYear + i);
+            dataAverages.year = (vis.endYear + i);
             extraYears.push(_.clone(dataAverages));
         }
 
@@ -307,12 +324,10 @@ Stacked.prototype.wrangleData = function() {
         return stack(
                 dataItems.map(function(name) {
 
-                    var finalValues = [vis.filteredData[name].values.slice(-1).pop()];
-                    finalValues = finalValues.concat(extraYears); 
+                    var finalSliceValue = vis.filteredData[name].values.filter(function(v){return v.year == vis.endYear;})[0];
+                    finalValues = [finalSliceValue].concat(extraYears); 
 
-
-
-                    //console.log(finalValue);
+                    //console.log(finalValues);
                     return {
                         name: name,
                         subcategory: vis.filteredData[name].subcategory,
@@ -358,6 +373,7 @@ Stacked.prototype.wrangleData = function() {
  
     vis.displayData = vis[TYPE];
     vis.legendData = vis[(TYPE + "Legend")]; 
+
 
     vis.updateVis();
 
@@ -431,9 +447,10 @@ Stacked.prototype.updateVis = function() {
     var Legendlayers = vis.svg.selectAll(".rightLegend")
         .data(vis.legendData);
 
+
     Legendlayers.enter().append("path")
         .attr("class", "rightLegend")
-        .attr("d", function(d) {return vis.areaExit(d.values);});
+        .attr("d", function(d) {return vis.legendAreaExit(d.values);});
 
     Legendlayers 
         .style("fill", function(d) {
@@ -452,32 +469,19 @@ Stacked.prototype.updateVis = function() {
         .enter().append('text')
         .attr("class", "chartDataLabel")
         .attr("y", function(d) { return vis.y(d.values[3].y0 + d.values[3].y/2); })
-        .attr("x", function(d) { return vis.rightLegend.x(d.values[3].year)  + 900; })
+        .attr("x", function(d) { return 2000; })
         .attr("dy", "0.5em")
         .style("fill", "black")
         .text(function (d){
-            console.log(d.name);
             return d.name});
 
 
-    
-  // // Data labels 
-  //   Legendlayers.selectAll(".chartDataLabel")
-  //       .data(function(d) {
-  //           //console.log(d);
-  //           return d;})
-  //       .append('text')
-  //       .attr("class", "chartDataLabel")
-  //       .attr("y", function(d) { return vis.y(d.values[3].y0 + d.values[3].y/2); })
-  //       .attr("x", function(d) { return vis.rightLegend.x(d.values[3].year)  + 900; })
-  //       .attr("dy", "0.5em")
-  //       .style("fill", "black")
-  //       .text(function (d){
-  //           console.log(d.name);
-  //           return d.name});
-
-
-
+    DataLabels
+        .transition().duration(duration).delay(delay)
+        .attr("y", function(d) { return vis.y(d.values[3].y0 + d.values[3].y/2); })
+        .attr("x", function(d) { return vis.rightLegend.x(d.values[3].year)  + 825; })
+        .attr("dy", "0.5em");
+  
 
 
 
