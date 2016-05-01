@@ -2,6 +2,14 @@
 /*  TREE STYLES  */
 /*********************/
 
+.tree-charts {
+    margin-bottom: 400px;
+}
+
+.tree-charts h2 {
+
+}
+
 #ground-line {
     fill: none;
     stroke: lightgreen;
@@ -31,6 +39,7 @@
     fill: green;
     font-family: FontAwesome;
     font-size: 15px;
+    cursor: pointer;
 }
 
 .tree-top-label {

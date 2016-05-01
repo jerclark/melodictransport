@@ -51,6 +51,16 @@ function typeValue(d) {
     };
 }
 
+function cpiTypeValue(d) {
+    var year = parseInt(d.year, 10);
+    return {
+        id: d.series_id.slice(0,2).concat(d.series_id.slice(4)),
+        year: year,
+        value: parseFloat(d.value),
+
+    };
+}
+
 var YV = function(d) {
     return {
         year: d.year,
@@ -72,10 +82,17 @@ function json(filename, cb) {
 
     queue()
         .defer(tsv, "cx/cx.demographics")
-        .defer(tsv, "cx/cx.characteristics")
+        .defer(tsv, "cx/cx.characteristics.rename")
         .defer(tsv, "cx/cx.subcategory")
-        .defer(tsv, "cx/cx.item")
+        .defer(tsv, "cx/cx.item.withcpi")
         .defer(tsv, "cx/cx.data.1.AllData")
+        .defer(tsv, "cu/cu.item.txt")
+        .defer(tsv, "cu/cu.data.2.Summaries.txt")
+        .defer(tsv, "cu/cu.data.11.USFoodBeverage.txt")
+        .defer(tsv, "cu/cu.data.16.USRecreation.txt")
+        .defer(tsv, "cu/cu.data.18.USOtherGoodsAndServices.txt")
+        .defer(tsv, "cu/cu.data.1.AllItems.txt")
+
         .defer(json, "events/disasters.json")
         .defer(json, "events/presidents.json")
 
@@ -85,6 +102,12 @@ function json(filename, cb) {
         subcategories,
         items,
         values,
+        cpiItems,
+        cpiSummaryValues,
+        cpiFoodBevValues,
+        cpiRecreationValues,
+        cpiOtherValues,
+        cpiAllItemsValues,
 
         /* events */
         disasters,
@@ -114,7 +137,8 @@ function json(filename, cb) {
             return {
                 category: d.category_code,
                 subcategory: d.subcategory_code,
-                name: d.subcategory_text
+                name: d.subcategory_text,
+                treeIcon: d.tree_icon
             };
         })
 
@@ -123,11 +147,28 @@ function json(filename, cb) {
                 item: d.item_code,
                 name: d.item_text,
                 subcategory: d.subcategory_code,
-                category: _.findWhere(output.subcategories, { subcategory: d.subcategory_code }).category
+                category: _.findWhere(output.subcategories, { subcategory: d.subcategory_code }).category,
+                cpiCode: d.cpi_code
             };
         });
 
         output.values = values.map(trim).map(typeValue);
+
+        output.cpiItems = cpiItems.map(trim).map(function(d) {
+            return {
+                item: d.item_code,
+                name: d.item_name
+            };
+        });
+
+
+        var cpiValues = _.union(cpiSummaryValues, cpiFoodBevValues,cpiRecreationValues, cpiOtherValues, cpiAllItemsValues);
+        output.cpiValues = cpiValues
+          .filter(function(v){
+              return (parseInt(v.year, 10) >= 1984) && (v.series_id.indexOf("0000") >= 0) && ((v.period == "M12" || v.period == "S02"));
+          })
+          .map(trim)
+          .map(cpiTypeValue);
 
         fs.writeFileSync('clean/dataset.json', JSON.stringify(output, null, 2), "utf8");
         fs.writeFileSync('clean/disasters.json', JSON.stringify(disasters, null, 2), "utf8");
@@ -135,7 +176,7 @@ function json(filename, cb) {
 
         Object.keys(output).forEach(function(k) {
 
-            var filename = `clean/${k}.json`;
+            var filename = "clean/" + k + ".json";
 
             fs.writeFileSync(filename, JSON.stringify(output[k], null, 2), "utf8");
 

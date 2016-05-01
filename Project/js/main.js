@@ -4,39 +4,59 @@ var timeline;
 var radarChart;
 var treePlot;
 
+// In SM- mode which we should use everywhere (don't want the layout
+// to ever break vertically eg. become responsive.)
+var COLUMN_WIDTH = 90;
+var COLUMN_WIDTH_4 = COLUMN_WIDTH * 4;
+var COLUMN_WIDTH_HALF = COLUMN_WIDTH * 6;
+var COLUMN_WIDTH_FULL = COLUMN_WIDTH * 12;
 
 function updateStories() {
-    var stories = ["#getting-old", "#old-entertainment"];
+    var stories = $('.hidden.story').toArray();
     stories.forEach(function(el, idx) {
         var el = el;
-        var button = $("<button/>")
-            .addClass("btn btn-primary")
-            .text(idx)
+        var link = $("<a/>")
+            .addClass("story-link")
+            .text($(el).find("h3").first().text())
             .click(function(e) {
                 var story = $(el);
                 var demographic = story.data('demographic');
                 var item = story.data('item');
+                var from = story.data('year-from') || '2004';
+                var to = story.data('year-to') || '2014';
 
                 $("#radar-demo-picker").val(demographic);
                 $("#radar-item-picker").val(item);
+                timeline.setYearRange(from, to);
 
                 $(".current-story").html($(el).html());
                 radarChart.fetchData();
             });
 
-        $(".story-picker").append(button);
+        $(".story-picker").append(link);
     });
 
-    $(".stories").find("button").first().click();
+    _.defer(function() {
+
+        $(".stories").find(".story-link").first().click();
+
+    });
 }
 
 
-function wrangleAll(e){
-    // TODO: recalculate the data here in the controller instead
+var wrangleAll = _.throttle(function wrangleAll(e){
+    console.time("wrangle Area");
     areachart.wrangleData();
+    console.timeEnd("wrangle Area");
+
+    console.time("wrangle radar");
     radarChart.wrangleData();
+    console.timeEnd("wrangle radar");
+
+    console.time("wrangle tree");
     treePlot.wrangleData();
-}
+    console.timeEnd("wrangle tree");
+}, 500);
 
 
 $(function() {
@@ -48,14 +68,61 @@ $(function() {
 
 (function(cs171) {
 
-    var FULL_WIDTH = 1366;
+    var FULL_WIDTH = 1170;
     var ds = window.ds = new cs171.Dataset();
 
     ds.ready(function(ds) {
+        console.time("timeline");
+        showTimeline();
+        console.timeEnd("timeline");
+
+        console.time("show area");
         showArea();
+        console.timeEnd("show area");
+
+        console.time("show radar");
         showRadar();
+        console.timeEnd("show radar");
+
+        console.time("show trees");
         showTrees();
+        console.timeEnd("show trees");
+
+        console.time("show stories");
+        updateStories();
+        console.timeEnd("show stories");
+
+        // Handle brush events
+        $(document).on("brushed", function(e, timeline, from, to) {
+            console.log("brushed!");
+
+            if (areachart) {
+                areachart.x.domain([from, to]);
+                areachart.svg.select(".area").attr("d", areachart.area);
+                areachart.svg.select(".x-axis").call(areachart.xAxis);
+            }
+
+            wrangleAll();
+        });
     });
+
+    function showTimeline() {
+        var parseDate = d3.time.format("%Y").parse;
+        var years = [];
+
+        for (var i = 1984; i <= 2014; i++) {
+            years.push({
+                Year: parseDate("" + i)
+            });
+        }
+
+        timeline = new Timeline("#timeline", years, {
+            width: FULL_WIDTH,
+            height: 100,
+            margin: { top: 0, right: 0, bottom: 30, left: 0 },
+            events: ds._datasets.presidents,
+        });
+    }
 
     function showArea() {
         var expenditures = _.pluck(ds.subcategories("EXPEND"), "subcategory");
@@ -113,8 +180,6 @@ $(function() {
             })
             .value();
 
-       //  console.log(yearDataset);
-
         var areachartProperties = {
             width: FULL_WIDTH,
             height: 1000,
@@ -123,24 +188,14 @@ $(function() {
 
         areachart = new Stacked("#stacked-area-chart", expends, areachartProperties);
 
-        var timelineProperties = {
-            width: FULL_WIDTH,
-            height: 100,
-            margin: { top: 0, right: 0, bottom: 30, left: 0 },
-            events: ds._datasets.presidents,
-            yearBuffer: 2
-        };
-
-     //   console.log('yeardataset', yearDataset);
-        timeline = new Timeline("#timeline", yearDataset, timelineProperties);
     }
 
 
     function showRadar() {
         var radarDemoPicker = new DemographicPicker("radar-demo-picker");
-        $(".stories").append(radarDemoPicker.html());
+        $(".radar-filter").append(radarDemoPicker.html());
         var radarItemPicker = new ItemPicker("radar-item-picker");
-        $(".stories").append(radarItemPicker.html());
+        $(".radar-filter").append(radarItemPicker.html());
         radarChart = new Radar("#radar-chart", {
             width: FULL_WIDTH / 2,
             height: 600,
@@ -150,30 +205,14 @@ $(function() {
         $("#radar-demo-picker").on("change", function() { radarChart.fetchData() });
         $("#radar-item-picker").on("change", function() { radarChart.fetchData() });
 
-        $(function() {
-            updateStories();
+        _.defer(function() {
             radarChart.fetchData();
-        })
+        });
     }
 
-
-    function showTrees(){
+    function showTrees() {
         treePlot = new TreePlot("#vis-tree");
     }
 
-    // Handle brush events
-    $(document).on("brushed", function(e, timeline) {
-        areachart.x.domain(timeline.brush.empty()
-            ? timeline.xContext.domain() : timeline.brush.extent());
-
-        areachart.svg.select(".area").attr("d", areachart.area);
-        areachart.svg.select(".x-axis").call(areachart.xAxis);
-
-        wrangleAll();
-
-    });
-
-
 
 })(window.cs171);
-

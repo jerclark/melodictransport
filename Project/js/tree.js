@@ -3,20 +3,20 @@ TreePlot = function(_parentElement, _options) {
   vis.parentElement = _parentElement;
 
   //Create the grid layout with the controls, legend and the trees
-  vis.container = d3.select(vis.parentElement).append("div")
-    .attr("class", "container-fluid");
+  // vis.container = d3.select(vis.parentElement).append("div")
+  //   .attr("class", "row");
 
-  vis.controlDiv = vis.container
-    .append("div")
-    .attr("class", "row")
-    .attr("id", "tree-controls");
+  // vis.controlDiv = vis.container
+  //   .append("div")
+  //   .attr("class", "row")
+  //   .attr("id", "tree-controls");
 
-  vis.gridDiv = vis.container
-    .append("div")
-    .attr("class", "row")
-    .append("div")
-    .attr("class", "col-md-8")
-    .attr("id", "tree-grid");
+  // vis.gridDiv = vis.container
+  //   .append("div")
+  //   .attr("class", "row")
+  //   .append("div")
+  //   .attr("class", "col-md-8")
+  //   .attr("id", "tree-grid");
 
   /************
    * CONTROLS
@@ -24,13 +24,12 @@ TreePlot = function(_parentElement, _options) {
 
   //Demographic picker. Remove some.
   vis.demoPicker = new DemographicPicker("tree-demo-picker");
-  $("#tree-controls").append("<div class='col-md-3'>" + this.demoPicker.html() + "</div>");
+  $(".tree-demo-picker").html(this.demoPicker.html());
   $('#tree-demo-picker option:contains("Income before taxes")').remove();
   $('#tree-demo-picker option:contains("Highest education level of any member")').remove();
 
-
   vis.charPicker = new CharacteristicPicker("tree-char-picker", $("#tree-demo-picker").val());
-  $("#tree-controls").append("<div class='col-md-3'>" + this.charPicker.html() + "</div>");
+  $(".tree-char-picker").html(this.charPicker.html());
 
   //Events
   $("#tree-demo-picker").on("change", function(e){
@@ -51,9 +50,11 @@ TreePlot = function(_parentElement, _options) {
 TreePlot.prototype.wrangleData = function(){
   var vis = this;
 
+  //Get the years to display in the multi-plot
   var selectedYears = timeline.brush.empty() ? timeline.xContext.domain() : timeline.brush.extent()
   vis.years = selectedYears.map(function(v){return v.getFullYear()});
 
+  //Get the criteria from the menu selections
   var expenditureCriteria = ds.expenditures().map(function(v){
     return {
       name: v.subcategory,
@@ -63,21 +64,26 @@ TreePlot.prototype.wrangleData = function(){
     }
   });
 
+  //Get the expenditure data for those years, and merge in the all item CPI
+  var allItemCPIData = ds.cpiValues("CU0000SA0");
   var expenditureList = ds.expenditures();
   var expenditureData = ds.query(expenditureCriteria);
+  var itemsToOmit = ["TOTALEXP", "CASHCONT", "INSPENSN"];
   var plotData = vis.plotData = [];
   _.each(vis.years, function(_year){
     var yearData = {chartTitle: _year, chartData: []};
     _.values(expenditureData).forEach(function(expendData){
-      if (expendData.name !== "TOTALEXP") {
-        var preparedData = _.clone(expendData);
-        var yearValues = _.findWhere(preparedData.values, {year: _year});
-        for (var a in yearValues) {
-          preparedData[a] = yearValues[a];
-        }
-        preparedData.icons = _.findWhere(expenditureList, {subcategory: expendData.name}).icons;
-        yearData.chartData.push(preparedData);
+      if (_.contains(itemsToOmit, expendData.name)) {
+        return;
       }
+      var preparedData = _.clone(expendData);
+      var yearValues = _.findWhere(preparedData.values, {year: _year});
+      for (var a in yearValues) {
+        preparedData[a] = yearValues[a];
+      }
+      preparedData.treeIcon = _.findWhere(expenditureList, {subcategory: expendData.name}).treeIcon;
+      preparedData.allItemCPIValue = _.findWhere(allItemCPIData, {year: _year}).value;
+      yearData.chartData.push(preparedData);
     });
     plotData.push(yearData);
   });
@@ -101,9 +107,9 @@ TreePlot.prototype.updatePlot = function(){
   $("#tree-grid").append(vis.plot.html());
 
   var chartOptions = {
-    width: 400,
-    height:400,
-    margin:{top: 40, right: 75, bottom: 40, left: 75}
+    width: 600,
+    height: 800,
+    margin: {top: 40, right: 75, bottom: 40, left: 75}
   };
 
   vis.plot.draw(vis.plotData, chartOptions);
@@ -307,13 +313,18 @@ Tree.prototype.updateVis = function(){
   branches
     .append("text")
     .attr("class", "leaf-label")
-    .attr("x", function(d, i){return (d.branchTipX);}) // + (branchDirection(i) * (vis.leafRadius + 10)));})
-    .attr("dy", function(d){return (d.branchTipY + 7.5);})
+    //.attr("x", function(d, i){return (d.branchTipX);}) // + (branchDirection(i) * (vis.leafRadius + 10)));})
+    //.attr("dy", function(d){return (d.branchTipY + 7.5);})
     .attr("text-anchor", function(d,i){
       return (i % 2 == 0) ? "end" : "start";
     })
+    .attr("transform", function(d) {
+      var cpiScaleFactor = 1 - ((-(d.cpi - d.allItemCPIValue)) / 100);
+      var transformStr = "translate(" + d.branchTipX + " " + (d.branchTipY + 7.5) + ") scale(" + cpiScaleFactor + ")";
+      return transformStr;
+    })
     .text(function(d){
-      var charCode =  (d.icons) ? ('0x' + d.icons[0]) : '0xf042';
+      var charCode =  (d.treeIcon) ? ('0x' + d.treeIcon) : '0xf042';
       return String.fromCharCode(charCode);
     })
     .on("mouseenter", function(e){

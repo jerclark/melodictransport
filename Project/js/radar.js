@@ -1,19 +1,17 @@
-
-/*
- *  Radar - Object constructor function
- *  @param _parentElement   -- HTML element in which to draw the visualization
- *  @param _data            -- Array with all stations of the bike-sharing network
- */
-
 Radar = function(_parentElement, options) {
 
     this.parentElement = _parentElement;
     this.options = _.defaults(options, {
         width: 800,
-        height:800,
-        margin:{top: 40, right: 40, bottom: 40, left: 40},
-        showLabels:true,
-        years:[1984,1985]
+        height: 800,
+        margin: {
+            top: 40,
+            right: 40,
+            bottom: 40,
+            left: 40
+        },
+        showLabels: true,
+        years: [2000, 2014]
     });
 
     this.initVis();
@@ -25,6 +23,7 @@ Radar = function(_parentElement, options) {
  */
 
 Radar.prototype.initVis = function() {
+    console.time("radar initvis");
     var vis = this;
 
     /************
@@ -37,74 +36,80 @@ Radar.prototype.initVis = function() {
     vis.radius = threshold / 1.5 - (.2 * threshold);
 
     /************
-    * LEGEND AND CHART TITLE
-    * **********/
-    var titleCenterX = (width/2);
-    var legendStartX = (width/2) - 75;
+     * LEGEND AND CHART TITLE
+     * **********/
+    var titleCenterX = (width / 2);
+    var legendStartX = (width / 2) - 75;
     var legendLineLength = 20;
     var legendTextWidth = 40;
     var legendSpacer = 10;
     var legendTextY = 55;
     var legendLineY = 50;
     vis.legend = d3.select(vis.parentElement).append("svg")
-      .attr("class", "center-block")
-      .attr('width', width)
-      .attr('height', 65)
-      .append('g')
-      .attr("id", "radar-legend");
+        .attr("class", "center-block")
+        .attr('width', width)
+        .attr('height', 65)
+        .append('g')
+        .attr("id", "radar-legend");
 
     vis.legend.append("text")
-      .attr("class", "radar-title")
-      .attr("id", "radar-title-item")
-      .attr("x", titleCenterX)
-      .attr("dy", "15")
-      .attr("text-anchor", "middle")
-      .text("Item by")
+        .attr("class", "radar-title")
+        .attr("id", "radar-title-item")
+        .attr("x", titleCenterX)
+        .attr("dy", "15")
+        .attr("text-anchor", "middle")
+        .text("Item by")
 
     vis.legend.append("text")
-      .attr("class", "radar-title")
-      .attr("id", "radar-title-demographic")
-      .attr("x", titleCenterX)
-      .attr("dy", "37")
-      .attr("text-anchor", "middle")
-      .text("Demographic")
+        .attr("class", "radar-title")
+        .attr("id", "radar-title-demographic")
+        .attr("x", titleCenterX)
+        .attr("dy", "37")
+        .attr("text-anchor", "middle")
+        .text("Demographic")
 
     vis.legend.append("path")
-      .datum([[legendStartX, legendLineY], [legendStartX + legendLineLength, legendLineY]])
-      .attr("class", "plot-0")
-      .attr("d", d3.svg.line());
+        .datum([
+            [legendStartX, legendLineY],
+            [legendStartX + legendLineLength, legendLineY]
+        ])
+        .attr("class", "plot-0")
+        .attr("d", d3.svg.line());
 
     vis.legend.append("circle")
-      .attr("class", "plot-0")
-      .attr("cx", legendStartX)
-      .attr("cy", legendLineY)
-      .attr("r", 3);
+        .attr("class", "plot-0")
+        .attr("cx", legendStartX)
+        .attr("cy", legendLineY)
+        .attr("r", 3);
 
 
     vis.legend.append("text")
-      .attr("class", "legend")
-      .attr("id", "legend-0-text")
-      .attr("x", legendStartX + legendLineLength + legendSpacer)
-      .attr("dy", legendTextY)
-      .text("1984");
+        .attr("class", "legend")
+        .attr("id", "legend-0-text")
+        .attr("x", legendStartX + legendLineLength + legendSpacer)
+        .attr("dy", legendTextY)
+        .text("1984");
 
     vis.legend.append("path")
-      .datum([[legendStartX + legendLineLength + legendTextWidth + (legendSpacer * 2), legendLineY], [legendStartX + legendLineLength + legendTextWidth + (legendSpacer * 2) + legendLineLength,legendLineY]])
-      .attr("class", "plot-1")
-      .attr("d", d3.svg.line());
+        .datum([
+            [legendStartX + legendLineLength + legendTextWidth + (legendSpacer * 2), legendLineY],
+            [legendStartX + legendLineLength + legendTextWidth + (legendSpacer * 2) + legendLineLength, legendLineY]
+        ])
+        .attr("class", "plot-1")
+        .attr("d", d3.svg.line());
 
     vis.legend.append("circle")
-      .attr("class", "plot-1")
-      .attr("cx", legendStartX + legendLineLength + legendTextWidth + (legendSpacer * 2))
-      .attr("cy", legendLineY)
-      .attr("r", 3);
+        .attr("class", "plot-1")
+        .attr("cx", legendStartX + legendLineLength + legendTextWidth + (legendSpacer * 2))
+        .attr("cy", legendLineY)
+        .attr("r", 3);
 
     vis.legend.append("text")
-      .attr("class", "legend")
-      .attr("id", "legend-1-text")
-      .attr("x", (legendStartX + (legendLineLength * 2) + (legendSpacer * 3) + legendTextWidth))
-      .attr("dy", legendTextY)
-      .text("2014");
+        .attr("class", "legend")
+        .attr("id", "legend-1-text")
+        .attr("x", (legendStartX + (legendLineLength * 2) + (legendSpacer * 3) + legendTextWidth))
+        .attr("dy", legendTextY)
+        .text("2014");
 
 
 
@@ -112,11 +117,11 @@ Radar.prototype.initVis = function() {
      * INITIALIZE MAIN SVG
      * **********/
     var svg = vis.svg = d3.select(vis.parentElement).append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .attr("class", "center-block")
-      .append("g")
-      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .attr("class", "center-block")
+        .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 
 
@@ -124,7 +129,7 @@ Radar.prototype.initVis = function() {
      * INITIALIZE RING AND SPOKE GROUPS
      * **********/
     var ringGroup = vis.ringGroup = vis.svg.append("g")
-      .attr("class", "r axis");
+        .attr("class", "r axis");
 
     var spokeGroup = vis.spokeGroup = vis.svg.append("g").attr("class", "a axis");
 
@@ -141,10 +146,12 @@ Radar.prototype.initVis = function() {
      * RADIAL LINE GENERATOR
      * **********/
     vis.line = d3.svg.line.radial()
-      .radius(function(d) { return (d[0]); })
-      .angle(function(d) {
-          return (d[1] * Math.PI/180); // + (Math.PI / 2);
-      });
+        .radius(function(d) {
+            return (d[0]);
+        })
+        .angle(function(d) {
+            return (d[1] * Math.PI / 180); // + (Math.PI / 2);
+        });
 
     /************
      * TOOLTIPS
@@ -152,6 +159,7 @@ Radar.prototype.initVis = function() {
     vis.tip = d3.tip().attr('class', 'd3-tip').html(function(d) {
         return d;
     });
+    console.timeEnd("radar initvis");
 
     vis.fetchData();
 }
@@ -159,6 +167,7 @@ Radar.prototype.initVis = function() {
 
 
 Radar.prototype.fetchData = function() {
+    console.time("radar fetchdata");
     var vis = this;
     var demographicCode = vis.demographicCode = $("#radar-demo-picker").val();
     var demographicName = vis.demographicName = $("#radar-demo-picker option[value='" + demographicCode + "']").text();
@@ -173,8 +182,11 @@ Radar.prototype.fetchData = function() {
     });
     vis.data = ds.toDimensions(_data);
     vis.wrangleData();
+    console.timeEnd("radar fetchdata");
 }
 
+// To avoid triggering the fetch data a bunch of time when we set many filters at once, we can throttle the function
+Radar.prototype.fetchData = _.throttle(Radar.prototype.fetchData, 500);
 
 
 /*
@@ -184,18 +196,18 @@ Radar.prototype.fetchData = function() {
 Radar.prototype.wrangleData = function() {
     var vis = this;
 
-   //Fetch the years from the timeline
-    var selectedYears = timeline.brush.empty() ? timeline.xContext.domain() : timeline.brush.extent()
-    vis.options.years = selectedYears.map(function(v){return v.getFullYear()});
+    //Fetch the years from the timeline
+    vis.options.years = timeline.selectedYears();
 
     //Set the value type (adjusted dollars, raw dollars, etc)
     vis.valueType = d3.select("#value-type").property("value");
 
-
-    var allValues = vis.data.map(function(characteristic){
+    var allValues = vis.data.map(function(characteristic) {
         var valuesForCharacteristic = [];
-        _.each(vis.options.years, function(selectedYear){
-            var yearData = _.where(characteristic.values, {year: selectedYear})[0];
+        _.each(vis.options.years, function(selectedYear) {
+            var yearData = _.where(characteristic.values, {
+                year: selectedYear
+            })[0];
             var value = yearData ? yearData[vis.valueType] : 0;
             valuesForCharacteristic.push(value);
         })
@@ -206,7 +218,6 @@ Radar.prototype.wrangleData = function() {
 
     // Update the visualization
     vis.updateVis();
-
 }
 
 
@@ -231,50 +242,53 @@ Radar.prototype.updateVis = function() {
      * SCALES
      * **********/
     vis.values
-      .domain([0, vis.maxValue]);
+        .domain([0, vis.maxValue]);
 
     vis.dimensions
-      .domain(vis.data.map(function(v,a,i){
-        return v.dimension;
+        .domain(vis.data.map(function(v, a, i) {
+            return v.dimension;
         }))
-      .range(d3.range(0, 360, (360/vis.data.length)));
+        .range(d3.range(0, 360, (360 / vis.data.length)));
 
 
     /************
      * RINGS
      * **********/
     var rings = vis.ringGroup.selectAll("g")
-      .data(vis.values.ticks(5).slice(1));
+        .data(vis.values.ticks(5).slice(1));
 
     rings
-      .enter()
-      .append("g")
-      .attr("class", "ring");
+        .enter()
+        .append("g")
+        .attr("class", "ring");
 
     rings.exit().remove();
 
     //Circles
     rings.selectAll("circle").remove();
     rings
-      .append("circle")
-      .attr("r", vis.values);
+        .append("circle")
+        .attr("r", vis.values);
 
 
     //Labels
     rings.selectAll("text").remove();
     rings.append("text")
-      .attr("y", function(d) { return -vis.values(d) - 4; })
-      .attr("transform", "rotate(" + (vis.dimensions.range()[1] / 2) + ")") //ring labels halfway btwn noon and 1
-      .style("text-anchor", "middle")
-      .text(function(d) {
-          var prefix = suffix = "";
-          if (_.contains(['adjustedValue', 'value'], vis.valueType))
-            prefix = "$";
-          if (vis.valueType === "valuePercentIncome")
-              suffix = "%";
-          //console.log(d);
-          return prefix + d.toString() + suffix;
-      });
+        .attr("y", function(d) {
+            return -vis.values(d) - 4;
+        })
+        .attr("transform", "rotate(" + (vis.dimensions.range()[1] / 2) + ")") //ring labels halfway btwn noon and 1
+        .style("text-anchor", "middle")
+        .text(function(d) {
+            var prefix = suffix = "";
+            if (_.contains(['adjustedValue', 'value'], vis.valueType))
+                prefix = "$";
+            if (vis.valueType === "valuePercentIncome")
+                suffix = "%";
+            console.log(d);
+            return prefix + d.toString() + suffix;
+        });
+
 
 
 
@@ -283,17 +297,21 @@ Radar.prototype.updateVis = function() {
      * **********/
 
     vis.svg.selectAll(".radar-plot-line").remove();
-    _.each(vis.options.years, function(plotYear, ix, array){
+    _.each(vis.options.years, function(plotYear, ix, array) {
         var vis = this;
-        var yearLineData = vis.data.map(function(v,a,i){
-            var yearData = _.where(v.values, {year:plotYear})[0];
+        var yearLineData = vis.data.map(function(v, a, i) {
+            var yearData = _.where(v.values, {
+                year: plotYear
+            })[0];
             var value = yearData ? yearData[vis.valueType] : 0;
             return [
                 vis.values(value),
                 vis.dimensions(v.dimension)
             ];
         });
-        var yearData = _.where(vis.data[0].values, {year:plotYear})[0];
+        var yearData = _.where(vis.data[0].values, {
+            year: plotYear
+        })[0];
         var value = yearData ? yearData[vis.valueType] : 0;
         yearLineData.push([
             vis.values(value),
@@ -301,12 +319,12 @@ Radar.prototype.updateVis = function() {
         ]);
 
         vis.svg.append("g")
-          .attr("class", "radar-plot-line")
-          .attr("id", "plot-" + plotYear)
-          .append("path")
-          .datum(yearLineData)
-          .attr("class", "line plot-" + ix)
-          .attr("d", vis.line);
+            .attr("class", "radar-plot-line")
+            .attr("id", "plot-" + plotYear)
+            .append("path")
+            .datum(yearLineData)
+            .attr("class", "line plot-" + ix)
+            .attr("d", vis.line);
     }, vis);
 
 
@@ -316,50 +334,52 @@ Radar.prototype.updateVis = function() {
      * **********/
     //Groups
     var spokes = vis.spokeGroup
-      .selectAll("g")
-      .data(vis.data);
+        .selectAll("g")
+        .data(vis.data);
 
     spokes
-      .enter()
-      .append("g");
+        .enter()
+        .append("g");
 
     spokes
-      .attr("transform", function(d) {
-        //  console.log(vis.dimensions(d.dimension));
-          return "rotate(" + (vis.dimensions(d.dimension) - 90) + ")"; }
-      );
+        .attr("transform", function(d) {
+            //  console.log(vis.dimensions(d.dimension));
+            return "rotate(" + (vis.dimensions(d.dimension) - 90) + ")";
+        });
 
     spokes.exit().remove();
 
     //Lines
     spokes.selectAll("line").remove();
     spokes.append("line")
-      .attr("class", "spoke")
-      .attr("x2", vis.radius);
+        .attr("class", "spoke")
+        .attr("x2", vis.radius);
 
     //Value Point - added here because can't attach event handlers to svg 'path markers'
     spokes.selectAll("circle").remove();
     for (var i = 0; i < vis.options.years.length; i++) {
         var plotYear = vis.options.years[i];
         spokes.append("circle")
-          .attr("class", "marker-circle plot-" + i)
-          .attr("cx", function (d) {
-              var yearData = _.where(d.values, {year: plotYear})[0];
-              var value = yearData ? yearData[vis.valueType] : 0;
-              $.data(this, "value", value);
-              $.data(this, "year", plotYear);
-              return vis.values(value);
-          })
-          .attr("cy", 0)
-          .attr("r", 5)
-          .on("mouseenter", function(e) {
-              var displayValue = $.data(this, "value") == 0 ? "No Data" : "$" + Math.round($.data(this, "value"));
-              vis.tip.show($.data(this, "year") + "<br>" + radarDimensionName(e.dimension) + "<br>" + displayValue);
-          })
-          .on("mouseout", function(e){
-              vis.tip.hide();
-          })
-          .call(vis.tip);
+            .attr("class", "marker-circle plot-" + i)
+            .attr("cx", function(d) {
+                var yearData = _.where(d.values, {
+                    year: plotYear
+                })[0];
+                var value = yearData ? yearData[vis.valueType] : 0;
+                $.data(this, "value", value);
+                $.data(this, "year", plotYear);
+                return vis.values(value);
+            })
+            .attr("cy", 0)
+            .attr("r", 5)
+            .on("mouseenter", function(e) {
+                var displayValue = $.data(this, "value") == 0 ? "No Data" : "$" + Math.round($.data(this, "value"));
+                vis.tip.show($.data(this, "year") + "<br>" + radarDimensionName(e.dimension) + "<br>" + displayValue);
+            })
+            .on("mouseout", function(e) {
+                vis.tip.hide();
+            })
+            .call(vis.tip);
     }
 
 
@@ -368,20 +388,20 @@ Radar.prototype.updateVis = function() {
     if (vis.options.showLabels) {
         spokes.selectAll("text").remove();
         spokes.append("text")
-          .attr("x", vis.radius + 10)
-          .attr("dy", ".35em")
-          .style("text-anchor", function (d) {
-              return "middle";
-              //return vis.dimensions(d.dimension) < 360 && vis.dimensions(d.dimension) > 180 ? "end" : null;
-          })
-          .attr("transform", function (d) {
-              var position = vis.dimensions(d.dimension);
-              var rotation =  position < 270 && position > 90 ?  "-90" : "90";
-              return "rotate(" + rotation + " " + (vis.radius + 10) + ",0)";
-          })
-          .text(function (d) {
-              return radarDimensionName(d.dimension);
-          });
+            .attr("x", vis.radius + 10)
+            .attr("dy", ".35em")
+            .style("text-anchor", function(d) {
+                return "middle";
+                //return vis.dimensions(d.dimension) < 360 && vis.dimensions(d.dimension) > 180 ? "end" : null;
+            })
+            .attr("transform", function(d) {
+                var position = vis.dimensions(d.dimension);
+                var rotation = position < 270 && position > 90 ? "-90" : "90";
+                return "rotate(" + rotation + " " + (vis.radius + 10) + ",0)";
+            })
+            .text(function(d) {
+                return radarDimensionName(d.dimension);
+            });
     }
 
 
@@ -389,8 +409,6 @@ Radar.prototype.updateVis = function() {
 }
 
 
-function radarDimensionName(fullDimensionLabel){
+function radarDimensionName(fullDimensionLabel) {
     return fullDimensionLabel.split("-").splice(2, 99).join("-");
 }
-
-

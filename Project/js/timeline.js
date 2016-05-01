@@ -3,20 +3,51 @@
  * @param _parentElement    -- the HTML element in which to draw the visualization
  * @param _data                     -- the
  */
+var parseDate = d3.time.format("%Y").parse;
 
-Timeline = function(_parentElement, _data, _properties) {
-    this.parentElement = _parentElement;
-    this.data = _data;
-
+Timeline = function(parentElement, data, properties) {
+    this.parentElement = parentElement;
+    this.data = data;
     this.displayData = this.data;
-    this.eventsData = _properties.events;
-    this.properties = _properties;
-
+    this.eventsData = properties.events;
+    this.properties = properties;
     this.initVis();
 }
 
-Timeline.prototype.updatevis = function() {
-    var vis = this;
+// Updates the timeline by redrawing the brush
+Timeline.prototype.updateVis = function() {
+    var selection = this.svg.select(".x.brush");
+    selection.call(this.brush);
+    this.brush.event(selection);
+    return this;
+};
+
+// Return a two item array with the from / to years (as dates)
+Timeline.prototype.selectedRange = function() {
+    return this.brush.empty() ? this.xContext.domain() : this.brush.extent();
+};
+
+// Return a two item array with the from / to years (as full year)
+Timeline.prototype.selectedYears = function() {
+    return this.selectedRange().map(function(d) {
+        return d.getFullYear();
+    });
+};
+
+// Returns the beginning of the selected range (year)
+Timeline.prototype.selectedBegin = function() {
+    return this.selectedRange()[0];
+}
+
+// Returns the beginning of the selected range (year)
+Timeline.prototype.selectedEnd = function() {
+    return this.selectedRange()[1];
+};
+
+// Sets the current range and redraws
+Timeline.prototype.setYearRange = function(from, to) {
+    this.brush.extent([parseDate('' + from), parseDate('' + to)]);
+    return this.updateVis();
 };
 
 /*
@@ -76,11 +107,10 @@ Timeline.prototype.initVis = function() {
     vis.xContext = xContext;
 
     // Initialize brush component
-
     var brush = d3.svg.brush()
         .x(xContext)
         .on("brush", function() {
-            $(this.parentElement).trigger('brushed', [this]);
+            $(this.parentElement).trigger('brushed', [this, this.selectedBegin(), this.selectedEnd()]);
         }.bind(this));
 
     vis.brush = brush;
@@ -91,7 +121,7 @@ Timeline.prototype.initVis = function() {
         .call(brush)
         .selectAll("rect")
         .attr("fill", "#424242")
-        .attr("opacity", 0.3)
+        .attr("opacity", 0.8)
         .attr("y", -6)
         .attr("height", vis.height + 7);
 
@@ -100,20 +130,19 @@ Timeline.prototype.initVis = function() {
         .attr("transform", "translate(0," + vis.height + ")")
         .call(vis.xAxis);
 
-    //console.log('yearsExtent', yearsExtent);
-
     // Event markers
     var evdata = this.eventsData.filter(function(d) {
         var from = yearsExtent[0].getFullYear();
         var to = yearsExtent[1].getFullYear();
 
         return (d.termBegin >= from && d.termBegin <= to) ||
-                (d.termEnd <= to && d.termEnd >= from)
+            (d.termEnd <= to && d.termEnd >= from)
     });
 
-    var parseDate = d3.time.format("%Y").parse;
 
-    var linex = function(d) { return xContext(parseDate('' + d.termBegin)); };
+    var linex = function(d) {
+        return xContext(parseDate('' + d.termBegin));
+    };
 
     function translate(x, y) {
         return "translate(" + x + ", " + y + ")";
@@ -154,6 +183,7 @@ Timeline.prototype.initVis = function() {
         .text(function(d) {
             return d.name.trim();
         });
+
 
   //  console.log(evdata);
 
