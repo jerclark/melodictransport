@@ -116,7 +116,7 @@
     "name": "Education",
     "subcategory": "EDUCATN",
     "category": "EXPEND",
-    "cpiCode": ""
+    "cpiCode": "SAE"
   },
   {
     "item": "ENTEROTH",
@@ -711,7 +711,7 @@
     "name": "Personal care products and services",
     "subcategory": "PERSCARE",
     "category": "EXPEND",
-    "cpiCode": ""
+    "cpiCode": "SAG1"
   },
   {
     "item": "FEDTAXES",
@@ -746,7 +746,7 @@
     "name": "Reading",
     "subcategory": "READING",
     "category": "EXPEND",
-    "cpiCode": ""
+    "cpiCode": "SERG"
   },
   {
     "item": "980010",
@@ -984,7 +984,7 @@
     "name": "Tobacco products and smoking supplies",
     "subcategory": "TOBACCO",
     "category": "EXPEND",
-    "cpiCode": ""
+    "cpiCode": "SEGA"
   },
   {
     "item": "TOTALEXP",
