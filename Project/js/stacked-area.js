@@ -32,7 +32,7 @@ Stacked.prototype.initVis = function() {
     vis.legend =    {margin: { top: 0, right: 20, bottom: 10, left: 75 }};
     vis.rightLegend = {
                     width: 350,
-                    margin: { top: 0, right: 250, bottom: 20, left: 75 }};
+                    margin: { top: 0, right: 20, bottom: 20, left: 75 }};
 
     vis.margin = vis.properties.margin;
 
@@ -175,7 +175,7 @@ Stacked.prototype.initVis = function() {
 
     vis.rightLegend.area = d3.svg.area()
         .interpolate("cardinal")
-        .x(function(d) { return vis.rightLegend.x(d.year)  + 900; })
+        .x(function(d) { return vis.rightLegend.x(d.year)  + 700; })
         .y0(function(d) { return vis.y(d.y0);  })
         .y1(function(d) { return vis.y(d.y0 + d.y  ); });
 
@@ -504,7 +504,7 @@ Stacked.prototype.updateVis = function() {
     DataLabels
         .transition().duration(duration).delay(delay)
         .attr("y", function(d) { return vis.y(d.values[3].y0 + d.values[3].y/2); })
-        .attr("x", function(d) { return vis.rightLegend.x(d.values[3].year)  + 825; })
+        .attr("x", function(d) { return vis.rightLegend.x(d.values[3].year)  + 635; })
         .attr("dy", "0.5em");
   
     Legendlayers.exit()
