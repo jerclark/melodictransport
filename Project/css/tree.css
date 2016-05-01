@@ -16,17 +16,21 @@
     stroke-width: 2px;
 }
 
+#ground {
+    fill: #6B2F06;
+}
+
 
 #trunk-line {
     fill: none;
     stroke: brown;
-    stroke-width: 5px;
+    stroke-width: 10px;
 }
 
 .branch-line {
     fill: none;
     stroke: brown;
-    stroke-width: 2px;
+    stroke-width: 5px;
 }
 
 .branch-leaf {
@@ -38,9 +42,33 @@
 .leaf-label {
     fill: green;
     font-family: FontAwesome;
-    font-size: 15px;
+    font-size: 30px;
     cursor: pointer;
 }
+
+.dead-leaf-label {
+    fill: #8C6430;
+    font-family: FontAwesome;
+    font-size: 30px;
+    opacity: 0.0;
+    cursor: pointer;
+}
+
+.flower-label {
+    fill: #F7CBD8;
+    font-family: FontAwesome;
+    font-size: 0px;
+    cursor: pointer;
+}
+
+.leaf-label-all-items {
+    fill: darkgray;
+    opacity: 0.5;
+    font-family: FontAwesome;
+    font-size: 25px;
+    cursor: pointer;
+}
+
 
 .tree-top-label {
     fill: green;
@@ -49,5 +77,5 @@
 
 .tree-top-bulb {
     fill: green;
-    font-size: 20px;
+    font-size: 40px;
 }
