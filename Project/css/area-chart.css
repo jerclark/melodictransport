@@ -22,11 +22,7 @@
 .rightLegend{
   opacity: 0.8;
 }
-.area:hover, .rightLegend:hover {
-  stroke: #FFFF00;
-  stroke-width: 1;
-  opacity: 1;
-}
+
 
 .brush .extent {
   stroke: #fff;
@@ -34,9 +30,34 @@
   shape-rendering: crispEdges;
 }
 
-.hover {
+path.highlight, path.highlight:hover{
+    stroke: #FFFF00;
+    stroke-width: 2;
+    opacity: 1;
+  }
+
+path.selected, path.selected:hover{
     fill: yellow;
-    stroke: "black";
-    stroke-width: 1;
-    fill-opacity: .125;
+    font-weight: bold;
+    stroke: #FFFF00;
+    stroke-width: 2;
+    opacity: 1;
+  }
+
+.chartDataLabel{
+
+ font-size: 11px;
+
+}
+
+.square {
+  display: inline-block;
+  border-width: 1px;
+  border-style: solid;
+  height: 15px;
+  vertical-align: top;
+  width: 15px;
+  *display: inline;
+  left: 5px;
+  top: 5px;
 }

@@ -28,10 +28,10 @@ Stacked = function(_parentElement, _data, _properties){
 Stacked.prototype.initVis = function() {
     var vis = this;
 
-    vis.areachart = {margin: { top: 20, right: 20, bottom: 20, left: 75 }};
+    vis.areachart = {margin: { top: 20, right: 100, bottom: 20, left: 75 }};
     vis.legend =    {margin: { top: 0, right: 20, bottom: 10, left: 75 }};
     vis.rightLegend = {
-                    width: 350,
+                    width: 300,
                     margin: { top: 0, right: 20, bottom: 20, left: 75 }};
 
     vis.margin = vis.properties.margin;
@@ -46,10 +46,53 @@ Stacked.prototype.initVis = function() {
     vis.areachart.height = vis.height - vis.areachart.margin.top - vis.areachart.margin.bottom - vis.legend.height ; 
     vis.areachart.width = vis.width - vis.areachart.margin.left - vis.areachart.margin.right; 
 
-    function isSingleton(s){
+    
+    // Helper functions 
+
+    vis.isSingleton = function (s){
         var singletons = ["ALCBEVG","CASHCONT","EDUCATN","PERSCARE","READING","TOBACCO", "MISC"];
             return singletons.indexOf(s) > -1
         };
+
+    vis.clipName = function(n){
+        var limit = 42; 
+        if (n.length > limit ){
+            return n.substring(0, (limit -3)) + "...";
+        } else { return n;}
+        
+    };
+
+    vis.inFilteredView = function(){
+        return (vis.subcategory != 'all');
+    };
+
+    vis.inSingleView = function(){
+        return (vis.itemSelector != 'none');
+    };
+
+    vis.getFullSubcategoryName = function(k){
+        var names = {"all": "All",
+                    "APPAREL":"Apparel",
+                    "ENTRTAIN":"Entertain.",
+                    "FOODTOTL":"Food",
+                    "HEALTH":"Healthcare",
+                    "HOUSING":"Housing",
+                    "INSPENSN":"Pensions",
+                    "MISC":"Misc.",
+                    "TRANS":"Transport."
+                    };
+        if (_.has(names,k)){return names[k]}
+            else {return k;}
+    };
+
+    vis.selectSubCatagory = function(c){
+            vis.itemSelector = 'none'; 
+        if (vis.subcategory == c){vis.subcategory = 'all'}
+                else {
+                    vis.subcategory = c;
+                }
+                vis.wrangleData()};
+
 
     var dataItems = d3.keys(vis.data);
     vis.alldataItems = dataItems;
@@ -66,13 +109,15 @@ Stacked.prototype.initVis = function() {
     dataItems.map(function(name) {
 
         // Groups singleton items under miscellanies category
-        if (isSingleton(vis.data[name].subcategory)){vis.data[name].subcategory = "MISC"};
+        if (vis.isSingleton(vis.data[name].subcategory)){vis.data[name].subcategory = "MISC"};
 
         // Fills in missing year values with zeors
         years.map(function(y){
             var found_y = false;
             vis.data[name].values.map(function(v){
-                if (y == v.year){found_y = true;}
+                if (y == v.year){found_y = true;
+                    v.valuePercentIncome = v.valuePercentIncome/100; 
+                }
                 })
 
             if (found_y == false){
@@ -140,7 +185,7 @@ Stacked.prototype.initVis = function() {
     vis.legendYears = 7; 
 
     vis.x = d3.time.scale()
-        .range([0, vis.areachart.width])
+        .range([0, (vis.areachart.width)])
         .domain([vis.min_year, vis.max_year]);
 
     vis.rightLegend.x = d3.time.scale()
@@ -148,6 +193,9 @@ Stacked.prototype.initVis = function() {
         .domain([parseDate(vis.endYear.toString()), parseDate((vis.endYear + vis.legendYears).toString())]);
 
     vis.y = d3.scale.linear()
+        .range([vis.areachart.height , 0]);
+
+    vis.rightLegend.y = d3.scale.linear()
         .range([vis.areachart.height , 0]);
 
     vis.xAxis = d3.svg.axis()
@@ -174,17 +222,17 @@ Stacked.prototype.initVis = function() {
             .attr("class", "y-axis axis");
 
     vis.rightLegend.area = d3.svg.area()
-        .interpolate("cardinal")
-        .x(function(d) { return vis.rightLegend.x(d.year)  + 700; })
-        .y0(function(d) { return vis.y(d.y0);  })
-        .y1(function(d) { return vis.y(d.y0 + d.y  ); });
+        .interpolate("linear")
+        .x(function(d) { return vis.rightLegend.x(d.year)  + 2000  ; })
+        .y0(function(d) { return vis.rightLegend.y(d.y0);  })
+        .y1(function(d) { return vis.rightLegend.y(d.y0 + d.y  ); });
 
     // Used for transitions in and out 
     vis.legendAreaExit = d3.svg.area()
-        .interpolate("cardinal")
-        .x(function(d) { return vis.x(d.year ); })
-        .y0(function(d) { return vis.y(d.y0); })
-        .y1(function(d) { return vis.y(d.y0 + d.y); });
+        .interpolate("linear")
+        .x(function(d) { return vis.rightLegend.x(d.year) ; })
+        .y0(function(d) { return vis.rightLegend.y(d.y0); })
+        .y1(function(d) { return vis.rightLegend.y(d.y0 + d.y); });
 
     
     vis.area = d3.svg.area()
@@ -200,7 +248,8 @@ Stacked.prototype.initVis = function() {
         .y0(function(d) { return vis.y(0); })
         .y1(function(d) { return vis.y(0); });
 
-   vis.svg.append("defs").append("clipPath")
+
+   vis.clippath = vis.svg.append("defs").append("clipPath")
         .attr("id", "clip")
         .append("rect")
         .attr("width", vis.areachart.width)
@@ -223,24 +272,54 @@ Stacked.prototype.initVis = function() {
         .attr("y","0");
     
    
-    // Append legend background
-    vis.legend_entry_height = 10; 
-    vis.legend_x = 0 
-    vis.legend_y = vis.height - vis.legend.height - 10;  
- 
+    vis.rightSlideLegendGroup = vis.svg.append('g');
 
-    vis.svg.append("rect")
-        .attr("id", "legendBackground")
-        .attr("x", vis.legend_x)
-        .attr("y", vis.legend_y)
-        .attr("width", vis.legend.width )
-        .attr("height", vis.legend.height - 25)
+    vis.rightSlideLegendGroup
+        .append('rect')
+        .attr("id", "legendBgBoxHead")
+        .attr("class","rightLegendBox")
+        .attr("x", 2000)
+        .attr("rx", 10)
+        .attr("ry", 10)
+        .attr("y", -20)
+        .attr("width", vis.rightLegend.width - 100)
+        .attr("height", 50)
         .style("stroke", "black")
+        .style("opacity", .75)
         .style("fill","#fff")
-        .style("opacity", .75);
+
+    vis.rightSlideLegendGroup
+        .append('text')
+        .attr("class","rightLegendBox")
+        .attr("id", "RightLegendHeader")
+        .attr("x", 2000)
+        .attr("dy", "-0.4em")
+        .attr("dx", "0.4em")
+        .text("SubCatagory");
+
+    vis.rightSlideLegendGroup
+        .append('rect')
+        .attr("id", "RightLegendBgBox")
+        .attr("class","rightLegendBox")
+        .attr("x", 2000)
+        .attr("y", 0)
+        .attr("width", vis.rightLegend.width - 42)
+        .attr("height", vis.areachart.height + 2)
+        .style("stroke", "black")
+        .style("fill","#fff");
+
+    // Bottem sub-catagory legend 
+    vis.bottemnavbar = d3.select(".area-chart-nav").selectAll('li')
+        .data((['all'].concat(vis.subcategories)))
+        .enter().append("li")
+        .attr("id",function(d){return "area-chart-nav-" + d})
+        .attr("class",function(d){return "area-chart-nav-li"})
+        .append("a").attr("xlink:href","#")
+        .attr("onclick",function(d){return 'areachart.selectSubCatagory("' + d +'")'})
+        .html(function(d){return('<div class="square" style="background-color:' + vis.subsubcategoryColorscale(d) + '"></div> ' + vis.getFullSubcategoryName(d))});
 
     vis.subcategory = 'all'; 
-
+    vis.itemSelector = 'none'; 
     vis.wrangleData();
 }
 
@@ -252,15 +331,16 @@ Stacked.prototype.initVis = function() {
 Stacked.prototype.wrangleData = function() {
     var vis = this;
 
-    function inFilteredView(){
-        return (vis.subcategory != 'all');
-    }
+    $('.area-chart-nav-li').removeClass("active");
+    $('#area-chart-nav-'+vis.subcategory).toggleClass("active");
 
-    if (inFilteredView()){
+    if (vis.inFilteredView()){
         vis.x.range([0, vis.areachart.width - vis.rightLegend.width - 25]);
+        vis.clippath.attr("width", vis.areachart.width - vis.rightLegend.width - 25);
 
     } else {
          vis.x.range([0, vis.areachart.width]);
+         vis.clippath.attr("width", vis.areachart.width);
     }
 
     vis.filteredData = vis.data;
@@ -273,26 +353,25 @@ Stacked.prototype.wrangleData = function() {
 
     filteredData = {};
 
-    if (vis.subcategory != 'all'){
-         vis.alldataItems.map(function(name){
-            if (vis.data[name].subcategory == vis.subcategory)
-                {filteredData[name] = vis.data[name]}})
-         vis.filteredData = filteredData;
-         };
+    d3.keys(vis.filteredData).map(function(name){
+        filteredData[name] = vis.filteredData[name]}); 
 
-         // Todo -- see if I can get better filtering work to enable "zoom transitons "
-/*    filteredData = {};
+    if (vis.inFilteredView() &&  vis.itemSelector == 'none' ){
+         Object.keys(filteredData).map(function(name){
+            if (filteredData[name].subcategory != vis.subcategory)
+                { delete filteredData[name] }})
+         } else if (vis.itemSelector != 'none'){
+            Object.keys(filteredData).map(function(name){
+           
+            if (vis.data[name].item != vis.itemSelector)
+                {
+                    delete filteredData[name]}
+                })
+         }
 
-    var dataItems = d3.keys(vis.filteredData);
+    vis.filteredData = filteredData;
 
-    if (vis.subcategory != 'all'){
-         dataItems.map(function(name) {
-            if (vis.filteredData[name].subcategory != vis.subcategory){
-                delete vis.filteredData[name]; 
-            }
-         })};*/
-
-   dataItems = d3.keys(vis.filteredData);
+    dataItems = d3.keys(vis.filteredData);
 
     // Caculates year-by-year total for each year, to be used in percentage
     // caculations below
@@ -313,15 +392,17 @@ Stacked.prototype.wrangleData = function() {
                 dataItems.map(function(name) {
                     return {
                         name: name,
+                        item: vis.filteredData[name].item,
                         subcategory: vis.filteredData[name].subcategory,
+                        subcategoryText: vis.filteredData[name].subcategoryText,
                         values: vis.filteredData[name].values.map(function(d) {
                         return {
                             year: parseDate(d.year.toString()), y: d[key]};
                 })};}))};
 
-
-
+    // Build data for slide in legend 
     valueTotals = {};
+
     dataItems.map(function(name) {
  
         var finalValues = vis.filteredData[name].values.filter(function(v){return v.year == vis.endYear;})[0];
@@ -332,7 +413,6 @@ Stacked.prototype.wrangleData = function() {
 
         var dataAverages = {};
         Object.keys(valueTotals).map(function(k){ dataAverages[k] =  valueTotals[k]/dataItems.length});
-
 
         extraYears = []; 
         for (i = 1; i < vis.legendYears; i++) {
@@ -351,10 +431,12 @@ Stacked.prototype.wrangleData = function() {
                     //console.log(finalValues);
                     return {
                         name: name,
+                        item:vis.filteredData[name].item,
                         subcategory: vis.filteredData[name].subcategory,
+                        subcategoryText: vis.filteredData[name].subcategoryText,
                         values: finalValues.map(function(d) {
 
-                        if(inFilteredView()){
+                        if(vis.inFilteredView()){
                             return {
                             year: parseDate(d.year.toString()), y: d[key]};
 
@@ -364,22 +446,24 @@ Stacked.prototype.wrangleData = function() {
 
 
     vis.adjustedValue = stackDataForKey("adjustedValue");
-    vis.adjustedValueLegend = legendDataForKey("adjustedValue");
-
     vis.value = stackDataForKey("value");
-    vis.valueLegend = legendDataForKey("value");
-
     vis.valuePercentIncome = stackDataForKey("valuePercentIncome");
-    vis.valuePercentIncomeLegend = legendDataForKey("valuePercentIncome");
-
-
+    
+    if(!vis.inSingleView()){
+        vis.adjustedValueLegend = legendDataForKey("adjustedValue");
+        vis.valuePercentIncomeLegend = legendDataForKey("valuePercentIncome");
+        vis.valueLegend = legendDataForKey("value");
+    }
+    
 
     // Calculating percentages is dependent on the totals from the submitted dataset,
     // and needs to be calculated a little differently
     vis.percent = stack(dataItems.map(function(name) {
                     return {
                         name: name,
-                        subcategory: vis.data[name].subcategory,
+                        item:vis.filteredData[name].item,
+                        subcategory: vis.filteredData[name].subcategory,
+                        subcategoryText: vis.filteredData[name].subcategoryText,
                         values: vis.data[name].values.map(function(d) {
                         return {
                             year: parseDate(d.year.toString()), y: d["value"]/(year_maxes[d.year])};
@@ -399,7 +483,6 @@ Stacked.prototype.wrangleData = function() {
     vis.displayData = vis[TYPE];
     vis.legendData = vis[(TYPE + "Legend")]; 
 
-
     vis.updateVis();
 
 }
@@ -413,27 +496,10 @@ Stacked.prototype.updateVis = function() {
 
     var vis = this;
 
-    function getFullSubcategoryName(k){
-        var names = {"APPAREL":"Apparel",
-                    "ENTRTAIN":"Entertain.",
-                    "FOODTOTL":"Food",
-                    "HEALTH":"Healthcare",
-                    "HOUSING":"Housing",
-                    "INSPENSN":"Pensions",
-                    "MISC":"Misc.",
-                    "TRANS":"Transport."
-                    };
-        if (_.has(names,k)){return names[k]}
-            else {return k;}
-    }
-
-    function inFilteredView(){
-        return (vis.subcategory != 'all');
-    }
-
     var highlight_color = "#7997a1"
 
-    // Get the maximum of the multi-dimensional array or in other words, get the highest peak of the uppermost layer
+    // update y scale for current data 
+
     vis.y.domain([0, d3.max(vis.displayData, function(d) {
             return d3.max(d.values, function(e) {
                 return e.y0 + e.y;
@@ -441,97 +507,177 @@ Stacked.prototype.updateVis = function() {
         })
     ]);
 
-    // Draw the layers
+    // Presuming we’re not in a single view, we update the fly in legend scale as well 
+    if(!vis.inSingleView()){
+        vis.rightLegend.y.domain(vis.y.domain()); 
+    };
 
-  
+    // Draw the main area chart 
+
     var layers = vis.svg.selectAll(".area-chart")
         .data(vis.displayData);
 
+    // Enter
     layers.enter().append("path")
         .attr("class", "area-chart area")
         .attr("d", function(d) {return vis.areaExit(d.values);});
 
+    // Update 
     layers
+        .transition().duration(duration).delay(delay + 1000)
         .style("fill", function(d) {
             if (vis.subcategory == 'all'){return vis.subsubcategoryColorscale(d.subcategory);}
             else {return vis.subColorScale(vis.subsubcategoryColorscale(d.subcategory))(d.name);}
         })
-        .transition().duration(duration).delay(delay)
+        .attr("id", function (d){return "layer-" + d.item})
+        .attr("alt", function (d){return d.name})
         .attr("d", function(d) {return vis.area(d.values);});
 
 
     layers.exit()
-        .transition().duration(duration).delay(delay)
+        .transition().duration(duration).delay(delay )
         .attr("d", function(d) {return vis.areaExit(d.values);})
         .remove();
 
 
-    // Draw the legend
+    // Draw the slide in  in legend 
 
+    var legendY = vis.rightLegend.y(d3.max(vis.legendData, function(d) {
+            return d3.max(d.values, function(e) {
+                return e.y0 + e.y;
+            })}));
+
+
+    if(vis.inFilteredView() && !vis.inSingleView() ){
+
+        if(vis.alreadyinFilteredView){
+            vis.rightSlideLegendGroup.selectAll(".rightLegend").remove();
+             vis.svg.selectAll(".chartDataLabel").remove();
+             vis.svg.selectAll(".rightLegendArea").remove();
+        }
+
+        // Slide in animation 
+        vis.rightSlideLegendGroup.transition().duration(duration).delay(delay)
+            .attr("transform", "translate(" + (-2000 + (vis.areachart.width - vis.rightLegend.width - 1)) + ",0)");
+
+        vis.rightSlideLegendGroup.selectAll(".rightLegendBox")
+            .attr("transform", "translate(0," + legendY +")");
+
+        vis.rightSlideLegendGroup.selectAll("#RightLegendBgBox")
+            .attr("height", (vis.areachart.height - legendY + 2));
+
+        vis.rightSlideLegendGroup.select("#RightLegendHeader")
+            .text(" " + vis.getFullSubcategoryName(vis.subcategory) + " Subcategories");
+
+        vis.alreadyinFilteredView = true; 
+
+    } else if (vis.inSingleView()){git 
+
+    }  else {
+        // Slide out 
+        vis.rightSlideLegendGroup.transition().duration(duration).delay(delay)
+            .attr("transform", "translate(0,0)"); 
+
+        vis.svg.selectAll(".chartDataLabel").transition().duration(duration).delay(delay).remove();
+        vis.svg.selectAll(".rightLegendArea").transition().duration(duration).delay(delay).remove();
+
+        vis.alreadyinFilteredView = false; 
+
+    }
   
-    var Legendlayers = vis.svg.selectAll(".rightLegend")
+
+    var Legendlayers = vis.rightSlideLegendGroup.selectAll(".rightLegend")
         .data(vis.legendData);
 
+    if(vis.inFilteredView()){
+        Legendlayers.enter().append("g")
+            .append("path")
+            .attr("class", function (d){return "rightLegend"})
+            .attr("id", function (d){return "rightLegend-" + d.item})
+            .attr("d", function(d) {return vis.rightLegend.area(d.values);}); }
 
-    Legendlayers.enter().append("path")
-        .attr("class", "rightLegend")
-        .attr("d", function(d) {return vis.legendAreaExit(d.values);});
-
-    Legendlayers 
+    Legendlayers
         .style("fill", function(d) {
             if (vis.subcategory == 'all'){return vis.subsubcategoryColorscale(d.subcategory);}
             else {return vis.subColorScale(vis.subsubcategoryColorscale(d.subcategory))(d.name);}
         })
-        .transition().duration(duration).delay(delay)
-        .attr("d", function(d) {return vis.rightLegend.area(d.values);}); 
+         .attr("d", function(d) {return vis.rightLegend.area(d.values);}); 
 
-    vis.svg.selectAll(".chartDataLabel").remove();
-
-    var DataLabels = vis.svg.selectAll(".chartDataLabel")
-        .data(vis.legendData);
-
-    DataLabels
-        .enter().append('text')
-        .attr("class", "chartDataLabel")
-        .attr("y", function(d) { return vis.y(d.values[3].y0 + d.values[3].y/2); })
-        .attr("x", function(d) { return 2000; })
-        .attr("dy", "0.5em")
-        .style("fill", "black")
-        .text(function (d){
-            if(inFilteredView()){return d.name}});
-
-
-    DataLabels
-        .transition().duration(duration).delay(delay)
-        .attr("y", function(d) { return vis.y(d.values[3].y0 + d.values[3].y/2); })
-        .attr("x", function(d) { return vis.rightLegend.x(d.values[3].year)  + 635; })
-        .attr("dy", "0.5em");
-  
     Legendlayers.exit()
         .transition().duration(duration).delay(delay)
         .attr("d", function(d) {return vis.areaExit(d.values);})
         .remove();
 
+    // Pop in legend labels 
+
+    var DataLabels = vis.rightSlideLegendGroup.selectAll(".chartDataLabel")
+        .data(vis.legendData)
+   
+    if(vis.inFilteredView()){
+    DataLabels
+        .enter().append('text')
+        .attr("class", "chartDataLabel")
+        .attr("dy", "0.5em")
+        .style("fill", "black")
+        .text(function (d){
+            if(vis.inFilteredView()){return vis.clipName(d.name)}});
+    };
+
+    DataLabels
+        .attr("y", function(d) { return vis.rightLegend.y(d.values[3].y0 + d.values[3].y/2) })
+        .attr("x", function(d) { return vis.rightLegend.x(d.values[1].year) + 2000; });
+
+
+    var highlight_layer = function(d){
+        vis.svg.select("#layer-"+d).classed('highlight',true); 
+        vis.svg.select("#rightLegend-"+d).classed('highlight',true); 
+    }
+
+
+    var unhighlight_layer = function(d){
+        vis.svg.select("#layer-"+d).classed('highlight',false);
+        vis.svg.select("#rightLegend-"+d).classed('highlight',false); 
+
+    }
+
+    var select_layer = function(d){
+        vis.svg.select("#rightLegend-"+d).classed('selected',true);
+        }; 
+
+    var unselect_layer = function(d){
+        vis.svg.select("#rightLegend-"+d).classed('selected',false);
+        }; 
 
     // highlight optiones
     vis.svg.selectAll(".area, .rightLegend")
         .on("mouseover", function(d)
             {vis.svg.select("#category-name").text(d.subcategory + ": " + d.name);
-            if (!inFilteredView()){vis.svg.select("#"+d.subcategory).style("fill", highlight_color);}
+            highlight_layer(d.item);
+         
             });
 
     vis.svg.selectAll(".area, .rightLegend")
         .on("mouseout",function(d)
             {vis.svg.select("#category-name").text("");
-            if (!inFilteredView()){vis.svg.select("#"+d.subcategory).style("fill", "none");}
-            });
+            unhighlight_layer(d.item);});
 
    vis.svg.selectAll(".area, .rightLegend")
         .on("dblclick",function(d)
-            {   if (inFilteredView()){
-                    vis.subcategory = 'all';
+            {   if (vis.inFilteredView() && vis.inSingleView()){
                     vis.svg.select("#"+d.subcategory).style("fill", "none");
-                } 
+
+                    vis.itemSelector = 'none'; 
+                    unhighlight_layer(d.item);
+                    unselect_layer(d.item);
+
+                  
+                } else if (vis.inFilteredView()) {
+
+                    vis.itemSelector = d.item; 
+                    select_layer(d.item);
+
+
+                }
                 else {
                     vis.subcategory = d.subcategory;
                     vis.svg.select("#"+d.subcategory).style("fill", highlight_color);
@@ -539,60 +685,6 @@ Stacked.prototype.updateVis = function() {
                 }
 
                 vis.wrangleData()});
-
-
-    // SubCatagory Legend 
-
-    var spacer = (vis.legend.width - 5) / (vis.subcategories.length );
-
-    var legend = vis.svg.selectAll('g.legendEntry')
-        .data(vis.subcategories)
-        .enter().append('g')
-        .attr('class', 'legendEntry')
-        .on("mouseover", function(d)
-            {vis.svg.select("#"+d).style("fill", highlight_color);})
-        .on("mouseout", function(d)
-            {vis.svg.select("#"+d).style("fill", "none");})
-        .on("dblclick",function(d)
-            {   if (vis.subcategory == d){vis.subcategory = 'all'}
-                else {vis.subcategory = d}
-                vis.wrangleData()});
-
-    legend
-        .append('rect')
-        .attr("class", "legendBgBox")
-        .attr('id',function(d){return d;})
-        .attr("x", function(d, i) {
-            return vis.legend_x + 10 +  (i * spacer );})
-        .attr("y", vis.legend_y + 5)
-        .attr("width", spacer - 8)
-        .attr("height", 12)
-        .style("fill", "#fff")
-        .on("mouseover", function() {
-            d3.select(this).style("fill", highlight_color);
-            })
-        .on("mouseout", function() {
-            if (!inFilteredView()){d3.select(this).style("fill", "none");}   
-        })
-
-    legend
-        .append('rect')
-        .attr("x", function(d, i) {
-            return vis.legend_x + 10 +  (i * spacer );})
-        .attr("y", vis.legend_y + 5)
-        .attr("width", 9)
-        .attr("height", 9)
-        .style("stroke", "black")
-        .style("stroke-width", 1)
-        .style("fill", function(d){return vis.subsubcategoryColorscale(d);});
-
-     legend.append('text')
-        .attr("x", function(d, i) {
-            return vis.legend_x + 25 +  (i * spacer );})
-        .attr("y", vis.legend_y + 15)
-        .style("font-size", 12)
-        .text(function(d){ return getFullSubcategoryName(d); });
-
 
 
     // Call axis functions with the new domain
