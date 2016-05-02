@@ -348,9 +348,8 @@ Stacked.prototype.wrangleData = function() {
 
     filteredData = {};
 
-    vis.alldataItems.map(function(name){
+    d3.keys(vis.filteredData).map(function(name){
         filteredData[name] = vis.filteredData[name]}); 
-
 
     if (vis.inFilteredView() &&  vis.itemSelector == 'none' ){
          Object.keys(filteredData).map(function(name){
@@ -365,24 +364,9 @@ Stacked.prototype.wrangleData = function() {
                 })
          }
 
-         vis.filteredData = filteredData; 
+    vis.filteredData = filteredData;
 
-
-/*        if (vis.inFilteredView() &&  vis.itemSelector == 'none' ){
-         Object.keys(vis.filteredData).map(function(name){
-            if (vis.filteredData[name].subcategory != vis.subcategory)
-                { delete vis.filteredData[name] }})
-         } else if (vis.itemSelector != 'none'){
-            Object.keys(vis.filteredData).map(function(name){
-           
-            if (vis.data[name].item != vis.itemSelector)
-                {
-                    delete vis.filteredData[name]}
-                })
-         }
-*/
-
-   dataItems = d3.keys(vis.filteredData);
+    dataItems = d3.keys(vis.filteredData);
 
     // Caculates year-by-year total for each year, to be used in percentage
     // caculations below
@@ -403,7 +387,7 @@ Stacked.prototype.wrangleData = function() {
                 dataItems.map(function(name) {
                     return {
                         name: name,
-                        item:vis.filteredData[name].item,
+                        item: vis.filteredData[name].item,
                         subcategory: vis.filteredData[name].subcategory,
                         subcategoryText: vis.filteredData[name].subcategoryText,
                         values: vis.filteredData[name].values.map(function(d) {
@@ -411,9 +395,9 @@ Stacked.prototype.wrangleData = function() {
                             year: parseDate(d.year.toString()), y: d[key]};
                 })};}))};
 
-
-
+    // Build data for slide in legend 
     valueTotals = {};
+
     dataItems.map(function(name) {
  
         var finalValues = vis.filteredData[name].values.filter(function(v){return v.year == vis.endYear;})[0];
@@ -467,8 +451,6 @@ Stacked.prototype.wrangleData = function() {
     }
     
 
-
-
     // Calculating percentages is dependent on the totals from the submitted dataset,
     // and needs to be calculated a little differently
     vis.percent = stack(dataItems.map(function(name) {
@@ -495,7 +477,6 @@ Stacked.prototype.wrangleData = function() {
  
     vis.displayData = vis[TYPE];
     vis.legendData = vis[(TYPE + "Legend")]; 
-
 
     vis.updateVis();
 
@@ -533,8 +514,7 @@ Stacked.prototype.updateVis = function() {
 
     // Enter
     layers.enter().append("path")
-        .attr("class", function (d){return "area-chart area " + d.item})
-        .attr("alt", function (d){return "area-chart area " + d.name})
+        .attr("class", "area-chart area")
         .attr("d", function(d) {return vis.areaExit(d.values);});
 
     // Update 
@@ -544,6 +524,8 @@ Stacked.prototype.updateVis = function() {
             if (vis.subcategory == 'all'){return vis.subsubcategoryColorscale(d.subcategory);}
             else {return vis.subColorScale(vis.subsubcategoryColorscale(d.subcategory))(d.name);}
         })
+        .attr("id", function (d){return "layer-" + d.item})
+        .attr("alt", function (d){return d.name})
         .attr("d", function(d) {return vis.area(d.values);});
 
 
@@ -593,7 +575,8 @@ Stacked.prototype.updateVis = function() {
     if(vis.inFilteredView()){
         Legendlayers.enter().append("g")
             .append("path")
-            .attr("class", function (d){return "rightLegend " + d.item})
+            .attr("class", function (d){return "rightLegend"})
+            .attr("id", function (d){return "rightLegend-" + d.item})
             .attr("d", function(d) {return vis.rightLegend.area(d.values);}); }
 
     Legendlayers
@@ -628,19 +611,35 @@ Stacked.prototype.updateVis = function() {
         .attr("x", function(d) { return vis.rightLegend.x(d.values[1].year) + 2000; });
 
 
+    var highlight_layer = function(d){
+        //vis.svg.select("#layer-"+d).style("stroke", "yellow").style("stroke-width", 3);
+        vis.svg.select("#layer-"+d).classed('active',true); 
+        //vis.svg.select("#rightLegend-"+d).style("stroke", "yellow").style("stroke-width", 3);
+        vis.svg.select("#rightLegend-"+d).classed('active',true); 
+    }
+
+    var unhighlight_layer = function(d){
+        //vis.svg.select("#layer-"+d).style("stroke", "none").style("stroke-width", 0);
+        //vis.svg.select("#rightLegend-"+d).style("stroke", "none").style("stroke-width", 0);
+        vis.svg.select("#layer-"+d).classed('active',false);
+        vis.svg.select("#rightLegend-"+d).classed('active',false); 
+
+    }
+
     // highlight optiones
     vis.svg.selectAll(".area, .rightLegend")
         .on("mouseover", function(d)
             {vis.svg.select("#category-name").text(d.subcategory + ": " + d.name);
             if (!vis.inFilteredView()){vis.svg.select("#"+d.subcategory).style("fill", highlight_color);}
-            //vis.svg.selectAll("." + d.item).style("stroke-width", 3);
+            highlight_layer(d.item);
+         
             });
 
     vis.svg.selectAll(".area, .rightLegend")
         .on("mouseout",function(d)
             {vis.svg.select("#category-name").text("");
             if (!vis.inFilteredView()){vis.svg.select("#"+d.subcategory).style("fill", "none");}
-              //vis.svg.selectAll("." + d.item).style("stroke-width", 1);
+              if(!vis.inSingleView()){unhighlight_layer(d.item);}
             });
 
    vis.svg.selectAll(".area, .rightLegend")
@@ -650,10 +649,12 @@ Stacked.prototype.updateVis = function() {
                     vis.svg.select("#"+d.subcategory).style("fill", "none");
 
                     vis.itemSelector = 'none'; 
+                    unhighlight_layer(d.item);
                   
                 } else if (vis.inFilteredView()) {
 
                     vis.itemSelector = d.item; 
+                    highlight_layer(d.item);
 
 
                 }

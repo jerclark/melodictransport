@@ -22,10 +22,10 @@
 .rightLegend{
   opacity: 0.8;
 }
-.area:hover, .rightLegend:hover {
+/*.area:hover, .rightLegend:hover{
   stroke: #FFFF00;
   opacity: 1;
-}
+}*/
 
 .brush .extent {
   stroke: #fff;
@@ -33,12 +33,12 @@
   shape-rendering: crispEdges;
 }
 
-.hover {
+.active{
     fill: yellow;
-    stroke: "black";
-    stroke-width: 1;
-    fill-opacity: .125;
-}
+    stroke: #FFFF00;
+    stroke-width: 3;
+    opacity: 1;
+  }
 
 .chartDataLabel{
 
