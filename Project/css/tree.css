@@ -20,6 +20,11 @@
     fill: #6B2F06;
 }
 
+#ground-year {
+    fill: white;
+    font-size: 20px;
+}
+
 
 #trunk-line {
     fill: none;
