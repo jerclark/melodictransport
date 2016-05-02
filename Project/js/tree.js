@@ -209,7 +209,7 @@ Tree.prototype.initVis = function() {
 
   vis.branchLength = d3.scale.linear();
 
-  vis.flower = d3.scale.linear().domain([1,100]).range([1,30]).clamp(true);
+  vis.flower = d3.scale.linear().domain([1,100]).range([0,30]).clamp(true);
 
   vis.chlorophyll = d3.scale.linear().domain([-1,-200]).range([0,1]).clamp(true);
 
@@ -381,7 +381,7 @@ Tree.prototype.updateVis = function(){
     .call(vis.tip);
 
 
-  //Add Flowers (pink font awesome icons)
+  //Add Flowers (pink font-awesome icons)
   branches
     .append("text")
     .attr("class", "flower-label")
