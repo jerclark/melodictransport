@@ -19,8 +19,6 @@ Stacked = function(_parentElement, _data, _properties){
     this.displayData = []; // see data wrangling
     this.properties = _properties;
     this.initVis();
-
-    console.log(this.data);
 }
 
 /*
@@ -342,8 +340,6 @@ Stacked.prototype.wrangleData = function() {
 
     vis.filteredData = vis.data;
 
-    console.log(vis.data);
-
     vis.startYear = vis.x.domain()[0].getFullYear(); 
     vis.endYear = vis.x.domain()[1].getFullYear();
 
@@ -525,22 +521,21 @@ Stacked.prototype.updateVis = function() {
         })
     ]);
 
+    // Presuming we’re not in a single view, we update the fly in legend scale as well 
     if(!vis.inSingleView()){
         vis.rightLegend.y.domain(vis.y.domain()); 
-   
     };
-    // Draw the layers
 
-    //console.log(vis.displayData);
-    // Data Join
+    // Draw the main area chart 
+
     var layers = vis.svg.selectAll(".area-chart")
         .data(vis.displayData);
 
     // Enter
     layers.enter().append("path")
         .attr("class", function (d){return "area-chart area " + d.item})
+        .attr("alt", function (d){return "area-chart area " + d.name})
         .attr("d", function(d) {return vis.areaExit(d.values);});
-
 
     // Update 
     layers
@@ -552,14 +547,13 @@ Stacked.prototype.updateVis = function() {
         .attr("d", function(d) {return vis.area(d.values);});
 
 
-
     layers.exit()
         .transition().duration(duration).delay(delay)
         .attr("d", function(d) {return vis.areaExit(d.values);})
         .remove();
 
 
-    // Draw the skude in legend 
+    // Draw the slide in  in legend 
 
     var legendY = vis.rightLegend.y(d3.max(vis.legendData, function(d) {
             return d3.max(d.values, function(e) {
@@ -568,6 +562,7 @@ Stacked.prototype.updateVis = function() {
 
 
     if(vis.inFilteredView() && !vis.inSingleView() ){
+        // Slide in animation 
         vis.rightSlideLegendGroup.transition().duration(duration).delay(delay)
             .attr("transform", "translate(" + (-2000 + (vis.areachart.width - vis.rightLegend.width - 1)) + ",0)");
 
@@ -581,7 +576,8 @@ Stacked.prototype.updateVis = function() {
             .text(vis.getFullSubcategoryName(vis.subcategory));
     } else if (vis.inSingleView()){
 
-    }    else {
+    }  else {
+        // Slide out 
         vis.rightSlideLegendGroup.transition().duration(duration).delay(delay)
             .attr("transform", "translate(0,0)"); 
 
@@ -595,13 +591,10 @@ Stacked.prototype.updateVis = function() {
         .data(vis.legendData);
 
     if(vis.inFilteredView()){
-
         Legendlayers.enter().append("g")
             .append("path")
             .attr("class", function (d){return "rightLegend " + d.item})
-            .attr("d", function(d) {return vis.rightLegend.area(d.values);}); 
-
-    };
+            .attr("d", function(d) {return vis.rightLegend.area(d.values);}); }
 
     Legendlayers
         .style("fill", function(d) {
@@ -609,7 +602,6 @@ Stacked.prototype.updateVis = function() {
             else {return vis.subColorScale(vis.subsubcategoryColorscale(d.subcategory))(d.name);}
         })
          .attr("d", function(d) {return vis.rightLegend.area(d.values);}); 
-
 
     Legendlayers.exit()
         .transition().duration(duration).delay(delay)
@@ -621,13 +613,10 @@ Stacked.prototype.updateVis = function() {
     var DataLabels = vis.rightSlideLegendGroup.selectAll(".chartDataLabel")
         .data(vis.legendData)
    
-
     if(vis.inFilteredView()){
     DataLabels
         .enter().append('text')
         .attr("class", "chartDataLabel")
-        .attr("y", function(d) { return vis.rightLegend.y(d.values[3].y0 + d.values[3].y/2) -  legendY;  })
-        .attr("x", function(d) { return vis.rightLegend.x(d.values[1].year) + 2000; })
         .attr("dy", "0.5em")
         .style("fill", "black")
         .text(function (d){
@@ -635,8 +624,8 @@ Stacked.prototype.updateVis = function() {
     };
 
     DataLabels
-      .attr("transform", "translate(0," + legendY +")");
-
+        .attr("y", function(d) { return vis.rightLegend.y(d.values[3].y0 + d.values[3].y/2) })
+        .attr("x", function(d) { return vis.rightLegend.x(d.values[1].year) + 2000; });
 
 
     // highlight optiones
