@@ -15,37 +15,6 @@ var COLUMN_WIDTH_4 = COLUMN_WIDTH * 4;
 var COLUMN_WIDTH_HALF = COLUMN_WIDTH * 6;
 var COLUMN_WIDTH_FULL = COLUMN_WIDTH * 12;
 
-function updateStories() {
-    var stories = $('.hidden.story').toArray();
-    stories.forEach(function(el, idx) {
-        var el = el;
-        var link = $("<a/>")
-            .addClass("story-link")
-            .text($(el).find("h3").first().text())
-            .click(function(e) {
-                var story = $(el);
-                var demographic = story.data('demographic');
-                var item = story.data('item');
-                var from = story.data('year-from') || '2004';
-                var to = story.data('year-to') || '2014';
-
-                $("#radar-demo-picker").val(demographic);
-                $("#radar-item-picker").val(item);
-                timeline.setYearRange(from, to);
-
-                $(".current-story").html($(el).html());
-                radarChart.fetchData();
-            });
-
-        $(".story-picker").append(link);
-    });
-
-    _.defer(function() {
-        $(".stories").find(".story-link").first().click();
-    });
-}
-
-
 var wrangleAll = function wrangleAll(e){
     console.time("wrangle radar");
     radarChart.wrangleData();
@@ -60,10 +29,13 @@ var wrangleAll = function wrangleAll(e){
     console.timeEnd("wrangle tree");
 };
 
-
 $(function() {
     $('.filtering-nav').scrollToFixed();
-    $('#fixed-tree-controls').scrollToFixed({
+    // $('#fixed-tree-controls').scrollToFixed({
+    //     marginTop: 245
+    // });
+
+    $('.fixed-tree-row').scrollToFixed({
         marginTop: 245
     });
 
@@ -97,7 +69,12 @@ $(function() {
         console.timeEnd("show trees");
 
         console.time("show stories");
-        updateStories();
+
+        var stories = new Stories({
+            timeline : timeline,
+            callback: wrangleAll
+        }).initialize();
+
         console.timeEnd("show stories");
 
         // Handle brush events
