@@ -28,10 +28,10 @@ Stacked = function(_parentElement, _data, _properties){
 Stacked.prototype.initVis = function() {
     var vis = this;
 
-    vis.areachart = {margin: { top: 20, right: 20, bottom: 20, left: 75 }};
+    vis.areachart = {margin: { top: 20, right: 75, bottom: 20, left: 75 }};
     vis.legend =    {margin: { top: 0, right: 20, bottom: 10, left: 75 }};
     vis.rightLegend = {
-                    width: 350,
+                    width: 400,
                     margin: { top: 0, right: 20, bottom: 20, left: 75 }};
 
     vis.margin = vis.properties.margin;
@@ -140,7 +140,7 @@ Stacked.prototype.initVis = function() {
     vis.legendYears = 7; 
 
     vis.x = d3.time.scale()
-        .range([0, vis.areachart.width])
+        .range([0, (vis.areachart.width)])
         .domain([vis.min_year, vis.max_year]);
 
     vis.rightLegend.x = d3.time.scale()
@@ -174,15 +174,15 @@ Stacked.prototype.initVis = function() {
             .attr("class", "y-axis axis");
 
     vis.rightLegend.area = d3.svg.area()
-        .interpolate("cardinal")
-        .x(function(d) { return vis.rightLegend.x(d.year)  + 700; })
+        .interpolate("linear")
+        .x(function(d) { return vis.rightLegend.x(d.year)  + 2000  ; })
         .y0(function(d) { return vis.y(d.y0);  })
         .y1(function(d) { return vis.y(d.y0 + d.y  ); });
 
     // Used for transitions in and out 
     vis.legendAreaExit = d3.svg.area()
-        .interpolate("cardinal")
-        .x(function(d) { return vis.x(d.year ); })
+        .interpolate("linear")
+        .x(function(d) { return vis.rightLegend.x(d.year) ; })
         .y0(function(d) { return vis.y(d.y0); })
         .y1(function(d) { return vis.y(d.y0 + d.y); });
 
@@ -238,6 +238,39 @@ Stacked.prototype.initVis = function() {
         .style("stroke", "black")
         .style("fill","#fff")
         .style("opacity", .75);
+
+
+
+
+    vis.rightLegendBox = vis.svg.append('g');
+
+    vis.rightLegendBox
+        .append('rect')
+        .attr("id", "legendBgBoxHead")
+        .attr("class","rightLegendBox")
+        .attr("x", 2000)
+        .attr("rx", 10)
+        .attr("ry", 10)
+        .attr("y", -20)
+        .attr("width", vis.rightLegend.width - 100)
+        .attr("height", 50)
+        .style("stroke", "black")
+        .style("fill","red")
+
+    vis.rightLegendBox
+        .append('rect')
+        .attr("id", "RightLegendBgBox")
+        .attr("class","rightLegendBox")
+        .attr("x", 2000)
+        .attr("y", 0)
+        .attr("width", vis.rightLegend.width - 55)
+        .attr("height", vis.areachart.height + 2)
+        .style("stroke", "black")
+        .style("fill","#fff");
+
+
+        
+
 
     vis.subcategory = 'all'; 
 
@@ -470,45 +503,70 @@ Stacked.prototype.updateVis = function() {
 
     // Draw the legend
 
+    var legendY = vis.y(d3.max(vis.legendData, function(d) {
+            return d3.max(d.values, function(e) {
+                return e.y0 + e.y;
+            })}));
+
+    //console.log(legendHeight);
+
+    if(inFilteredView()){
+        vis.rightLegendBox.transition().duration(duration).delay(delay)
+            .attr("transform", "translate(" + (-2000 + (vis.areachart.width - vis.rightLegend.width - 1)) + ",0)");
+
+        vis.rightLegendBox.selectAll(".rightLegendBox")
+            .attr("transform", "translate(0," + legendY +")");
+
+        vis.rightLegendBox.selectAll("#RightLegendBgBox")
+            .attr("height", (vis.areachart.height - legendY + 2));
+
+    }else {
+        vis.rightLegendBox.transition().duration(duration).delay(delay)
+            .attr("transform", "translate(0,0)");
+    }
   
-    var Legendlayers = vis.svg.selectAll(".rightLegend")
+
+
+    var Legendlayers = vis.rightLegendBox.selectAll(".rightLegend")
         .data(vis.legendData);
 
+    Legendlayers
+        .exit()
+        .transition().duration(duration).delay(delay)
+        .attr("d", function(d) {return vis.legendAreaExit(d.values);})
+        .remove(); 
+
+    if(inFilteredView()){
 
     Legendlayers.enter().append("path")
         .attr("class", "rightLegend")
-        .attr("d", function(d) {return vis.legendAreaExit(d.values);});
-
-    Legendlayers 
         .style("fill", function(d) {
             if (vis.subcategory == 'all'){return vis.subsubcategoryColorscale(d.subcategory);}
             else {return vis.subColorScale(vis.subsubcategoryColorscale(d.subcategory))(d.name);}
         })
-        .transition().duration(duration).delay(delay)
         .attr("d", function(d) {return vis.rightLegend.area(d.values);}); 
 
-    vis.svg.selectAll(".chartDataLabel").remove();
+    };
 
-    var DataLabels = vis.svg.selectAll(".chartDataLabel")
-        .data(vis.legendData);
+    //vis.svg.selectAll(".chartDataLabel").remove()
 
+    var DataLabels = vis.rightLegendBox.selectAll(".chartDataLabel")
+        .data(vis.legendData)
+
+    if(inFilteredView()){
     DataLabels
         .enter().append('text')
         .attr("class", "chartDataLabel")
         .attr("y", function(d) { return vis.y(d.values[3].y0 + d.values[3].y/2); })
-        .attr("x", function(d) { return 2000; })
+        .attr("x", function(d) { return vis.rightLegend.x(d.values[1].year) + 2000; })
         .attr("dy", "0.5em")
         .style("fill", "black")
         .text(function (d){
             if(inFilteredView()){return d.name}});
+    };
 
-
-    DataLabels
-        .transition().duration(duration).delay(delay)
-        .attr("y", function(d) { return vis.y(d.values[3].y0 + d.values[3].y/2); })
-        .attr("x", function(d) { return vis.rightLegend.x(d.values[3].year)  + 635; })
-        .attr("dy", "0.5em");
-  
+    DataLabels.exit().remove(); 
+    
     Legendlayers.exit()
         .transition().duration(duration).delay(delay)
         .attr("d", function(d) {return vis.areaExit(d.values);})
