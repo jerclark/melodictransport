@@ -32,12 +32,12 @@ DemographicPicker.prototype.html = function() {
 
 ItemPicker = function(pickerId) {
 
-  //Get the demographic elements
-  var pickerChoices = window.ds.items().map(function(v) {
-    return {
-      name: v.name,
-      value: v.item
-    };
+  //Get the expend item elements
+  var pickerChoices = window.ds.items().filter(function(v) {
+    return (v.category == "EXPEND");
+  }).map(function(v)
+  {
+    return {name: v.name, value: v.item};
   });
 
   var pickerOptions = {
