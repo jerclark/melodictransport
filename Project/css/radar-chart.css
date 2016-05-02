@@ -32,15 +32,14 @@
     stroke-dasharray: 1,4;
 }
 
-
 .plot-0 {
-    fill: red;
-    stroke: red;
+    fill: #3299BB;
+    stroke: #3299BB;
 }
 
 .plot-1 {
-    fill: blue;
-    stroke: blue;
+    fill: #FF9900;
+    stroke: #FF9900;
 }
 
 .marker-circle {
