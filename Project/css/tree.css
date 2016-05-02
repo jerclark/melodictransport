@@ -76,6 +76,24 @@
 }
 
 .tree-top-bulb {
-    fill: green;
-    font-size: 40px;
+     fill: green;
+     font-size: 40px;
+ }
+
+.tree-demo-picker {
+    position: absolute;
+    top: 300px;
+    right: 425px;
+    width: 250px;
+    height: 200px;
+    z-index: 99;
+}
+
+.tree-char-picker {
+    position: absolute;
+    top: 425px;
+    right: 425px;
+    width: 250px;
+    height: 200px;
+    z-index: 99;
 }
