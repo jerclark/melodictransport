@@ -25,6 +25,7 @@
     <script src="js/demographic-picker.js"></script>
     <script src="js/characteristic-picker.js"></script>
     <script src="js/tree.js"></script>
+    <script src="js/stories.js"></script>
     <script src="js/main.js"></script>
 </head>
 
@@ -112,8 +113,8 @@
                         </div>
                         <hr class="style17">
                         <div class="stories">
-                            <div class="current-story"></div>
-                            <div class="story-picker">
+                            <div class="current-story radar"></div>
+                            <div class="story-picker radar">
                                 <h4>Choose a story</h4>
                             </div>
                         </div>
@@ -136,11 +137,17 @@
             <hr class="style17">
             <div class="tree-charts">
                 <h2 class="vis-title text-center">The Money Tree</h2>
-                <div class="row">
+                <div class="row fixed-tree-row">
                     <div class="col-sm-4">
                         <div id="fixed-tree-controls">
                             <div class="tree-demo-picker"></div>
                             <div class="tree-char-picker"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="current-story tree"></div>
+                        <div class="story-picker tree">
+                            <h4>Choose a story</h4>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -154,8 +161,6 @@
                                 <li><em>Brownness</em> of leaf represents difference at which item cost has grown <strong>faster</strong> than inflation (bad)</li>
                             </ul>
                         </ul>
-                    </div>
-                    <div class="col-sm-4">
                         <p>The trees represent the beginning and end of the selected range in the timeline. Slide, expand or contract the timeline selection to see trends over time.</p>
                         <p>Refine the data by selecting from the various demographics, and hover over the leaves for more details.</p>
                     </div>
@@ -203,7 +208,7 @@
         <h3>Where's The Beef? (and Pork)</h3>
         <p>Looking at the data for the last ten years, there is a marked decrease in the amount of money spent on <a class="filter-link selected">beef</a> and <a class="filter-link">pork</a>, and generally on meats. What could it mean? The consumer price index does not suggest that meat got more affordable; are we making healthier choices?</p>
     </div>
-    <div class="hidden story tree" data-section="tree" data-demographic="LB01" data-characteristic="04" data-year-from="1987" data-year-to="1993">
+    <div class="hidden story" data-section="tree" data-demographic="LB01" data-characteristic="04" data-year-from="1987" data-year-to="1993">
         <h3>Middle Class, Empty Glass</h3>
         <p>In 1993, the middle class cut their spending by almost 50% on alcohol compared to 1987. They also spent less on entertainment, though recreational costs remained relatively cheap compared to increasing costs in healthcare and education. Income was also flat between the two years. The early 90's was not kind to the middle class.</p>
         <p>Click <a class="filter-link" data-section="tree" data-characteristic="06">here</a> to see how the top 20% was doing over the same time period.</p>
