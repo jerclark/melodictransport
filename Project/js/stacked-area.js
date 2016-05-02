@@ -31,7 +31,7 @@ Stacked.prototype.initVis = function() {
     vis.areachart = {margin: { top: 20, right: 75, bottom: 20, left: 75 }};
     vis.legend =    {margin: { top: 0, right: 20, bottom: 10, left: 75 }};
     vis.rightLegend = {
-                    width: 400,
+                    width: 300,
                     margin: { top: 0, right: 20, bottom: 20, left: 75 }};
 
     vis.margin = vis.properties.margin;
@@ -46,10 +46,40 @@ Stacked.prototype.initVis = function() {
     vis.areachart.height = vis.height - vis.areachart.margin.top - vis.areachart.margin.bottom - vis.legend.height ; 
     vis.areachart.width = vis.width - vis.areachart.margin.left - vis.areachart.margin.right; 
 
-    function isSingleton(s){
+    
+    // Helper functions 
+
+    vis.isSingleton = function (s){
         var singletons = ["ALCBEVG","CASHCONT","EDUCATN","PERSCARE","READING","TOBACCO", "MISC"];
             return singletons.indexOf(s) > -1
         };
+
+    vis.clipName = function(n){
+        var limit = 42; 
+        if (n.length > limit ){
+            return n.substring(0, (limit -3)) + "...";
+        } else { return n;}
+        
+    };
+
+    vis.inFilteredView = function(){
+        return (vis.subcategory != 'all');
+    }
+
+    vis.getFullSubcategoryName = function(k){
+        var names = {"APPAREL":"Apparel",
+                    "ENTRTAIN":"Entertain.",
+                    "FOODTOTL":"Food",
+                    "HEALTH":"Healthcare",
+                    "HOUSING":"Housing",
+                    "INSPENSN":"Pensions",
+                    "MISC":"Misc.",
+                    "TRANS":"Transport."
+                    };
+        if (_.has(names,k)){return names[k]}
+            else {return k;}
+    };
+
 
     var dataItems = d3.keys(vis.data);
     vis.alldataItems = dataItems;
@@ -66,7 +96,7 @@ Stacked.prototype.initVis = function() {
     dataItems.map(function(name) {
 
         // Groups singleton items under miscellanies category
-        if (isSingleton(vis.data[name].subcategory)){vis.data[name].subcategory = "MISC"};
+        if (vis.isSingleton(vis.data[name].subcategory)){vis.data[name].subcategory = "MISC"};
 
         // Fills in missing year values with zeors
         years.map(function(y){
@@ -253,6 +283,7 @@ Stacked.prototype.initVis = function() {
         .attr("width", vis.rightLegend.width - 100)
         .attr("height", 50)
         .style("stroke", "black")
+        .style("opacity", .75)
         .style("fill","#fff")
 
     vis.rightSlideLegendGroup
@@ -270,7 +301,7 @@ Stacked.prototype.initVis = function() {
         .attr("class","rightLegendBox")
         .attr("x", 2000)
         .attr("y", 0)
-        .attr("width", vis.rightLegend.width - 55)
+        .attr("width", vis.rightLegend.width - 42)
         .attr("height", vis.areachart.height + 2)
         .style("stroke", "black")
         .style("fill","#fff");
@@ -292,11 +323,8 @@ Stacked.prototype.initVis = function() {
 Stacked.prototype.wrangleData = function() {
     var vis = this;
 
-    function inFilteredView(){
-        return (vis.subcategory != 'all');
-    }
 
-    if (inFilteredView()){
+    if (vis.inFilteredView()){
         vis.x.range([0, vis.areachart.width - vis.rightLegend.width - 25]);
         vis.clippath.attr("width", vis.areachart.width - vis.rightLegend.width - 25);
 
@@ -396,7 +424,7 @@ Stacked.prototype.wrangleData = function() {
                         subcategory: vis.filteredData[name].subcategory,
                         values: finalValues.map(function(d) {
 
-                        if(inFilteredView()){
+                        if(vis.inFilteredView()){
                             return {
                             year: parseDate(d.year.toString()), y: d[key]};
 
@@ -455,23 +483,6 @@ Stacked.prototype.updateVis = function() {
 
     var vis = this;
 
-    function getFullSubcategoryName(k){
-        var names = {"APPAREL":"Apparel",
-                    "ENTRTAIN":"Entertain.",
-                    "FOODTOTL":"Food",
-                    "HEALTH":"Healthcare",
-                    "HOUSING":"Housing",
-                    "INSPENSN":"Pensions",
-                    "MISC":"Misc.",
-                    "TRANS":"Transport."
-                    };
-        if (_.has(names,k)){return names[k]}
-            else {return k;}
-    }
-
-    function inFilteredView(){
-        return (vis.subcategory != 'all');
-    }
 
     var highlight_color = "#7997a1"
 
@@ -517,7 +528,7 @@ Stacked.prototype.updateVis = function() {
 
     //console.log(legendHeight);
 
-    if(inFilteredView()){
+    if(vis.inFilteredView()){
         vis.rightSlideLegendGroup.transition().duration(duration).delay(delay)
             .attr("transform", "translate(" + (-2000 + (vis.areachart.width - vis.rightLegend.width - 1)) + ",0)");
 
@@ -528,8 +539,7 @@ Stacked.prototype.updateVis = function() {
             .attr("height", (vis.areachart.height - legendY + 2));
 
         vis.rightSlideLegendGroup.select("#RightLegendHeader")
-            .text(getFullSubcategoryName(vis.subcategory));
-
+            .text(vis.getFullSubcategoryName(vis.subcategory));
     }else {
         vis.rightSlideLegendGroup.transition().duration(duration).delay(delay)
             .attr("transform", "translate(0,0)"); 
@@ -543,7 +553,7 @@ Stacked.prototype.updateVis = function() {
     var Legendlayers = vis.rightSlideLegendGroup.selectAll(".rightLegendArea")
         .data(vis.legendData);
 
-    if(inFilteredView()){
+    if(vis.inFilteredView()){
 
     Legendlayers.enter().append("path")
         .attr("class", "rightLegendArea")
@@ -564,8 +574,9 @@ Stacked.prototype.updateVis = function() {
     var DataLabels = vis.rightSlideLegendGroup.selectAll(".chartDataLabel")
         .data(vis.legendData)
 
-    console.log(vis.legendData);
-    if(inFilteredView()){
+
+
+    if(vis.inFilteredView()){
     DataLabels
         .enter().append('text')
         .attr("class", "chartDataLabel")
@@ -574,7 +585,7 @@ Stacked.prototype.updateVis = function() {
         .attr("dy", "0.5em")
         .style("fill", "black")
         .text(function (d){
-            if(inFilteredView()){return d.name}});
+            if(vis.inFilteredView()){return vis.clipName(d.name)}});
     };
 
     DataLabels.exit().remove(); 
@@ -589,18 +600,18 @@ Stacked.prototype.updateVis = function() {
     vis.svg.selectAll(".area, .rightLegend")
         .on("mouseover", function(d)
             {vis.svg.select("#category-name").text(d.subcategory + ": " + d.name);
-            if (!inFilteredView()){vis.svg.select("#"+d.subcategory).style("fill", highlight_color);}
+            if (!vis.inFilteredView()){vis.svg.select("#"+d.subcategory).style("fill", highlight_color);}
             });
 
     vis.svg.selectAll(".area, .rightLegend")
         .on("mouseout",function(d)
             {vis.svg.select("#category-name").text("");
-            if (!inFilteredView()){vis.svg.select("#"+d.subcategory).style("fill", "none");}
+            if (!vis.inFilteredView()){vis.svg.select("#"+d.subcategory).style("fill", "none");}
             });
 
    vis.svg.selectAll(".area, .rightLegend")
         .on("dblclick",function(d)
-            {   if (inFilteredView()){
+            {   if (vis.inFilteredView()){
                     vis.subcategory = 'all';
                     vis.svg.select("#"+d.subcategory).style("fill", "none");
                 } 
@@ -644,7 +655,7 @@ Stacked.prototype.updateVis = function() {
             d3.select(this).style("fill", highlight_color);
             })
         .on("mouseout", function() {
-            if (!inFilteredView()){d3.select(this).style("fill", "none");}   
+            if (!vis.inFilteredView()){d3.select(this).style("fill", "none");}   
         })
 
     legend
@@ -663,7 +674,7 @@ Stacked.prototype.updateVis = function() {
             return vis.legend_x + 25 +  (i * spacer );})
         .attr("y", vis.legend_y + 15)
         .style("font-size", 12)
-        .text(function(d){ return getFullSubcategoryName(d); });
+        .text(function(d){ return vis.getFullSubcategoryName(d); });
 
 
 
