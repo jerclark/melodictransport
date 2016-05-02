@@ -174,7 +174,6 @@ $(function() {
         console.timeEnd('subcats2');
 
 
-        console.log(expends);
         // Date parser to convert strings to date objects
         var parseDate = d3.time.format("%Y").parse;
 
@@ -197,10 +196,11 @@ $(function() {
         var areachartProperties = {
             width: FULL_WIDTH,
             height: 1000,
-            margin: { top: 20, right: 10, bottom: 20, left: 60 }
+            margin: { top: 10, right: 10, bottom: 20, left: 10 }
         };
 
         areachart = new Stacked("#stacked-area-chart", expends, areachartProperties);
+
     }
 
 

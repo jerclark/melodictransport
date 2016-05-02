@@ -231,4 +231,5 @@ Timeline.prototype.initVis = function() {
         .call(vis.xAxis);
 
     this.drawMarkers(yearsExtent[0].getFullYear(), yearsExtent[1].getFullYear(), 'Financial');
+
 }
