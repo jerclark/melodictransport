@@ -28,7 +28,7 @@ Stacked = function(_parentElement, _data, _properties){
 Stacked.prototype.initVis = function() {
     var vis = this;
 
-    vis.areachart = {margin: { top: 20, right: 75, bottom: 20, left: 75 }};
+    vis.areachart = {margin: { top: 20, right: 100, bottom: 20, left: 75 }};
     vis.legend =    {margin: { top: 0, right: 20, bottom: 10, left: 75 }};
     vis.rightLegend = {
                     width: 300,
@@ -269,23 +269,6 @@ Stacked.prototype.initVis = function() {
         .attr("y","0");
     
    
-    // Append legend background
-    vis.legend_entry_height = 10; 
-    vis.legend_x = 0 
-    vis.legend_y = vis.height - vis.legend.height - 10;  
- 
-
-    vis.svg.append("rect")
-        .attr("id", "legendBackground")
-        .attr("x", vis.legend_x)
-        .attr("y", vis.legend_y)
-        .attr("width", vis.legend.width )
-        .attr("height", vis.legend.height - 25)
-        .style("stroke", "black")
-        .style("fill","#fff")
-        .style("opacity", .75);
-
-
     vis.rightSlideLegendGroup = vis.svg.append('g');
 
     vis.rightSlideLegendGroup
@@ -322,6 +305,14 @@ Stacked.prototype.initVis = function() {
         .style("stroke", "black")
         .style("fill","#fff");
 
+    var bottemnavbar = d3.select(".area-chart-nav").selectAll('li')
+        .data((['all'].concat(vis.subcategories)))
+        .enter().append("li")
+        .attr("id",function(d){return "area-chart-nav-" + d})
+        .attr("class",function(d){return "area-chart-nav-li"})
+        .append("a").attr("xlink:href","#")
+        .attr("onclick",function(d){return 'areachart.selectSubCatagory("' + d +'")'})
+        .html(function(d){return('<div class="square" style="background-color:' + vis.subsubcategoryColorscale(d) + '"></div> ' + vis.getFullSubcategoryName(d))});
 
     vis.subcategory = 'all'; 
     vis.itemSelector = 'none'; 
@@ -675,68 +666,6 @@ Stacked.prototype.updateVis = function() {
                 }
 
                 vis.wrangleData()});
-
-
-    // SubCatagory Legend 
-
-    var spacer = (vis.legend.width - 5) / (vis.subcategories.length );
-
-    var legend = vis.svg.selectAll('g.legendEntry')
-        .data(vis.subcategories)
-        .enter().append('g')
-        .attr('class', 'legendEntry')
-        .on("mouseover", function(d)
-            {vis.svg.select("#"+d).style("fill", highlight_color);})
-        .on("mouseout", function(d)
-            {vis.svg.select("#"+d).style("fill", "none");})
-        .on("dblclick",function(d)
-            {   if (vis.subcategory == d){vis.subcategory = 'all'}
-                else {vis.subcategory = d}
-                vis.wrangleData()});
-
-    legend
-        .append('rect')
-        .attr("class", "legendBgBox")
-        .attr('id',function(d){return d;})
-        .attr("x", function(d, i) {
-            return vis.legend_x + 10 +  (i * spacer );})
-        .attr("y", vis.legend_y + 5)
-        .attr("width", spacer - 8)
-        .attr("height", 12)
-        .style("fill", "#fff")
-        .on("mouseover", function() {
-            d3.select(this).style("fill", highlight_color);
-            })
-        .on("mouseout", function() {
-            if (!vis.inFilteredView()){d3.select(this).style("fill", "none");}   
-        })
-
-    legend
-        .append('rect')
-        .attr("x", function(d, i) {
-            return vis.legend_x + 10 +  (i * spacer );})
-        .attr("y", vis.legend_y + 5)
-        .attr("width", 9)
-        .attr("height", 9)
-        .style("stroke", "black")
-        .style("stroke-width", 1)
-        .style("fill", function(d){return vis.subsubcategoryColorscale(d);});
-
-     legend.append('text')
-        .attr("x", function(d, i) {
-            return vis.legend_x + 25 +  (i * spacer );})
-        .attr("y", vis.legend_y + 15)
-        .style("font-size", 12)
-        .text(function(d){ return vis.getFullSubcategoryName(d); });
-
-    var bottemnavbar = d3.select(".area-chart-nav").selectAll('li')
-        .data((['all'].concat(vis.subcategories)))
-        .enter().append("li")
-        .attr("id",function(d){return "area-chart-nav-" + d})
-        .attr("class",function(d){return "area-chart-nav-li"})
-        .append("a").attr("xlink:href","#")
-        .attr("onclick",function(d){return 'areachart.selectSubCatagory("' + d +'")'})
-        .html(function(d){return('<div class="square" style="background-color:' + vis.subsubcategoryColorscale(d) + '"></div> ' + vis.getFullSubcategoryName(d))});
 
 
     // Call axis functions with the new domain
