@@ -521,7 +521,7 @@ Stacked.prototype.updateVis = function() {
 
     // Update 
     layers
-        .transition().duration(duration).delay(delay)
+        .transition().duration(duration).delay(delay + 1000)
         .style("fill", function(d) {
             if (vis.subcategory == 'all'){return vis.subsubcategoryColorscale(d.subcategory);}
             else {return vis.subColorScale(vis.subsubcategoryColorscale(d.subcategory))(d.name);}
@@ -532,7 +532,7 @@ Stacked.prototype.updateVis = function() {
 
 
     layers.exit()
-        .transition().duration(duration).delay(delay)
+        .transition().duration(duration).delay(delay )
         .attr("d", function(d) {return vis.areaExit(d.values);})
         .remove();
 
@@ -568,7 +568,7 @@ Stacked.prototype.updateVis = function() {
 
         vis.alreadyinFilteredView = true; 
 
-    } else if (vis.inSingleView()){
+    } else if (vis.inSingleView()){git 
 
     }  else {
         // Slide out 
@@ -659,7 +659,6 @@ Stacked.prototype.updateVis = function() {
    vis.svg.selectAll(".area, .rightLegend")
         .on("dblclick",function(d)
             {   if (vis.inFilteredView() && vis.inSingleView()){
-                    vis.subcategory = 'all';
                     vis.svg.select("#"+d.subcategory).style("fill", "none");
 
                     vis.itemSelector = 'none'; 
