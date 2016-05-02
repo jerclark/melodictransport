@@ -44,6 +44,14 @@ html, body {
     font-family: Lora, serif;
     font-size: 16px;
     line-height: 1.5;
+    background: rgba(255,255,255,1);
+    background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 23%, rgba(188,224,238,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(255,255,255,1)), color-stop(23%, rgba(255,255,255,1)), color-stop(100%, rgba(188,224,238,1)));
+    background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 23%, rgba(188,224,238,1) 100%);
+    background: -o-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 23%, rgba(188,224,238,1) 100%);
+    background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 23%, rgba(188,224,238,1) 100%);
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 23%, rgba(188,224,238,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#bce0ee', GradientType=0 );
 }
 
 .shopgirl-bg {
@@ -62,16 +70,17 @@ section.intro {
     margin-bottom: 40px;
 }
 
-.radar-charts {
-    padding-top: 40px;
-}
-
 .vis-container {
-    background-image: url(../img/landscape1.png);
+    background-image: url("../img/landscape-307325.png");
     background-position: bottom;
     background-size: contain;
     background-repeat: no-repeat;
 }
+
+.vis-title {
+    margin-bottom: 40px;
+}
+
 
 // Allow svg elements inside the vis container to "pop out" of their containing elements
 .vis-container svg:not(:root), .container svg:not(:root), #timeline svg {

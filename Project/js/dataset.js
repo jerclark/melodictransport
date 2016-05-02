@@ -105,7 +105,10 @@
             console.time("building index");
             this._datasets.indexed = this._datasets.values.reduce(function(obj, v) {
                 obj[v.id] = obj[v.id] || [];
-                obj[v.id].push({ year: v.year, value: v.value });
+                obj[v.id].push({
+                    year: v.year,
+                    value: v.value
+                });
                 return obj;
             });
             console.timeEnd("building index");
@@ -147,14 +150,15 @@
             return _.where(this.subcategories(), {
                 category: category
             });
-        }
-        else {
+        } else {
             return this._datasets.subcategories;
         }
     };
 
     Dataset.prototype.subcategory = function(subcategory) {
-        return _.findWhere(this.subcategories(), { subcategory: subcategory });
+        return _.findWhere(this.subcategories(), {
+            subcategory: subcategory
+        });
     };
 
     Dataset.prototype.subcategoryText = function(subcategory) {
@@ -225,7 +229,9 @@
 
     Dataset.prototype.item = function(code) {
         console.assert(code, "pass an item code to get an item");
-        return _.findWhere(this.items(), { item: code });
+        return _.findWhere(this.items(), {
+            item: code
+        });
     }
 
     Dataset.prototype.itemText = function(item) {
@@ -415,12 +421,12 @@
     });
 
 
-  /**************
-   * CPI RELATED QUERIES BELOW
-   **************/
+    /**************
+     * CPI RELATED QUERIES BELOW
+     **************/
 
 
-      // Returns all the cpi's for the criteria given
+    // Returns all the cpi's for the criteria given
     Dataset.prototype.cpiForYear = function(year, criteria) {
         var cpiForCriteria = this.cpi(criteria);
         var cpiForYear = _.findWhere(cpiForCriteria, {
@@ -431,7 +437,7 @@
 
 
     // Returns all the cpi's for the criteria given
-    Dataset.prototype.cpi = function(criteria) {
+    Dataset.prototype.cpi = _.memoize(function(criteria) {
         //Make sure to populate criteria
         criteria = _defaultCriteria(criteria);
 
@@ -442,7 +448,7 @@
                 id: "CU0000" + cpiCode
             }).map(YV);
         }
-    }
+    }, JSON.stringify);
 
 
     Dataset.prototype.cpiValues = function(cpiItemCode) {
@@ -450,8 +456,7 @@
             return _.where(this.cpiValues(), {
                 id: cpiItemCode
             });
-        }
-        else {
+        } else {
             return this._datasets.cpiValues;
         }
     };

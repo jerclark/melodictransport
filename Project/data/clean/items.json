@@ -116,7 +116,7 @@
     "name": "Education",
     "subcategory": "EDUCATN",
     "category": "EXPEND",
-    "cpiCode": "SAE"
+    "cpiCode": "SEEB01"
   },
   {
     "item": "ENTEROTH",
@@ -130,7 +130,7 @@
     "name": "Entertainment",
     "subcategory": "ENTRTAIN",
     "category": "EXPEND",
-    "cpiCode": ""
+    "cpiCode": "SAR"
   },
   {
     "item": "FEESADM",
@@ -368,7 +368,7 @@
     "name": "Healthcare",
     "subcategory": "HEALTH",
     "category": "EXPEND",
-    "cpiCode": ""
+    "cpiCode": "SAM"
   },
   {
     "item": "HLTHINSR",

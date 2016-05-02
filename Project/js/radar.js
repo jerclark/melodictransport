@@ -43,12 +43,12 @@ Radar.prototype.initVis = function() {
     var legendLineLength = 20;
     var legendTextWidth = 40;
     var legendSpacer = 10;
-    var legendTextY = 55;
-    var legendLineY = 50;
+    var legendTextY = 70;
+    var legendLineY = 65;
     vis.legend = d3.select(vis.parentElement).append("svg")
         .attr("class", "center-block")
         .attr('width', width)
-        .attr('height', 65)
+        .attr('height', 90)
         .append('g')
         .attr("id", "radar-legend");
 
@@ -56,7 +56,7 @@ Radar.prototype.initVis = function() {
         .attr("class", "radar-title")
         .attr("id", "radar-title-item")
         .attr("x", titleCenterX)
-        .attr("dy", "15")
+        .attr("dy", "20")
         .attr("text-anchor", "middle")
         .text("Item by")
 
@@ -64,7 +64,7 @@ Radar.prototype.initVis = function() {
         .attr("class", "radar-title")
         .attr("id", "radar-title-demographic")
         .attr("x", titleCenterX)
-        .attr("dy", "37")
+        .attr("dy", "45")
         .attr("text-anchor", "middle")
         .text("Demographic")
 
@@ -298,10 +298,14 @@ Radar.prototype.updateVis = function() {
                 year: plotYear
             })[0];
             var value = yearData ? yearData[vis.valueType] : 0;
-            return [
-                vis.values(value),
-                vis.dimensions(v.dimension)
-            ];
+            if (value !== 0) {
+                return [
+                    vis.values(value),
+                    vis.dimensions(v.dimension)
+                ];
+            } else {
+                return [];
+            }
         });
         var yearData = _.where(vis.data[0].values, {
             year: plotYear
@@ -313,6 +317,8 @@ Radar.prototype.updateVis = function() {
                 vis.dimensions(vis.data[0].dimension)
             ]);
         }
+
+        yearLineData = yearLineData.filter(function(v){return (v.length > 0);});
 
         vis.svg.append("g")
             .attr("class", "radar-plot-line")

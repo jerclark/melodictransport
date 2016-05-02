@@ -4,45 +4,16 @@ var timeline;
 var radarChart;
 var treePlot;
 
+var SCROLL_TO_TREE = 3235;
+var SCROLL_TO_CAKE = 2116;
+var SCROLL_TO_RADAR = 1261;
+
 // In SM- mode which we should use everywhere (don't want the layout
 // to ever break vertically eg. become responsive.)
 var COLUMN_WIDTH = 90;
 var COLUMN_WIDTH_4 = COLUMN_WIDTH * 4;
 var COLUMN_WIDTH_HALF = COLUMN_WIDTH * 6;
 var COLUMN_WIDTH_FULL = COLUMN_WIDTH * 12;
-
-function updateStories() {
-    var stories = $('.hidden.story').toArray();
-    stories.forEach(function(el, idx) {
-        var el = el;
-        var link = $("<a/>")
-            .addClass("story-link")
-            .text($(el).find("h3").first().text())
-            .click(function(e) {
-                var story = $(el);
-                var demographic = story.data('demographic');
-                var item = story.data('item');
-                var from = story.data('year-from') || '2004';
-                var to = story.data('year-to') || '2014';
-
-                $("#radar-demo-picker").val(demographic);
-                $("#radar-item-picker").val(item);
-                timeline.setYearRange(from, to);
-
-                $(".current-story").html($(el).html());
-                radarChart.fetchData();
-            });
-
-        $(".story-picker").append(link);
-    });
-
-    _.defer(function() {
-
-        $(".stories").find(".story-link").first().click();
-
-    });
-}
-
 
 var wrangleAll = function wrangleAll(e){
     console.time("wrangle radar");
@@ -58,12 +29,21 @@ var wrangleAll = function wrangleAll(e){
     console.timeEnd("wrangle tree");
 };
 
-
 $(function() {
     $('.filtering-nav').scrollToFixed();
-    // Story picker
-    // TODO MOVE
+    // $('#fixed-tree-controls').scrollToFixed({
+    //     marginTop: 245
+    // });
 
+    $('.fixed-tree-row').scrollToFixed({
+        marginTop: 245
+    });
+
+    // Handle "scrollto" anchors to force the document to go in the right spot
+    $("body").on("click", ".scrollto", function(e) {
+        e.preventDefault();
+        $("body").scrollTop(parseInt($(e.target).data("position"), 10));
+    });
 });
 
 (function(cs171) {
@@ -89,7 +69,12 @@ $(function() {
         console.timeEnd("show trees");
 
         console.time("show stories");
-        updateStories();
+
+        var stories = new Stories({
+            timeline : timeline,
+            callback: wrangleAll
+        }).initialize();
+
         console.timeEnd("show stories");
 
         // Handle brush events
@@ -118,7 +103,7 @@ $(function() {
 
         timeline = new Timeline("#timeline", years, {
             width: FULL_WIDTH,
-            height: 160,
+            height: 150,
             margin: { top: 0, right: 0, bottom: 30, left: 0 },
             events: ds._datasets.events,
         });
@@ -200,9 +185,7 @@ $(function() {
         };
 
         areachart = new Stacked("#stacked-area-chart", expends, areachartProperties);
-
     }
-
 
     function showRadar() {
         var radarDemoPicker = new DemographicPicker("radar-demo-picker");
