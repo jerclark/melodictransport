@@ -24,7 +24,6 @@
 }
 .area:hover, .rightLegend:hover {
   stroke: #FFFF00;
-  stroke-width: 1;
   opacity: 1;
 }
 
@@ -44,5 +43,5 @@
 .chartDataLabel{
 
  font-size: 11px;
-  
+
 }
