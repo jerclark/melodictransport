@@ -297,10 +297,14 @@ Radar.prototype.updateVis = function() {
                 year: plotYear
             })[0];
             var value = yearData ? yearData[vis.valueType] : 0;
-            return [
-                vis.values(value),
-                vis.dimensions(v.dimension)
-            ];
+            if (value !== 0) {
+                return [
+                    vis.values(value),
+                    vis.dimensions(v.dimension)
+                ];
+            } else {
+                return [];
+            }
         });
         var yearData = _.where(vis.data[0].values, {
             year: plotYear
@@ -312,6 +316,8 @@ Radar.prototype.updateVis = function() {
                 vis.dimensions(vis.data[0].dimension)
             ]);
         }
+
+        yearLineData = yearLineData.filter(function(v){return (v.length > 0);});
 
         vis.svg.append("g")
             .attr("class", "radar-plot-line")
