@@ -71,7 +71,8 @@ Stacked.prototype.initVis = function() {
     };
 
     vis.getFullSubcategoryName = function(k){
-        var names = {"APPAREL":"Apparel",
+        var names = {"all": "All",
+                    "APPAREL":"Apparel",
                     "ENTRTAIN":"Entertain.",
                     "FOODTOTL":"Food",
                     "HEALTH":"Healthcare",
@@ -86,7 +87,9 @@ Stacked.prototype.initVis = function() {
 
     vis.selectSubCatagory = function(c){
         if (vis.subcategory == c){vis.subcategory = 'all'}
-                else {vis.subcategory = c}
+                else {
+                    vis.subcategory = c;
+                }
                 vis.wrangleData()};
 
 
@@ -333,6 +336,8 @@ Stacked.prototype.initVis = function() {
 Stacked.prototype.wrangleData = function() {
     var vis = this;
 
+    $('.area-chart-nav-li').removeClass("active");
+    $('#area-chart-nav-'+vis.subcategory).toggleClass("active");
 
     if (vis.inFilteredView()){
         vis.x.range([0, vis.areachart.width - vis.rightLegend.width - 25]);
@@ -725,16 +730,13 @@ Stacked.prototype.updateVis = function() {
         .text(function(d){ return vis.getFullSubcategoryName(d); });
 
     var bottemnavbar = d3.select(".area-chart-nav").selectAll('li')
-        .data(vis.subcategories)
-        .enter().append("li").append("a").attr("xlink:href","#").attr("onclick",function(d){return 'areachart.selectSubCatagory("' + d +'")'})
+        .data((['all'].concat(vis.subcategories)))
+        .enter().append("li")
+        .attr("id",function(d){return "area-chart-nav-" + d})
+        .attr("class",function(d){return "area-chart-nav-li"})
+        .append("a").attr("xlink:href","#")
+        .attr("onclick",function(d){return 'areachart.selectSubCatagory("' + d +'")'})
         .html(function(d){return('<div class="square" style="background-color:' + vis.subsubcategoryColorscale(d) + '"></div> ' + vis.getFullSubcategoryName(d))});
-
-
-        //.append("div").attr("class","square").style("background-color", function(d){return vis.subsubcategoryColorscale(d);})
-        //.text(function(d) { return  vis.getFullSubcategoryName(d); });
-    
-
-
 
 
     // Call axis functions with the new domain
