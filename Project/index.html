@@ -138,8 +138,10 @@
                 <h2 class="vis-title text-center">The Money Tree</h2>
                 <div class="row">
                     <div class="col-sm-4">
-                        <div class="tree-demo-picker"></div>
-                        <div class="tree-char-picker"></div>
+                        <div id="fixed-tree-controls">
+                            <div class="tree-demo-picker"></div>
+                            <div class="tree-char-picker"></div>
+                        </div>
                     </div>
                     <div class="col-sm-4">
                         <h4>Reading the tree</h4>
@@ -192,16 +194,19 @@
                     <% } %>
         </div>
     </script>
-    <div class="hidden story" id="getting-old" data-demographic="LB04" data-item="HOUSING" data-value-type="adjustedValue" data-year-from="2004" data-year-to="2014">
+    <div class="hidden story" data-section="radar" data-demographic="LB04" data-item="HOUSING" data-value-type="adjustedValue" data-year-from="2004" data-year-to="2014">
         <h3>This Old House</h3>
-        <p>In 2014, older households (those with a reference person 55 years and older) made up 41.5 percent of the
-            <abbr title="Consumer Expenditure">CE</abbr> sample, compared with 37.5 percent in 2009 and 34.6 percent in 2004, reflecting the aging of the U.S. population.</p>
+        <p>In 2014, older households (those with a reference person 55 years and older) made up 41.5 percent of the <abbr title="Consumer Expenditure">CE</abbr> sample, compared with 37.5 percent in 2009 and 34.6 percent in 2004, reflecting the aging of the U.S. population.</p>
         <p>Housing was the greatest expense in dollar terms ($16,219) and as a share of annual expenditures (32.9 percent) for older households. The statistically significant decline in dollar expenditure reflects the decline in mortgage debt among (aging) households.</p>
     </div>
-    <div class="hidden story" id="meat" data-demographic="LB08" data-item="BEEF" data-value-type="adjustedValue" data-year-from="2004" data-year-to="2014">
+    <div class="hidden story" data-section="radar" data-demographic="LB08" data-item="BEEF" data-value-type="adjustedValue" data-year-from="2004" data-year-to="2014">
         <h3>Where's The Beef? (and Pork)</h3>
         <p>Looking at the data for the last ten years, there is a marked decrease in the amount of money spent on <a class="filter-link selected">beef</a> and <a class="filter-link">pork</a>, and generally on meats. What could it mean? The consumer price index does not suggest that meat got more affordable; are we making healthier choices?</p>
     </div>
+    <div class="hidden story tree" data-section="tree" data-demographic="LB01" data-characteristic="04" data-year-from="1987" data-year-to="1993">
+        <h3>Middle Class, Empty Glass</h3>
+        <p>In 1993, the middle class cut their spending by almost 50% on alcohol compared to 1987. They also spent less on entertainment, though recreational costs remained relatively cheap compared to increasing costs in healthcare and education. Income was also flat between the two years. The early 90's was not kind to the middle class.</p>
+        <p>Click <a class="filter-link" data-section="tree" data-characteristic="06">here</a> to see how the top 20% was doing over the same time period.</p>
+    </div>
 </body>
-
 </html>

@@ -41,9 +41,7 @@ function updateStories() {
     });
 
     _.defer(function() {
-
         $(".stories").find(".story-link").first().click();
-
     });
 }
 
@@ -65,6 +63,9 @@ var wrangleAll = function wrangleAll(e){
 
 $(function() {
     $('.filtering-nav').scrollToFixed();
+    $('#fixed-tree-controls').scrollToFixed({
+        marginTop: 233
+    });
 
     // Handle "scrollto" anchors to force the document to go in the right spot
     $("body").on("click", ".scrollto", function(e) {
