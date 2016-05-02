@@ -1,4 +1,7 @@
 /* Area Chart */
+.layer-cake {
+  margin-top: 80px;
+}
 
 .vis-stacked .axis path,
 .vis-stacked .axis line {
@@ -21,7 +24,7 @@
 }
 .area:hover, .rightLegend:hover {
   stroke: #FFFF00;
-  stroke-width: 1; 
+  stroke-width: 1;
   opacity: 1;
 }
 
