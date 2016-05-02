@@ -84,6 +84,11 @@ Stacked.prototype.initVis = function() {
             else {return k;}
     };
 
+    vis.selectSubCatagory = function(c){
+        if (vis.subcategory == c){vis.subcategory = 'all'}
+                else {vis.subcategory = c}
+                vis.wrangleData()};
+
 
     var dataItems = d3.keys(vis.data);
     vis.alldataItems = dataItems;
@@ -718,6 +723,19 @@ Stacked.prototype.updateVis = function() {
         .attr("y", vis.legend_y + 15)
         .style("font-size", 12)
         .text(function(d){ return vis.getFullSubcategoryName(d); });
+
+    var bottemnavbar = d3.select(".area-chart-nav").selectAll('li')
+        .data(vis.subcategories)
+        .enter().append("li").append("a").attr("xlink:href","#").attr("onclick",function(d){return 'areachart.selectSubCatagory("' + d +'")'})
+        .html(function(d){return('<div class="square" style="background-color:' + vis.subsubcategoryColorscale(d) + '"></div> ' + vis.getFullSubcategoryName(d))});
+
+
+        //.append("div").attr("class","square").style("background-color", function(d){return vis.subsubcategoryColorscale(d);})
+        //.text(function(d) { return  vis.getFullSubcategoryName(d); });
+    
+
+
+
 
     // Call axis functions with the new domain
     vis.svg.select(".x-axis").transition().duration(duration).delay(delay).call(vis.xAxis);

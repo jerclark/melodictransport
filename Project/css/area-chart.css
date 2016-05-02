@@ -22,10 +22,7 @@
 .rightLegend{
   opacity: 0.8;
 }
-/*.area:hover, .rightLegend:hover{
-  stroke: #FFFF00;
-  opacity: 1;
-}*/
+
 
 .brush .extent {
   stroke: #fff;
@@ -33,10 +30,9 @@
   shape-rendering: crispEdges;
 }
 
-.active{
-    fill: yellow;
+path.active, path.active:hover{
     stroke: #FFFF00;
-    stroke-width: 3;
+    stroke-width: 2;
     opacity: 1;
   }
 
@@ -44,4 +40,16 @@
 
  font-size: 11px;
 
+}
+
+.square {
+  display: inline-block;
+  border-width: 1px;
+  border-style: solid;
+  height: 15px;
+  vertical-align: top;
+  width: 15px;
+  *display: inline;
+  left: 5px;
+  top: 5px;
 }
