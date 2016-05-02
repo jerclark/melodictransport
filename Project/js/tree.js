@@ -68,7 +68,7 @@ TreePlot.prototype.wrangleData = function(){
   var allItemCPIData = ds.cpiValues("CU0000SA0");
   var expenditureList = ds.expenditures();
   var expenditureData = ds.query(expenditureCriteria);
-  var itemsToOmit = ["TOTALEXP", "CASHCONT", "INSPENSN", "READING"];
+  var itemsToOmit = ["TOTALEXP", "CASHCONT", "INSPENSN", "READING", "MISC"];
   var plotData = vis.plotData = [];
   _.each(vis.years, function(_year){
     var yearData = {chartTitle: _year, chartData: []};
@@ -179,10 +179,6 @@ Tree.prototype.initVis = function() {
    * Ground
    * **********/
   vis.ground = (height);
-  //vis.svg.append("path")
-  //  .datum([[0, vis.ground], [width, vis.ground]])
-  //  .attr("id", "ground-line")
-  //  .attr("d", d3.svg.line());
 
   vis.svg.append("ellipse")
     .attr("id", "ground")
@@ -190,6 +186,13 @@ Tree.prototype.initVis = function() {
     .attr("cy", height)
     .attr("rx", 90)
     .attr("ry", 35);
+
+  vis.svg.append("text")
+    .attr("id", "ground-year")
+    .attr("x", width/2)
+    .attr("dy", vis.ground + 20)
+    .attr("text-anchor", "middle")
+    .text(vis.data[0].year);
 
 
 
@@ -206,9 +209,9 @@ Tree.prototype.initVis = function() {
 
   vis.branchLength = d3.scale.linear();
 
-  vis.flower = d3.scale.log().domain([1,20]).range([3,15]);
+  vis.flower = d3.scale.linear().domain([1,100]).range([0,30]).clamp(true);
 
-  vis.chlorophyll = d3.scale.log().domain([-1,-20]).range([0,1]);
+  vis.chlorophyll = d3.scale.linear().domain([-1,-200]).range([0,1]).clamp(true);
 
 
   /************
@@ -364,12 +367,13 @@ Tree.prototype.updateVis = function(){
       return vis.chlorophyll(cpiDelta);
     })
     .on("mouseenter", function(e){
-      var itemText = e.itemText;
-      var percentOfIncomeSpent = "Spent " + Math.round(e.valuePercentIncome) + "% of income";
       var _cpiPace = ((e.allItemCPIValue - e.cpi) < 0) ? "FASTER" : "SLOWER";
       var _cpiDelta = ((Math.abs(e.allItemCPIValue - e.cpi) / e.allItemCPIValue) * 100).toFixed(1);
-      var cpiTracking = "Cost increasing " + _cpiPace + " than inflation by " + _cpiDelta + "%";
-      vis.tip.show(e.itemText + "<br>" + percentOfIncomeSpent + "<br>" + cpiTracking);
+      var tipText = e.itemText + "<br>";
+      tipText += "Spent: $" + Math.round(e.adjustedValue) + "(inflation adjusted)";
+      tipText += "; " + e.valuePercentIncome.toFixed(3) + "% of income<br> ";
+      tipText += "Cost increasing " + _cpiPace + " than inflation by " + _cpiDelta + "%";
+      vis.tip.show(tipText);
     })
     .on("mouseout", function(e){
       vis.tip.hide();
@@ -377,7 +381,7 @@ Tree.prototype.updateVis = function(){
     .call(vis.tip);
 
 
-  //Add Flowers (pink font awesome icons)
+  //Add Flowers (pink font-awesome icons)
   branches
     .append("text")
     .attr("class", "flower-label")

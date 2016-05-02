@@ -15,9 +15,9 @@ CHGASLI	CHGASLI	Net change in total assets and liabilities	0	T	13800
 CHGASLI	CHGASSET	Net change in total assets	1	T	13900	
 CHGASLI	CHGLIAB	Net change in total liabilities	1	T	14000	
 CONSUNIT	CONSUNIT	Number of consumer units (in thousands)	0	T	14500	
-EDUCATN	EDUCATN	Education	0	T	11600	SAE
+EDUCATN	EDUCATN	Education	0	T	11600	SEEB01
 ENTRTAIN	ENTEROTH	Entertainment: other supplies, equip., & services	1	T	11300	
-ENTRTAIN	ENTRTAIN	Entertainment	0	T	10900	
+ENTRTAIN	ENTRTAIN	Entertainment	0	T	10900	SAR
 ENTRTAIN	FEESADM	Entertainment: fees and admissions	1	T	11000	
 ENTRTAIN	PETS	Pets	2	T	11230	
 ENTRTAIN	PETSPLAY	Pets, toys, and playground equipment	1	T	11200	
@@ -51,7 +51,7 @@ FOODTOTL	PROCFRUT	Processed fruits	3	T	4400
 FOODTOTL	PROCVEG	Processed vegetables	3	T	4500	
 FOODTOTL	SWEETS	Sugar and other sweets	3	T	4700	
 HEALTH	DRUGS	Drugs: Prescription and nonprescription	1	T	10700	
-HEALTH	HEALTH	Healthcare	0	T	10400	
+HEALTH	HEALTH	Healthcare	0	T	10400	SAM
 HEALTH	HLTHINSR	Health insurance	1	T	10500	
 HEALTH	MEDSERVS	Medical services	1	T	10600	
 HEALTH	MEDSUPPL	Medical supplies	1	T	10800	

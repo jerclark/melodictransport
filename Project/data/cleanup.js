@@ -90,6 +90,7 @@ function json(filename, cb) {
         .defer(tsv, "cu/cu.data.2.Summaries.txt")
         .defer(tsv, "cu/cu.data.11.USFoodBeverage.txt")
         .defer(tsv, "cu/cu.data.16.USRecreation.txt")
+        .defer(tsv, "cu/cu.data.17.USEducationAndCommunication.txt")
         .defer(tsv, "cu/cu.data.18.USOtherGoodsAndServices.txt")
         .defer(tsv, "cu/cu.data.1.AllItems.txt")
 
@@ -106,6 +107,7 @@ function json(filename, cb) {
         cpiSummaryValues,
         cpiFoodBevValues,
         cpiRecreationValues,
+        cpiEducationValues,
         cpiOtherValues,
         cpiAllItemsValues,
 
@@ -172,7 +174,7 @@ function json(filename, cb) {
         });
 
 
-        var cpiValues = _.union(cpiSummaryValues, cpiFoodBevValues,cpiRecreationValues, cpiOtherValues, cpiAllItemsValues);
+        var cpiValues = _.union(cpiSummaryValues, cpiFoodBevValues,cpiRecreationValues, cpiEducationValues, cpiOtherValues, cpiAllItemsValues);
         output.cpiValues = cpiValues
           .filter(function(v){
               return (parseInt(v.year, 10) >= 1984) && (v.series_id.indexOf("0000") >= 0) && ((v.period == "M12" || v.period == "S02"));
