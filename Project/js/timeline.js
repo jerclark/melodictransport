@@ -134,7 +134,7 @@ Timeline.prototype.drawMarkers = function(yearFrom, yearTo, eventType) {
     eventMarkers
         .append("text")
         .attr("transform", function(d, idx) {
-            return translate(10, heights[idx % 4]);
+            return translate(5, heights[idx % 4]);
         })
         .text(function(d) {
             return d.label.trim();

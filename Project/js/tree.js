@@ -188,8 +188,8 @@ Tree.prototype.initVis = function() {
     .attr("id", "ground")
     .attr("cx", width/2)
     .attr("cy", height)
-    .attr("rx", width/2)
-    .attr("ry", 25);
+    .attr("rx", 90)
+    .attr("ry", 35);
 
 
 

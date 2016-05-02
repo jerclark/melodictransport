@@ -13,10 +13,15 @@
     "toYear": 2000,
     "description": "Collapse of a technology bubble"
 }, {
-    "label": "Economic effects from 9/11",
+    "label": "9/11 Stock Crash",
     "fromYear": 2001,
     "toYear": 2001,
     "description": "The September 11 attacks caused global stock markets to drop sharply. The attacks themselves caused approximately $40 billion in insurance losses, making it one of the largest insured events ever."
+}, {
+    "label": "GW. Bush 10Y 350B tax-cut",
+    "fromYear": 2001,
+    "toYear": 2001,
+    "description": ""
 }, {
     "label": "Stock market downturn of 2002",
     "fromYear": 2002,
@@ -28,7 +33,7 @@
     "toYear": 2009,
     "description": "Till June 2009, the Dow Jones Industrial Average, Nasdaq Composite and S&P 500 all experienced declines of greater than 20% from their peaks in late 2007."
 }, {
-    "label": "Financial Crisis 2007-2008 (Housing crash)",
+    "label": "Housing Bubble and Bailout",
     "fromYear": 2008,
     "toYear": 2008,
     "description": "On September 16, 2008, failures of large financial institutions in the United States, due primarily to exposure of securities of packaged subprime loans and credit default swaps issued to insure these loans and their issuers, rapidly devolved into a global crisis resulting in a number of bank failures in Europe and sharp reductions in the value of equities (stock) and commodities worldwide. The failure of banks in Iceland resulted in a devaluation of the Icelandic króna and threatened the government with bankruptcy. Iceland was able to secure an emergency loan from the IMF in November. Later on, U.S. President George W. Bush signs the Emergency Economic Stabilization Act into law, creating a Troubled Asset Relief Program (TARP) to purchase failing bank assets. Had disastrous affects on the world economy along with world trade."
