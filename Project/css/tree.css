@@ -11,23 +11,17 @@
 
 }
 
-#ground-line {
-    fill: none;
-    stroke: lightgreen;
-    stroke-width: 2px;
-}
-
-#ground {
+.ground {
     fill: #6B2F06;
 }
 
-#ground-year {
+.ground-year {
     fill: white;
     font-size: 20px;
+    font-family: Lato, sans-serif;
 }
 
-
-#trunk-line {
+.trunk-line {
     fill: none;
     stroke: brown;
     stroke-width: 10px;

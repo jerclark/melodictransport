@@ -62,16 +62,17 @@ section.intro {
     margin-bottom: 40px;
 }
 
-.radar-charts {
-    padding-top: 40px;
-}
-
 .vis-container {
     background-image: url("../img/landscape-307325.png");
     background-position: bottom;
     background-size: contain;
     background-repeat: no-repeat;
 }
+
+.vis-title {
+    margin-bottom: 40px;
+}
+
 
 // Allow svg elements inside the vis container to "pop out" of their containing elements
 .vis-container svg:not(:root), .container svg:not(:root), #timeline svg {

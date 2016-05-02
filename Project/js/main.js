@@ -4,6 +4,10 @@ var timeline;
 var radarChart;
 var treePlot;
 
+var SCROLL_TO_TREE = 3235;
+var SCROLL_TO_CAKE = 2116;
+var SCROLL_TO_RADAR = 1261;
+
 // In SM- mode which we should use everywhere (don't want the layout
 // to ever break vertically eg. become responsive.)
 var COLUMN_WIDTH = 90;
@@ -61,9 +65,12 @@ var wrangleAll = function wrangleAll(e){
 
 $(function() {
     $('.filtering-nav').scrollToFixed();
-    // Story picker
-    // TODO MOVE
 
+    // Handle "scrollto" anchors to force the document to go in the right spot
+    $("body").on("click", ".scrollto", function(e) {
+        e.preventDefault();
+        $("body").scrollTop(parseInt($(e.target).data("position"), 10));
+    });
 });
 
 (function(cs171) {
@@ -118,7 +125,7 @@ $(function() {
 
         timeline = new Timeline("#timeline", years, {
             width: FULL_WIDTH,
-            height: 160,
+            height: 150,
             margin: { top: 0, right: 0, bottom: 30, left: 0 },
             events: ds._datasets.events,
         });
@@ -200,9 +207,7 @@ $(function() {
         };
 
         areachart = new Stacked("#stacked-area-chart", expends, areachartProperties);
-
     }
-
 
     function showRadar() {
         var radarDemoPicker = new DemographicPicker("radar-demo-picker");

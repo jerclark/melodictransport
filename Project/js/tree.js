@@ -71,7 +71,7 @@ TreePlot.prototype.wrangleData = function(){
   var itemsToOmit = ["TOTALEXP", "CASHCONT", "INSPENSN", "READING", "MISC"];
   var plotData = vis.plotData = [];
   _.each(vis.years, function(_year){
-    var yearData = {chartTitle: _year, chartData: []};
+    var yearData = {chartTitle: null, chartData: []};
     _.values(expenditureData).forEach(function(expendData){
       if (_.contains(itemsToOmit, expendData.name)) {
         return;
@@ -181,14 +181,14 @@ Tree.prototype.initVis = function() {
   vis.ground = (height);
 
   vis.svg.append("ellipse")
-    .attr("id", "ground")
+    .attr("class", "ground")
     .attr("cx", width/2)
     .attr("cy", height)
     .attr("rx", 90)
     .attr("ry", 35);
 
   vis.svg.append("text")
-    .attr("id", "ground-year")
+    .attr("class", "ground-year")
     .attr("x", width/2)
     .attr("dy", vis.ground + 20)
     .attr("text-anchor", "middle")
@@ -261,7 +261,7 @@ Tree.prototype.updateVis = function(){
 
   vis.trunk.append("path")
     .datum([[vis.trunkX, vis.ground], [vis.trunkX, trunkTop]])
-    .attr("id", "trunk-line")
+    .attr("class", "trunk-line")
     .attr("d", d3.svg.line());
 
   vis.trunk
