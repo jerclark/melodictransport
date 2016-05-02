@@ -240,11 +240,9 @@ Stacked.prototype.initVis = function() {
         .style("opacity", .75);
 
 
+    vis.rightSlideLegendGroup = vis.svg.append('g');
 
-
-    vis.rightLegendBox = vis.svg.append('g');
-
-    vis.rightLegendBox
+    vis.rightSlideLegendGroup
         .append('rect')
         .attr("id", "legendBgBoxHead")
         .attr("class","rightLegendBox")
@@ -255,9 +253,18 @@ Stacked.prototype.initVis = function() {
         .attr("width", vis.rightLegend.width - 100)
         .attr("height", 50)
         .style("stroke", "black")
-        .style("fill","red")
+        .style("fill","#fff")
 
-    vis.rightLegendBox
+    vis.rightSlideLegendGroup
+        .append('text')
+        .attr("class","rightLegendBox")
+        .attr("id", "RightLegendHeader")
+        .attr("x", 2000)
+        .attr("dy", "-0.4em")
+        .attr("dx", "0.4em")
+        .text("SubCatagory");
+
+    vis.rightSlideLegendGroup
         .append('rect')
         .attr("id", "RightLegendBgBox")
         .attr("class","rightLegendBox")
@@ -511,48 +518,53 @@ Stacked.prototype.updateVis = function() {
     //console.log(legendHeight);
 
     if(inFilteredView()){
-        vis.rightLegendBox.transition().duration(duration).delay(delay)
+        vis.rightSlideLegendGroup.transition().duration(duration).delay(delay)
             .attr("transform", "translate(" + (-2000 + (vis.areachart.width - vis.rightLegend.width - 1)) + ",0)");
 
-        vis.rightLegendBox.selectAll(".rightLegendBox")
+        vis.rightSlideLegendGroup.selectAll(".rightLegendBox")
             .attr("transform", "translate(0," + legendY +")");
 
-        vis.rightLegendBox.selectAll("#RightLegendBgBox")
+        vis.rightSlideLegendGroup.selectAll("#RightLegendBgBox")
             .attr("height", (vis.areachart.height - legendY + 2));
 
+        vis.rightSlideLegendGroup.select("#RightLegendHeader")
+            .text(getFullSubcategoryName(vis.subcategory));
+
     }else {
-        vis.rightLegendBox.transition().duration(duration).delay(delay)
-            .attr("transform", "translate(0,0)");
+        vis.rightSlideLegendGroup.transition().duration(duration).delay(delay)
+            .attr("transform", "translate(0,0)"); 
+
+        vis.svg.selectAll(".chartDataLabel").transition().duration(duration).delay(delay).remove();
+        vis.svg.selectAll(".rightLegendArea").transition().duration(duration).delay(delay).remove();
+
     }
   
 
-
-    var Legendlayers = vis.rightLegendBox.selectAll(".rightLegend")
+    var Legendlayers = vis.rightSlideLegendGroup.selectAll(".rightLegendArea")
         .data(vis.legendData);
-
-    Legendlayers
-        .exit()
-        .transition().duration(duration).delay(delay)
-        .attr("d", function(d) {return vis.legendAreaExit(d.values);})
-        .remove(); 
 
     if(inFilteredView()){
 
     Legendlayers.enter().append("path")
-        .attr("class", "rightLegend")
+        .attr("class", "rightLegendArea")
         .style("fill", function(d) {
             if (vis.subcategory == 'all'){return vis.subsubcategoryColorscale(d.subcategory);}
             else {return vis.subColorScale(vis.subsubcategoryColorscale(d.subcategory))(d.name);}
         })
         .attr("d", function(d) {return vis.rightLegend.area(d.values);}); 
 
-    };
+    } else {
+    
+    Legendlayers.exit().remove(); 
+
+    }
 
     //vis.svg.selectAll(".chartDataLabel").remove()
 
-    var DataLabels = vis.rightLegendBox.selectAll(".chartDataLabel")
+    var DataLabels = vis.rightSlideLegendGroup.selectAll(".chartDataLabel")
         .data(vis.legendData)
 
+    console.log(vis.legendData);
     if(inFilteredView()){
     DataLabels
         .enter().append('text')
