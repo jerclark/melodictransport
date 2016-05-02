@@ -115,7 +115,9 @@ Stacked.prototype.initVis = function() {
         years.map(function(y){
             var found_y = false;
             vis.data[name].values.map(function(v){
-                if (y == v.year){found_y = true;}
+                if (y == v.year){found_y = true;
+                    v.valuePercentIncome = v.valuePercentIncome/100; 
+                }
                 })
 
             if (found_y == false){
@@ -306,7 +308,8 @@ Stacked.prototype.initVis = function() {
         .style("stroke", "black")
         .style("fill","#fff");
 
-    var bottemnavbar = d3.select(".area-chart-nav").selectAll('li')
+    // Bottem sub-catagory legend 
+    vis.bottemnavbar = d3.select(".area-chart-nav").selectAll('li')
         .data((['all'].concat(vis.subcategories)))
         .enter().append("li")
         .attr("id",function(d){return "area-chart-nav-" + d})
@@ -564,7 +567,7 @@ Stacked.prototype.updateVis = function() {
             .attr("height", (vis.areachart.height - legendY + 2));
 
         vis.rightSlideLegendGroup.select("#RightLegendHeader")
-            .text(vis.getFullSubcategoryName(vis.subcategory));
+            .text(" " + vis.getFullSubcategoryName(vis.subcategory) + " Subcategories");
 
         vis.alreadyinFilteredView = true; 
 
@@ -626,25 +629,29 @@ Stacked.prototype.updateVis = function() {
 
 
     var highlight_layer = function(d){
-        //vis.svg.select("#layer-"+d).style("stroke", "yellow").style("stroke-width", 3);
-        vis.svg.select("#layer-"+d).classed('active',true); 
-        //vis.svg.select("#rightLegend-"+d).style("stroke", "yellow").style("stroke-width", 3);
-        vis.svg.select("#rightLegend-"+d).classed('active',true); 
+        vis.svg.select("#layer-"+d).classed('highlight',true); 
+        vis.svg.select("#rightLegend-"+d).classed('highlight',true); 
     }
+
 
     var unhighlight_layer = function(d){
-        //vis.svg.select("#layer-"+d).style("stroke", "none").style("stroke-width", 0);
-        //vis.svg.select("#rightLegend-"+d).style("stroke", "none").style("stroke-width", 0);
-        vis.svg.select("#layer-"+d).classed('active',false);
-        vis.svg.select("#rightLegend-"+d).classed('active',false); 
+        vis.svg.select("#layer-"+d).classed('highlight',false);
+        vis.svg.select("#rightLegend-"+d).classed('highlight',false); 
 
     }
+
+    var select_layer = function(d){
+        vis.svg.select("#rightLegend-"+d).classed('selected',true);
+        }; 
+
+    var unselect_layer = function(d){
+        vis.svg.select("#rightLegend-"+d).classed('selected',false);
+        }; 
 
     // highlight optiones
     vis.svg.selectAll(".area, .rightLegend")
         .on("mouseover", function(d)
             {vis.svg.select("#category-name").text(d.subcategory + ": " + d.name);
-            if (!vis.inFilteredView()){vis.svg.select("#"+d.subcategory).style("fill", highlight_color);}
             highlight_layer(d.item);
          
             });
@@ -652,9 +659,7 @@ Stacked.prototype.updateVis = function() {
     vis.svg.selectAll(".area, .rightLegend")
         .on("mouseout",function(d)
             {vis.svg.select("#category-name").text("");
-            if (!vis.inFilteredView()){vis.svg.select("#"+d.subcategory).style("fill", "none");}
-              if(!vis.inSingleView()){unhighlight_layer(d.item);}
-            });
+            unhighlight_layer(d.item);});
 
    vis.svg.selectAll(".area, .rightLegend")
         .on("dblclick",function(d)
@@ -663,11 +668,13 @@ Stacked.prototype.updateVis = function() {
 
                     vis.itemSelector = 'none'; 
                     unhighlight_layer(d.item);
+                    unselect_layer(d.item);
+
                   
                 } else if (vis.inFilteredView()) {
 
                     vis.itemSelector = d.item; 
-                    highlight_layer(d.item);
+                    select_layer(d.item);
 
 
                 }

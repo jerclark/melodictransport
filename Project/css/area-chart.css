@@ -30,7 +30,15 @@
   shape-rendering: crispEdges;
 }
 
-path.active, path.active:hover{
+path.highlight, path.highlight:hover{
+    stroke: #FFFF00;
+    stroke-width: 2;
+    opacity: 1;
+  }
+
+path.selected, path.selected:hover{
+    fill: yellow;
+    font-weight: bold;
     stroke: #FFFF00;
     stroke-width: 2;
     opacity: 1;
