@@ -86,6 +86,7 @@ Stacked.prototype.initVis = function() {
     };
 
     vis.selectSubCatagory = function(c){
+            vis.itemSelector = 'none'; 
         if (vis.subcategory == c){vis.subcategory = 'all'}
                 else {
                     vis.subcategory = c;
@@ -545,6 +546,13 @@ Stacked.prototype.updateVis = function() {
 
 
     if(vis.inFilteredView() && !vis.inSingleView() ){
+
+        if(vis.alreadyinFilteredView){
+            vis.rightSlideLegendGroup.selectAll(".rightLegend").remove();
+             vis.svg.selectAll(".chartDataLabel").remove();
+             vis.svg.selectAll(".rightLegendArea").remove();
+        }
+
         // Slide in animation 
         vis.rightSlideLegendGroup.transition().duration(duration).delay(delay)
             .attr("transform", "translate(" + (-2000 + (vis.areachart.width - vis.rightLegend.width - 1)) + ",0)");
@@ -557,6 +565,9 @@ Stacked.prototype.updateVis = function() {
 
         vis.rightSlideLegendGroup.select("#RightLegendHeader")
             .text(vis.getFullSubcategoryName(vis.subcategory));
+
+        vis.alreadyinFilteredView = true; 
+
     } else if (vis.inSingleView()){
 
     }  else {
@@ -566,6 +577,8 @@ Stacked.prototype.updateVis = function() {
 
         vis.svg.selectAll(".chartDataLabel").transition().duration(duration).delay(delay).remove();
         vis.svg.selectAll(".rightLegendArea").transition().duration(duration).delay(delay).remove();
+
+        vis.alreadyinFilteredView = false; 
 
     }
   
