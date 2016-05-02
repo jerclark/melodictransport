@@ -64,7 +64,7 @@ var wrangleAll = function wrangleAll(e){
 $(function() {
     $('.filtering-nav').scrollToFixed();
     $('#fixed-tree-controls').scrollToFixed({
-        marginTop: 233
+        marginTop: 245
     });
 
     // Handle "scrollto" anchors to force the document to go in the right spot
