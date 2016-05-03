@@ -122,31 +122,6 @@
             </div>
             <hr class="style17">
             <div class="layer-cake">
-                <nav class="navbar navbar-default">
-                
-                <h2 class="text-center">Expenditure Layer Cake</h2>
-
-
-                  <div class="container-fluid">
-                      <ul class="nav navbar-nav area-chart-nav">
-                        <li class="area-chart-nav-li active" id="area-chart-nav-all">
-                            <a href="javascript:void(0)" onclick="areachart.selectSubCatagory('all')" ><div class="square">
-                        </div> All<span class="sr-only"></span></a></li>
-                  
-                      </ul>
-
-
-                  </div>
-                </nav>
-
-                <label>Show values as</label>
-                <select class="form-control" id="value-type-area" onchange="wrangleAll()">
-                    <option value="adjustedValue">Inflation Adjusted Dollars</option>
-                    <option value="value">Raw dollars</option>
-                    <option value="valuePercentIncome">Percent of Income</option>
-                    <option value="percent">Percentage</option>
-                </select>
-
                 <div class="row">
                     <div class="col-sm-3">
                         <label>Show values as</label>
@@ -165,11 +140,20 @@
                         </div>
                     </div>
                     <div class="col-sm-9">
+                        <h2 class="text-center">Expenditure Layer Cake</h2>
+                        <nav class="navbar navbar-default">
+                            <ul class="nav navbar-nav area-chart-nav">
+                                <li class="area-chart-nav-li active" id="area-chart-nav-all">
+                                    <a href="javascript:void(0)" onclick="areachart.selectSubCatagory('all')">
+                                        <div class="square">
+                                        </div> All<span class="sr-only"></span></a>
+                                </li>
+                            </ul>
+                        </nav>
                         <div class="household">
                             <div class="vis-stacked">
                                 <div id="stacked-area-chart"></div>
                             </div>
-
                         </div>
                     </div>
                 </div>

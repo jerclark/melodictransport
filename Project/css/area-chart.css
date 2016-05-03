@@ -10,7 +10,17 @@
 
 .layer-cake .navbar-default .navbar-nav a {
   font-size: 12px;
+  padding: 10px !important;
 }
+
+.area-chart-nav {
+  margin-left: 75px;
+}
+
+.layer-cake h2 {
+  margin-left: 75px;
+}
+
 .layer-cake .navbar-default .navbar-nav>.active>a,
 .layer-cake .navbar-default .navbar-nav>.active>a:focus,
 .layer-cake .navbar-default .navbar-nav>.active>a:hover {
