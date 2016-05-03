@@ -30,6 +30,9 @@ Stories = (function() {
                 .click(function(e) {
                     e.preventDefault();
 
+                    // "Close" all other stories
+                    $('.current-story').html("");
+
                     var story = $(el);
                     var demographic = story.data('demographic');
                     var characteristic = story.data('characteristic');
