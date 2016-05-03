@@ -58,6 +58,15 @@ There are links to project book and screencast on the website, and files can be 
 [http://melodictransport.uppadada.com/cs171/project/screencast.mp4](http://melodictransport.uppadada.com/cs171/project/screencast.mp4)
 [http://melodictransport.uppadada.com/cs171/project/process_book.pdf](http://melodictransport.uppadada.com/cs171/project/process_book.pdf)
 
+We hope the site is relatively intuative to use, but here's the basic idea:
+
+* Read the overview
+* Browse to a visualization section
+* Click on one of our story links to load a story
+* Adjust the timeline to see different time slices
+* Adjust the controls to continue exploring!
+
 ###Databrowser
 We used a homegrown data browser (Thanks, Bruno!) to help us analyze the vast amounts of data in the Bureau of Labor Statistics Consumer Expenditure survey. You can find it at:
 [http://melodictransport.uppadada.com/cs171/databrowser/index.html](http://melodictransport.uppadada.com/cs171/databrowser/index.html)
+
