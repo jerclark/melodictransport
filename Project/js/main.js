@@ -16,9 +16,7 @@ var COLUMN_WIDTH_HALF = COLUMN_WIDTH * 6;
 var COLUMN_WIDTH_FULL = COLUMN_WIDTH * 12;
 
 var wrangleAll = function wrangleAll(e){
-    console.time("wrangle radar");
-    radarChart.wrangleData();
-    console.timeEnd("wrangle radar");
+    radarChart.fetchData();
 
     console.time("wrangle Area");
     areachart.wrangleData();
