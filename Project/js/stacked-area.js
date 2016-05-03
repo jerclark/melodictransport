@@ -470,7 +470,7 @@ Stacked.prototype.wrangleData = function() {
                 })};}));
 
    
-    var TYPE = d3.select("#value-type").property("value");
+    var TYPE = d3.select("#value-type-area").property("value");
     var yAxisFormats = {adjustedValue : "$,.4s", value : "$,.4s",  percent : ",.2p", valuePercentIncome : ",.2p",};
     vis.yAxis.tickFormat(function(d) { return d3.format(yAxisFormats[TYPE])(d);});
 

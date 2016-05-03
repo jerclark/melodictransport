@@ -2,21 +2,6 @@ TreePlot = function(_parentElement, _options) {
   var vis = this;
   vis.parentElement = _parentElement;
 
-  //Create the grid layout with the controls, legend and the trees
-  // vis.container = d3.select(vis.parentElement).append("div")
-  //   .attr("class", "row");
-
-  // vis.controlDiv = vis.container
-  //   .append("div")
-  //   .attr("class", "row")
-  //   .attr("id", "tree-controls");
-
-  // vis.gridDiv = vis.container
-  //   .append("div")
-  //   .attr("class", "row")
-  //   .append("div")
-  //   .attr("class", "col-md-8")
-  //   .attr("id", "tree-grid");
 
   /************
    * CONTROLS
@@ -110,7 +95,7 @@ TreePlot.prototype.updatePlot = function(){
 
   var chartOptions = {
     width: 600,
-    height: 800,
+    height: 600,
     margin: {top: 40, right: 75, bottom: 40, left: 75}
   };
 

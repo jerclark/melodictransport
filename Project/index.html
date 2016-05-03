@@ -104,11 +104,10 @@
                     <div class="col-sm-4">
                         <div class="radar-filter">
                             <label>Show values as</label>
-                            <select class="form-control" id="value-type" onchange="wrangleAll()">
+                            <select class="form-control" id="value-type-radar" onchange="radarChart.wrangleData()">
                                 <option value="adjustedValue">Inflation Adjusted Dollars</option>
                                 <option value="value">Raw dollars</option>
                                 <option value="valuePercentIncome">Percent of Income</option>
-                                <option value="percent">Percentage</option>
                             </select>
                         </div>
                         <hr class="style17">
@@ -124,8 +123,24 @@
             <hr class="style17">
             <div class="layer-cake">
                 <h2 class="text-center">Expenditure Layer Cake</h2>
+                <label>Show values as</label>
+                <select class="form-control" id="value-type-area" onchange="wrangleAll()">
+                    <option value="adjustedValue">Inflation Adjusted Dollars</option>
+                    <option value="value">Raw dollars</option>
+                    <option value="valuePercentIncome">Percent of Income</option>
+                    <option value="percent">Percentage</option>
+                </select>
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-3">
+                        <hr class="style17">
+                        <div class="stories">
+                            <div class="current-story area"></div>
+                            <div class="story-picker area">
+                                <h4>Choose a story</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
                         <div class="household">
                             <div class="vis-stacked">
                                 <div id="stacked-area-chart"></div>
@@ -152,21 +167,21 @@
             <div class="tree-charts">
                 <h2 class="vis-title text-center">The Money Tree</h2>
                 <div class="row">
-                    <div class="col-sm-4">
-                        <div class="current-story tree"></div>
-                        <div class="story-picker tree">
-                            <h4>Choose a story</h4>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="row fixed-tree-row">
-                            <div id="fixed-tree-controls">
-                                <div class="tree-demo-picker"></div>
-                                <div class="tree-char-picker"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
+                    <!--<div class="col-sm-4">-->
+                        <!--<div class="current-story tree"></div>-->
+                        <!--<div class="story-picker tree">-->
+                            <!--<h4>Choose a story</h4>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div class="col-sm-4">-->
+                        <!--<div class="row fixed-tree-row">-->
+                            <!--<div id="fixed-tree-controls">-->
+                                <!--<div class="tree-demo-picker"></div>-->
+                                <!--<div class="tree-char-picker"></div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="col-sm-12">
                         <h4>Reading the tree</h4>
                         <ul class="unstyled">
                             <li>Tree <em>height</em> &rarr;Income earned</li>
@@ -182,7 +197,21 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-3">
+                        <div id="tree-controls-and-story" style="position:relative;min-height:600px;">
+                            <div id="tree-story-container">
+                                <div class="current-story tree"></div>
+                                <div class="story-picker tree">
+                                    <h4>Choose a story</h4>
+                                </div>
+                            </div>
+                            <div class="fixed-tree-controls" style="position:absolute;bottom:0px;">
+                                <div class="tree-demo-picker"></div>
+                                <div class="tree-char-picker"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
                         <div id="tree-grid">
                         </div>
                     </div>
@@ -223,6 +252,10 @@
     <div class="hidden story" data-section="radar" data-demographic="LB08" data-item="BEEF" data-value-type="adjustedValue" data-year-from="2004" data-year-to="2014">
         <h3>Where's The Beef? (and Pork)</h3>
         <p>Looking at the data for the last ten years, there is a marked decrease in the amount of money spent on <a class="filter-link selected">beef</a> and <a class="filter-link">pork</a>, and generally on meats. What could it mean? The consumer price index does not suggest that meat got more affordable; are we making healthier choices?</p>
+    </div>
+    <div class="hidden story" data-section="area" data-demographic="LB01" data-characteristic="04" data-year-from="1990" data-year-to="2010">
+        <h3>Stop, drop and roll</h3>
+        <p>Three major spikes in flooring consumption during the 1990's were followed by a decade of relatively low, flat consumption. One big spike peaked not long after the northridge earthquake...did it shake up the flooring market?</p>
     </div>
     <div class="hidden story" data-section="tree" data-demographic="LB01" data-characteristic="04" data-year-from="1987" data-year-to="1993">
         <h3>Middle Class, Empty Glass</h3>

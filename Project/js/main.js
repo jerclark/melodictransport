@@ -177,8 +177,8 @@ $(function() {
             .value();
 
         var areachartProperties = {
-            width: FULL_WIDTH,
-            height: 1000,
+            width: FULL_WIDTH * .75,
+            height: 650,
             margin: { top: 10, right: 10, bottom: 20, left: 10 }
         };
 
