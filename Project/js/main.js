@@ -46,8 +46,7 @@ $(function() {
     // Handle story change for area chart
     $("body").on("story-change", function(e, section, demographic, characteristic, item) {
         if (section === "area") {
-            areachart.itemSelector = item;
-            areachart.wrangleData();
+            areachart.selectItem(item);
         }
     });
 });
