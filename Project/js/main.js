@@ -179,7 +179,7 @@ $(function() {
         var areachartProperties = {
             width: FULL_WIDTH * .75,
             height: 650,
-            margin: { top: 10, right: 10, bottom: 20, left: 10 }
+            margin: { top: 10, right: 10, bottom: 20, left: 0 }
         };
 
         areachart = new Stacked("#stacked-area-chart", expends, areachartProperties);
