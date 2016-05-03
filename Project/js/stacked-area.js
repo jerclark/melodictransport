@@ -94,6 +94,32 @@ Stacked.prototype.initVis = function() {
                 }
                 vis.wrangleData()};
 
+    var alldataItems = {};
+
+    Object.keys(vis.data).map(function(name){
+        alldataItems[vis.data[name].item] = vis.data[name].subcategory; 
+    })
+
+    var highlight_layer = function(d){
+        vis.svg.select("#layer-"+d).classed('highlight',true);
+        vis.svg.select("#rightLegend-"+d).classed('highlight',true);
+    }
+
+   var select_layer = function(d){
+        vis.svg.select("#rightLegend-"+d).classed('selected',true);
+        };
+
+    vis.selectItem = function(c){
+        if(alldataItems.hasOwnProperty(c)){
+        vis.subcategory = alldataItems[c];
+        vis.wrangleData();
+        vis.itemSelector = c;
+        highlight_layer(c);
+        select_layer(c);
+        vis.wrangleData();}
+        
+    };
+
 
     var dataItems = d3.keys(vis.data);
     vis.alldataItems = dataItems;
