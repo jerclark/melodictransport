@@ -28,10 +28,9 @@ Stacked = function(_parentElement, _data, _properties){
 Stacked.prototype.initVis = function() {
     var vis = this;
 
-    vis.areachart = {margin: { top: 20, right: 100, bottom: 20, left: 75 }};
-    vis.legend =    {margin: { top: 0, right: 20, bottom: 10, left: 75 }};
+    vis.areachart = {margin: { top: 20, right: 100, bottom: 20, left: 25 }};
     vis.rightLegend = {
-                    width: 300,
+                    width: 250,
                     margin: { top: 0, right: 20, bottom: 20, left: 75 }};
 
     vis.margin = vis.properties.margin;
@@ -39,11 +38,11 @@ Stacked.prototype.initVis = function() {
     vis.width = vis.properties.width - vis.margin.left - vis.margin.right;
     vis.height = vis.properties.height - vis.margin.top - vis.margin.bottom;
 
-    vis.legend.area = 65;
-    vis.legend.height = vis.legend.area - vis.legend.margin.top - vis.legend.margin.bottom;
-    vis.legend.width = vis.width - vis.legend.margin.right - vis.legend.margin.left;
+    vis.areachart.height = vis.height - vis.areachart.margin.top - vis.areachart.margin.bottom - 65 ; 
+    vis.areachart.width = vis.width - vis.areachart.margin.left - vis.areachart.margin.right; 
 
-    vis.areachart.height = vis.height - vis.areachart.margin.top - vis.areachart.margin.bottom - vis.legend.height ;
+
+    vis.areachart.height = vis.height - vis.areachart.margin.top - vis.areachart.margin.bottom - 65;
     vis.areachart.width = vis.width - vis.areachart.margin.left - vis.areachart.margin.right;
 
 
@@ -55,7 +54,9 @@ Stacked.prototype.initVis = function() {
         };
 
     vis.clipName = function(n){
-        var limit = 42;
+
+        var limit = Math.round(vis.rightLegend.width * .13); 
+
         if (n.length > limit ){
             return n.substring(0, (limit -3)) + "...";
         } else { return n;}
@@ -169,7 +170,7 @@ Stacked.prototype.initVis = function() {
   // SVG drawing area (Adapted from lab 7)
     vis.svg = d3.select(vis.parentElement).append("svg")
         .attr("width", vis.width + vis.margin.left + vis.margin.right)
-        .attr("height", vis.areachart.height + vis.margin.top + vis.margin.bottom + vis.legend.area)
+        .attr("height", vis.areachart.height + vis.margin.top + vis.margin.bottom + 65)
       .append("g")
         .attr("transform", "translate(" + vis.areachart.margin.left + "," + vis.areachart.margin.top + ")")
     .append("g")
@@ -259,8 +260,8 @@ Stacked.prototype.initVis = function() {
     vis.svg.append("text")
         .attr("id", "y-axis-label")
         .attr("transform", "rotate(-90)")
-        .attr("y", (0 - vis.areachart.margin.left ))
-        .attr("x",0 - (vis.areachart.height / 2))
+        .attr("y", (0 - (vis.areachart.margin.left *3 )))
+        .attr("x",(0 - (vis.areachart.height / 2)))
         .attr("dy", "1em")
         .style("text-anchor", "middle")
         .text("Value");
@@ -302,7 +303,7 @@ Stacked.prototype.initVis = function() {
         .attr("class","rightLegendBox")
         .attr("x", 2000)
         .attr("y", 0)
-        .attr("width", vis.rightLegend.width - 42)
+        .attr("width", vis.rightLegend.width - 35)
         .attr("height", vis.areachart.height + 2)
         .style("stroke", "black")
         .style("fill","#fff");
@@ -674,7 +675,6 @@ Stacked.prototype.updateVis = function() {
 
                     vis.itemSelector = d.item;
                     select_layer(d.item);
-
 
                 }
                 else {

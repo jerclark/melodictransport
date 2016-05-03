@@ -59,9 +59,12 @@ path.selected, path.selected:hover{
   }
 
 .chartDataLabel{
-
  font-size: 11px;
+}
 
+#RightLegendHeader{
+  font-weight: bold;
+   font-size: 12px;
 }
 
 .square {
