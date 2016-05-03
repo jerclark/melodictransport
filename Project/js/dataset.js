@@ -2,6 +2,10 @@
 
 (function(cs171) {
 
+    if (Object.assign === undefined) {
+        Object.assign = _.extend;
+    }
+
     var INCOME_BEFORE_TAXES = {
         item: "INCBEFTX"
     };
