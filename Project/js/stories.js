@@ -51,14 +51,9 @@ Stories = (function() {
             $(".story-picker." + section).append(link);
         });
 
-        // Select the first story of each story section. Use _.defer
-        // to wait until free cycles are available.
-
-        $(".story-picker").each(function() {
-            var el = this;
-            _.defer(function() {
-                $(el).find(".story-link").first().click();
-            });
+        // Select the first story.
+        _.defer(function() {
+            $(".story-link").first().click();
         });
     };
 
