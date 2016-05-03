@@ -270,8 +270,7 @@ Stacked.prototype.initVis = function() {
     vis.svg.append("text")
         .attr("id", "category-name")
         .attr("x","10")
-        .attr("y","0");
-
+        .attr("y","-20");
 
     vis.rightSlideLegendGroup = vis.svg.append('g');
 
@@ -572,7 +571,7 @@ Stacked.prototype.updateVis = function() {
 
         vis.alreadyinFilteredView = true;
 
-    } else if (vis.inSingleView()){git
+    } else if (vis.inSingleView()){
 
     }  else {
         // Slide out
@@ -652,7 +651,7 @@ Stacked.prototype.updateVis = function() {
     // highlight optiones
     vis.svg.selectAll(".area, .rightLegend")
         .on("mouseover", function(d)
-            {vis.svg.select("#category-name").text(d.subcategory + ": " + d.name);
+            {vis.svg.select("#category-name").text(d.name);
             highlight_layer(d.item);
 
             });
