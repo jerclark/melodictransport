@@ -17,14 +17,8 @@ var COLUMN_WIDTH_FULL = COLUMN_WIDTH * 12;
 
 var wrangleAll = function wrangleAll(e){
     radarChart.fetchData();
-
-    console.time("wrangle Area");
     areachart.wrangleData();
-    console.timeEnd("wrangle Area");
-
-    console.time("wrangle tree");
     treePlot.wrangleData();
-    console.timeEnd("wrangle tree");
 };
 
 $(function() {
@@ -57,35 +51,18 @@ $(function() {
     var ds = window.ds = new cs171.Dataset();
 
     ds.ready(function(ds) {
-        console.time("timeline");
         showTimeline();
-        console.timeEnd("timeline");
-
-        console.time("show area");
         showArea();
-        console.timeEnd("show area");
-
-        console.time("show radar");
         showRadar();
-        console.timeEnd("show radar");
-
-        console.time("show trees");
         showTrees();
-        console.timeEnd("show trees");
-
-        console.time("show stories");
 
         var stories = new Stories({
             timeline : timeline,
             callback: wrangleAll
         }).initialize();
 
-        console.timeEnd("show stories");
-
         // Handle brush events
         $(document).on("brushed", function(e, timeline, from, to) {
-            console.log("brushed!");
-
             if (areachart) {
                 areachart.x.domain([from, to]);
                 areachart.svg.select(".area").attr("d", areachart.area);
@@ -135,8 +112,6 @@ $(function() {
             return singletons.indexOf(s) > -1
         };
 
-        console.time('subcats2');
-
         var expends = ds.items().filter(function(i) {
 
             // We only want items that are in the expenses array above, and that are either a singleton,
@@ -161,8 +136,6 @@ $(function() {
             }
             return acc;
         }, {});
-        console.timeEnd('subcats2');
-
 
         // Date parser to convert strings to date objects
         var parseDate = d3.time.format("%Y").parse;

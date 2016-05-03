@@ -39,8 +39,6 @@
     }
 
     Dataset.prototype._loadData = function(callback) {
-
-        console.time('loading dataset');
         queue()
             .defer(d3.json, "data/clean/dataset.json")
             .defer(d3.json, "data/clean/presidents.json")
@@ -104,9 +102,6 @@
                 return events;
             }, this._datasets.events);
 
-            console.log('events loaded', this._datasets.events);
-
-            console.time("building index");
             this._datasets.indexed = this._datasets.values.reduce(function(obj, v) {
                 obj[v.id] = obj[v.id] || [];
                 obj[v.id].push({
@@ -115,11 +110,8 @@
                 });
                 return obj;
             });
-            console.timeEnd("building index");
 
             this.isLoaded = true;
-            console.timeEnd('loading dataset');
-
             callback(this);
 
         }.bind(this));

@@ -23,7 +23,6 @@ Radar = function(_parentElement, options) {
  */
 
 Radar.prototype.initVis = function() {
-    console.time("radar initvis");
     var vis = this;
 
     /************
@@ -159,15 +158,12 @@ Radar.prototype.initVis = function() {
     vis.tip = d3.tip().attr('class', 'd3-tip radar').html(function(d) {
         return d;
     });
-    console.timeEnd("radar initvis");
-
     vis.fetchData();
 }
 
 
 
 Radar.prototype.fetchData = function() {
-    console.time("radar fetchdata");
     var vis = this;
     var demographicCode = vis.demographicCode = $("#radar-demo-picker").val();
     var demographicName = vis.demographicName = $("#radar-demo-picker option[value='" + demographicCode + "']").text();
@@ -182,7 +178,6 @@ Radar.prototype.fetchData = function() {
     });
     vis.data = ds.toDimensions(_data);
     vis.wrangleData();
-    console.timeEnd("radar fetchdata");
 }
 
 // To avoid triggering the fetch data a bunch of time when we set many filters at once, we can throttle the function
@@ -345,7 +340,6 @@ Radar.prototype.updateVis = function() {
 
     spokes
         .attr("transform", function(d) {
-            //  console.log(vis.dimensions(d.dimension));
             return "rotate(" + (vis.dimensions(d.dimension) - 90) + ")";
         });
 
