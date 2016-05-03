@@ -200,7 +200,7 @@ Radar.prototype.wrangleData = function() {
     vis.options.years = timeline.selectedYears();
 
     //Set the value type (adjusted dollars, raw dollars, etc)
-    vis.valueType = d3.select("#value-type").property("value");
+    vis.valueType = d3.select("#value-type-radar").property("value");
 
     var allValues = vis.data.map(function(characteristic) {
         var valuesForCharacteristic = [];
