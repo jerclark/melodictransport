@@ -38,8 +38,8 @@ Stacked.prototype.initVis = function() {
     vis.width = vis.properties.width - vis.margin.left - vis.margin.right;
     vis.height = vis.properties.height - vis.margin.top - vis.margin.bottom;
 
-    vis.areachart.height = vis.height - vis.areachart.margin.top - vis.areachart.margin.bottom - 65 ; 
-    vis.areachart.width = vis.width - vis.areachart.margin.left - vis.areachart.margin.right; 
+    vis.areachart.height = vis.height - vis.areachart.margin.top - vis.areachart.margin.bottom - 65 ;
+    vis.areachart.width = vis.width - vis.areachart.margin.left - vis.areachart.margin.right;
 
 
     vis.areachart.height = vis.height - vis.areachart.margin.top - vis.areachart.margin.bottom - 65;
@@ -55,7 +55,7 @@ Stacked.prototype.initVis = function() {
 
     vis.clipName = function(n){
 
-        var limit = Math.round(vis.rightLegend.width * .13); 
+        var limit = Math.round(vis.rightLegend.width * .13);
 
         if (n.length > limit ){
             return n.substring(0, (limit -3)) + "...";

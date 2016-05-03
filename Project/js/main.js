@@ -42,6 +42,14 @@ $(function() {
         e.preventDefault();
         $("body").scrollTop(parseInt($(e.target).data("position"), 10));
     });
+
+    // Handle story change for area chart
+    $("body").on("story-change", function(e, section, demographic, characteristic, item) {
+        if (section === "area") {
+            areachart.itemSelector = item;
+            areachart.wrangleData();
+        }
+    });
 });
 
 (function(cs171) {

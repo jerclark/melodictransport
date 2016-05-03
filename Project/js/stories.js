@@ -46,6 +46,8 @@ Stories = (function() {
                     $(".current-story." + section).html($(el).html());
 
                     callback(this);
+
+                    $("body").trigger("story-change", [section, demographic, characteristic, item]);
                 });
 
             $(".story-picker." + section).append(link);
