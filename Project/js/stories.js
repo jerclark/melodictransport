@@ -5,9 +5,6 @@
 
 // See the bottom of index.html for details.
 
-// Additionally links can be inserted in the story text that also trigger a change
-// in the selected filters.
-
 Stories = (function() {
 
     var Stories = function(options) {

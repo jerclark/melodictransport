@@ -3,6 +3,20 @@
   margin-top: 80px;
 }
 
+.layer-cake .navbar-default {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.layer-cake .navbar-default .navbar-nav a {
+  font-size: 12px;
+}
+.layer-cake .navbar-default .navbar-nav>.active>a,
+.layer-cake .navbar-default .navbar-nav>.active>a:focus,
+.layer-cake .navbar-default .navbar-nav>.active>a:hover {
+    background-color: white;
+}
+
 .vis-stacked .axis path,
 .vis-stacked .axis line {
   fill: none;
@@ -58,9 +72,9 @@ path.selected, path.selected:hover{
   border-width: 1px;
   border-style: solid;
   height: 15px;
-  vertical-align: top;
   width: 15px;
-  *display: inline;
-  left: 5px;
-  top: 5px;
+  vertical-align: top;
+  border-radius: 8px;
+  margin-top: 2px;
+  margin-right: 3px;
 }

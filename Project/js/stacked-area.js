@@ -41,8 +41,12 @@ Stacked.prototype.initVis = function() {
     vis.areachart.height = vis.height - vis.areachart.margin.top - vis.areachart.margin.bottom - 65 ; 
     vis.areachart.width = vis.width - vis.areachart.margin.left - vis.areachart.margin.right; 
 
-    
-    // Helper functions 
+
+    vis.areachart.height = vis.height - vis.areachart.margin.top - vis.areachart.margin.bottom - 65;
+    vis.areachart.width = vis.width - vis.areachart.margin.left - vis.areachart.margin.right;
+
+
+    // Helper functions
 
     vis.isSingleton = function (s){
         var singletons = ["ALCBEVG","CASHCONT","EDUCATN","PERSCARE","READING","TOBACCO", "MISC"];
@@ -50,11 +54,13 @@ Stacked.prototype.initVis = function() {
         };
 
     vis.clipName = function(n){
+
         var limit = Math.round(vis.rightLegend.width * .13); 
+
         if (n.length > limit ){
             return n.substring(0, (limit -3)) + "...";
         } else { return n;}
-        
+
     };
 
     vis.inFilteredView = function(){
@@ -81,7 +87,7 @@ Stacked.prototype.initVis = function() {
     };
 
     vis.selectSubCatagory = function(c){
-            vis.itemSelector = 'none'; 
+            vis.itemSelector = 'none';
         if (vis.subcategory == c){vis.subcategory = 'all'}
                 else {
                     vis.subcategory = c;
@@ -111,7 +117,7 @@ Stacked.prototype.initVis = function() {
             var found_y = false;
             vis.data[name].values.map(function(v){
                 if (y == v.year){found_y = true;
-                    v.valuePercentIncome = v.valuePercentIncome/100; 
+                    v.valuePercentIncome = v.valuePercentIncome/100;
                 }
                 })
 
@@ -133,8 +139,8 @@ Stacked.prototype.initVis = function() {
     vis.subcategories = Array.from(subcategories).sort();
 
     var colorPallets = [colorbrewer.Purples[6],colorbrewer.Blues[6],colorbrewer.YlGn[6],colorbrewer.Oranges[6],colorbrewer.Reds[6],colorbrewer.RdYlGn[6],colorbrewer.PuRd[6]];
-    
-    // Main colors, used at top level 
+
+    // Main colors, used at top level
 
     var subcategoryColors = [];
 
@@ -177,7 +183,7 @@ Stacked.prototype.initVis = function() {
     vis.max_year = parseDate(d3.max(years).toString());
 
     vis.endYear = 2014;
-    vis.legendYears = 7; 
+    vis.legendYears = 7;
 
     vis.x = d3.time.scale()
         .range([0, (vis.areachart.width)])
@@ -222,21 +228,21 @@ Stacked.prototype.initVis = function() {
         .y0(function(d) { return vis.rightLegend.y(d.y0);  })
         .y1(function(d) { return vis.rightLegend.y(d.y0 + d.y  ); });
 
-    // Used for transitions in and out 
+    // Used for transitions in and out
     vis.legendAreaExit = d3.svg.area()
         .interpolate("linear")
         .x(function(d) { return vis.rightLegend.x(d.year) ; })
         .y0(function(d) { return vis.rightLegend.y(d.y0); })
         .y1(function(d) { return vis.rightLegend.y(d.y0 + d.y); });
 
-    
+
     vis.area = d3.svg.area()
         .interpolate("cardinal")
         .x(function(d) { return vis.x(d.year); })
         .y0(function(d) { return vis.y(d.y0); })
         .y1(function(d) { return vis.y(d.y0 + d.y); });
 
-    // Used for transitions in and out 
+    // Used for transitions in and out
     vis.areaExit = d3.svg.area()
         .interpolate("cardinal")
         .x(function(d) { return vis.x(d.year); })
@@ -249,7 +255,7 @@ Stacked.prototype.initVis = function() {
         .append("rect")
         .attr("width", vis.areachart.width)
         .attr("height", vis.areachart.height);
-    
+
     // Y axis label
     vis.svg.append("text")
         .attr("id", "y-axis-label")
@@ -260,13 +266,13 @@ Stacked.prototype.initVis = function() {
         .style("text-anchor", "middle")
         .text("Value");
 
-    // Slice label 
+    // Slice label
     vis.svg.append("text")
         .attr("id", "category-name")
         .attr("x","10")
         .attr("y","0");
-    
-   
+
+
     vis.rightSlideLegendGroup = vis.svg.append('g');
 
     vis.rightSlideLegendGroup
@@ -303,7 +309,7 @@ Stacked.prototype.initVis = function() {
         .style("stroke", "black")
         .style("fill","#fff");
 
-    // Bottem sub-catagory legend 
+    // Bottem sub-catagory legend
     vis.bottemnavbar = d3.select(".area-chart-nav").selectAll('li')
         .data((['all'].concat(vis.subcategories)))
         .enter().append("li")
@@ -313,8 +319,8 @@ Stacked.prototype.initVis = function() {
         .attr("onclick",function(d){return 'areachart.selectSubCatagory("' + d +'")'})
         .html(function(d){return('<div class="square" style="background-color:' + vis.subsubcategoryColorscale(d) + '"></div> ' + vis.getFullSubcategoryName(d))});
 
-    vis.subcategory = 'all'; 
-    vis.itemSelector = 'none'; 
+    vis.subcategory = 'all';
+    vis.itemSelector = 'none';
     vis.wrangleData();
 }
 
@@ -340,7 +346,7 @@ Stacked.prototype.wrangleData = function() {
 
     vis.filteredData = vis.data;
 
-    vis.startYear = vis.x.domain()[0].getFullYear(); 
+    vis.startYear = vis.x.domain()[0].getFullYear();
     vis.endYear = vis.x.domain()[1].getFullYear();
 
     vis.rightLegend.x
@@ -349,7 +355,7 @@ Stacked.prototype.wrangleData = function() {
     filteredData = {};
 
     d3.keys(vis.filteredData).map(function(name){
-        filteredData[name] = vis.filteredData[name]}); 
+        filteredData[name] = vis.filteredData[name]});
 
     if (vis.inFilteredView() &&  vis.itemSelector == 'none' ){
          Object.keys(filteredData).map(function(name){
@@ -357,7 +363,7 @@ Stacked.prototype.wrangleData = function() {
                 { delete filteredData[name] }})
          } else if (vis.itemSelector != 'none'){
             Object.keys(filteredData).map(function(name){
-           
+
             if (vis.data[name].item != vis.itemSelector)
                 {
                     delete filteredData[name]}
@@ -395,21 +401,21 @@ Stacked.prototype.wrangleData = function() {
                             year: parseDate(d.year.toString()), y: d[key]};
                 })};}))};
 
-    // Build data for slide in legend 
+    // Build data for slide in legend
     valueTotals = {};
 
     dataItems.map(function(name) {
- 
+
         var finalValues = vis.filteredData[name].values.filter(function(v){return v.year == vis.endYear;})[0];
 
         Object.keys(finalValues).filter(function(k){return k!='year';}).map(function(k){
-            valueTotals[k] = (valueTotals[k] !== undefined ? valueTotals[k] : 0) + finalValues[k]; 
+            valueTotals[k] = (valueTotals[k] !== undefined ? valueTotals[k] : 0) + finalValues[k];
         })});
 
         var dataAverages = {};
         Object.keys(valueTotals).map(function(k){ dataAverages[k] =  valueTotals[k]/dataItems.length});
 
-        extraYears = []; 
+        extraYears = [];
         for (i = 1; i < vis.legendYears; i++) {
             dataAverages.year = (vis.endYear + i);
             extraYears.push(_.clone(dataAverages));
@@ -421,7 +427,7 @@ Stacked.prototype.wrangleData = function() {
                 dataItems.map(function(name) {
 
                     var finalSliceValue = vis.filteredData[name].values.filter(function(v){return v.year == vis.endYear;})[0];
-                    finalValues = [finalSliceValue].concat(extraYears); 
+                    finalValues = [finalSliceValue].concat(extraYears);
 
                     //console.log(finalValues);
                     return {
@@ -443,13 +449,13 @@ Stacked.prototype.wrangleData = function() {
     vis.adjustedValue = stackDataForKey("adjustedValue");
     vis.value = stackDataForKey("value");
     vis.valuePercentIncome = stackDataForKey("valuePercentIncome");
-    
+
     if(!vis.inSingleView()){
         vis.adjustedValueLegend = legendDataForKey("adjustedValue");
         vis.valuePercentIncomeLegend = legendDataForKey("valuePercentIncome");
         vis.valueLegend = legendDataForKey("value");
     }
-    
+
 
     // Calculating percentages is dependent on the totals from the submitted dataset,
     // and needs to be calculated a little differently
@@ -464,7 +470,7 @@ Stacked.prototype.wrangleData = function() {
                             year: parseDate(d.year.toString()), y: d["value"]/(year_maxes[d.year])};
                 })};}));
 
-   
+
     var TYPE = d3.select("#value-type-area").property("value");
     var yAxisFormats = {adjustedValue : "$,.4s", value : "$,.4s",  percent : ",.2p", valuePercentIncome : ",.2p",};
     vis.yAxis.tickFormat(function(d) { return d3.format(yAxisFormats[TYPE])(d);});
@@ -474,9 +480,9 @@ Stacked.prototype.wrangleData = function() {
 
 
     // Update the visualization
- 
+
     vis.displayData = vis[TYPE];
-    vis.legendData = vis[(TYPE + "Legend")]; 
+    vis.legendData = vis[(TYPE + "Legend")];
 
     vis.updateVis();
 
@@ -484,7 +490,7 @@ Stacked.prototype.wrangleData = function() {
 
 
 /*
- *  The drawing function 
+ *  The drawing function
  */
 
 Stacked.prototype.updateVis = function() {
@@ -493,7 +499,7 @@ Stacked.prototype.updateVis = function() {
 
     var highlight_color = "#7997a1"
 
-    // update y scale for current data 
+    // update y scale for current data
 
     vis.y.domain([0, d3.max(vis.displayData, function(d) {
             return d3.max(d.values, function(e) {
@@ -502,12 +508,12 @@ Stacked.prototype.updateVis = function() {
         })
     ]);
 
-    // Presuming we’re not in a single view, we update the fly in legend scale as well 
+    // Presuming we’re not in a single view, we update the fly in legend scale as well
     if(!vis.inSingleView()){
-        vis.rightLegend.y.domain(vis.y.domain()); 
+        vis.rightLegend.y.domain(vis.y.domain());
     };
 
-    // Draw the main area chart 
+    // Draw the main area chart
 
     var layers = vis.svg.selectAll(".area-chart")
         .data(vis.displayData);
@@ -517,7 +523,7 @@ Stacked.prototype.updateVis = function() {
         .attr("class", "area-chart area")
         .attr("d", function(d) {return vis.areaExit(d.values);});
 
-    // Update 
+    // Update
     layers
         .transition().duration(duration).delay(delay + 1000)
         .style("fill", function(d) {
@@ -535,7 +541,7 @@ Stacked.prototype.updateVis = function() {
         .remove();
 
 
-    // Draw the slide in  in legend 
+    // Draw the slide in  in legend
 
     var legendY = vis.rightLegend.y(d3.max(vis.legendData, function(d) {
             return d3.max(d.values, function(e) {
@@ -551,7 +557,7 @@ Stacked.prototype.updateVis = function() {
              vis.svg.selectAll(".rightLegendArea").remove();
         }
 
-        // Slide in animation 
+        // Slide in animation
         vis.rightSlideLegendGroup.transition().duration(duration).delay(delay)
             .attr("transform", "translate(" + (-2000 + (vis.areachart.width - vis.rightLegend.width - 1)) + ",0)");
 
@@ -564,22 +570,22 @@ Stacked.prototype.updateVis = function() {
         vis.rightSlideLegendGroup.select("#RightLegendHeader")
             .text(" " + vis.getFullSubcategoryName(vis.subcategory) + " Subcategories");
 
-        vis.alreadyinFilteredView = true; 
+        vis.alreadyinFilteredView = true;
 
-    } else if (vis.inSingleView()){git 
+    } else if (vis.inSingleView()){git
 
     }  else {
-        // Slide out 
+        // Slide out
         vis.rightSlideLegendGroup.transition().duration(duration).delay(delay)
-            .attr("transform", "translate(0,0)"); 
+            .attr("transform", "translate(0,0)");
 
         vis.svg.selectAll(".chartDataLabel").transition().duration(duration).delay(delay).remove();
         vis.svg.selectAll(".rightLegendArea").transition().duration(duration).delay(delay).remove();
 
-        vis.alreadyinFilteredView = false; 
+        vis.alreadyinFilteredView = false;
 
     }
-  
+
 
     var Legendlayers = vis.rightSlideLegendGroup.selectAll(".rightLegend")
         .data(vis.legendData);
@@ -596,18 +602,18 @@ Stacked.prototype.updateVis = function() {
             if (vis.subcategory == 'all'){return vis.subsubcategoryColorscale(d.subcategory);}
             else {return vis.subColorScale(vis.subsubcategoryColorscale(d.subcategory))(d.name);}
         })
-         .attr("d", function(d) {return vis.rightLegend.area(d.values);}); 
+         .attr("d", function(d) {return vis.rightLegend.area(d.values);});
 
     Legendlayers.exit()
         .transition().duration(duration).delay(delay)
         .attr("d", function(d) {return vis.areaExit(d.values);})
         .remove();
 
-    // Pop in legend labels 
+    // Pop in legend labels
 
     var DataLabels = vis.rightSlideLegendGroup.selectAll(".chartDataLabel")
         .data(vis.legendData)
-   
+
     if(vis.inFilteredView()){
     DataLabels
         .enter().append('text')
@@ -624,31 +630,31 @@ Stacked.prototype.updateVis = function() {
 
 
     var highlight_layer = function(d){
-        vis.svg.select("#layer-"+d).classed('highlight',true); 
-        vis.svg.select("#rightLegend-"+d).classed('highlight',true); 
+        vis.svg.select("#layer-"+d).classed('highlight',true);
+        vis.svg.select("#rightLegend-"+d).classed('highlight',true);
     }
 
 
     var unhighlight_layer = function(d){
         vis.svg.select("#layer-"+d).classed('highlight',false);
-        vis.svg.select("#rightLegend-"+d).classed('highlight',false); 
+        vis.svg.select("#rightLegend-"+d).classed('highlight',false);
 
     }
 
     var select_layer = function(d){
         vis.svg.select("#rightLegend-"+d).classed('selected',true);
-        }; 
+        };
 
     var unselect_layer = function(d){
         vis.svg.select("#rightLegend-"+d).classed('selected',false);
-        }; 
+        };
 
     // highlight optiones
     vis.svg.selectAll(".area, .rightLegend")
         .on("mouseover", function(d)
             {vis.svg.select("#category-name").text(d.subcategory + ": " + d.name);
             highlight_layer(d.item);
-         
+
             });
 
     vis.svg.selectAll(".area, .rightLegend")
@@ -661,14 +667,14 @@ Stacked.prototype.updateVis = function() {
             {   if (vis.inFilteredView() && vis.inSingleView()){
                     vis.svg.select("#"+d.subcategory).style("fill", "none");
 
-                    vis.itemSelector = 'none'; 
+                    vis.itemSelector = 'none';
                     unhighlight_layer(d.item);
                     unselect_layer(d.item);
 
-                  
+
                 } else if (vis.inFilteredView()) {
 
-                    vis.itemSelector = d.item; 
+                    vis.itemSelector = d.item;
                     select_layer(d.item);
 
                 }
